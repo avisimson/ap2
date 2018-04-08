@@ -35,7 +35,7 @@ namespace ImageService
     };
     public partial class ImageService : ServiceBase
     {
-        //
+        
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
         private System.ComponentModel.IContainer components;
