@@ -17,8 +17,12 @@ namespace ImageService.Modal
         #region Members
         private string m_OutputFolder;            // The Output Folder
         private int m_thumbnailSize;              // The Size Of The Thumbnail Size
-       
-        #endregion
 
+        #endregion/// <summary>
+        /// The Function Addes A file to the system
+        /// </summary>
+        /// <param name="path">The Path of the Image from the file</param>
+        /// <returns>Indication if the Addition Was Successful</returns>
+        public string AddFile(string path, out bool result);
     }
 }
