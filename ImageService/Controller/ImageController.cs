@@ -26,7 +26,7 @@ namespace ImageService.Controller
         }
         public string ExecuteCommand(int commandID, string[] args, out bool resultSuccesful)
         {
-            // Write Code Here
+            //execute the command that we are need to implement
             return this.commands[commandID].Execute(args, out resultSuccesful);
         }
     }

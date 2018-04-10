@@ -13,7 +13,7 @@ namespace ImageService.Server
 {
     public class ImageServer
     {
-        //
+        
         ILoggingService loggingService;
         ImageController controller;
 
