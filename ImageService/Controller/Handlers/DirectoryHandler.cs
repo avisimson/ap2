@@ -23,7 +23,7 @@ namespace ImageService.Controller.Handlers
         //file types to check.
         private String[] types = { "*.jpg", "*.png", "*.gif", "*.bmp" };
         // The Event That Notifies that the Directory is being closed
-        event EventHandler<DirectoryCloseEventArgs> DirectoryClose;
+        public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;
 
         public DirectoryHandler(IImageController controller, ILoggingService log)
         {
@@ -72,9 +72,18 @@ namespace ImageService.Controller.Handlers
                 }
             }
         }
+        //create new file of filewatcher
+        private void NewFile(object sender, FileSystemEventArgs e)
+        {
+            String[] args = { e.FullPath, e.Name };
+            CommandRecievedEventArgs crea = new CommandRecievedEventArgs((int)CommandEnum.NewFileCommand,
+                args, this.path);
+            this.OnCommandRecieved(this, crea);
+        }
         //stop handle the directory.
         public void CloseHandle()
         {
+            //clear the list of watchers.
             this.sysWatchers.Clear();
             DirectoryCloseEventArgs closeListen = new DirectoryCloseEventArgs(this.path, "Closing path- " + this.path);
             this.DirectoryClose?.Invoke(this, closeListen);
