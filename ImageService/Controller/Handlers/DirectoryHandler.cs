@@ -24,15 +24,23 @@ namespace ImageService.Controller.Handlers
         private String[] types = { "*.jpg", "*.png", "*.gif", "*.bmp" };
         // The Event That Notifies that the Directory is being closed
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;
-
+        /*
+         * constructor
+         * param name = controller initializes image controller
+         * param name = log initialize loggingModal
+         * also initialize new list of FileSystemWatchers.
+         */
         public DirectoryHandler(IImageController controller, ILoggingService log)
         {
             this.imageController = controller;
             this.loggingModal = log;
             this.sysWatchers = new List<FileSystemWatcher>();
         }
-        // The Function Recieves the directory to Handle, and makes file system watchers
-        //for every type of file to listen to.
+        /*
+         * param name = dirPath - directory path to start listen to.
+         * Function starts listen to new files in type of types[] in the directory,
+         * and adds them to the watchers list.
+         */
         public void StartHandleDirectory(string dirPath)
         {
             this.path = dirPath;
@@ -41,18 +49,24 @@ namespace ImageService.Controller.Handlers
             for (i = 0; i < this.types.Length; i++)
             {
                 FileSystemWatcher fileWatcher = new FileSystemWatcher(dirPath, this.types[i]);
-                //start listen to events that occur.
+                //start listen to files that being added.
                 fileWatcher.EnableRaisingEvents = true;
-                fileWatcher.Created += new FileSystemEventHandler(this.NewFile);
+                fileWatcher.Created += new FileSystemEventHandler(this.AddNewFileCommand);
                 this.sysWatchers.Add(fileWatcher);
             }
         }
-        // The Event that will be activated upon new Command
+        /*
+         * param name = sender - the object that sent command.
+         * param name = e - the command that is recieved.
+         * OnCommandRecieved checks if the command is for the directory,
+         * if the command is to close it stops listening to the directory,
+         * if the command is everything but close so go to controller to execute command.
+         */
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             if (this.path.Equals(e.RequestDirPath) || e.RequestDirPath.Equals("*"))
             {
-                // if command recieved is close command
+                //if command is close, just close and dont go to conroller.
                 if (e.CommandID == (int)CommandEnum.CloseCommand)
                 {
                     this.CloseHandle();
@@ -61,24 +75,27 @@ namespace ImageService.Controller.Handlers
                 bool result;
                 // execute recieved command
                 string message = this.imageController.ExecuteCommand(e.CommandID, e.Args, out result);
-                // check if command has executed succesfully and write result to the log
                 if (result)
-                {
+                {//execute command succeed
                     loggingModal.Log(message, MessageTypeEnum.INFO);
                 }
                 else
-                {
+                {//execute command failed
                     loggingModal.Log(message, MessageTypeEnum.FAIL);
                 }
             }
         }
-        //create new file of filewatcher
-        private void NewFile(object sender, FileSystemEventArgs e)
+        /*
+         * param name = sender - the object that send file command.
+         * param name = e - the watcher of the path directory.
+         * function handles adding a file to a the directory we listen to.
+         */
+        private void AddNewFileCommand(object sender, FileSystemEventArgs e)
         {
-
             String[] args = { e.FullPath, e.Name };
             CommandRecievedEventArgs crea = new CommandRecievedEventArgs((int)CommandEnum.NewFileCommand,
                 args, this.path);
+            //add command to new file in the directory.
             this.OnCommandRecieved(this, crea);
         }
         //stop handle the directory.
@@ -86,7 +103,9 @@ namespace ImageService.Controller.Handlers
         {
             //clear the list of watchers.
             this.sysWatchers.Clear();
+            //send close message.
             DirectoryCloseEventArgs closeListen = new DirectoryCloseEventArgs(this.path, "Closing path- " + this.path);
+            //inform closing.
             this.DirectoryClose?.Invoke(this, closeListen);
         }
     }
