@@ -8,7 +8,7 @@ namespace ImageService.Infrastructure.Enums
 {
     public enum CommandEnum : int
     {
-        NewFileCommand,
+        AddNewFileCommand,
         CloseCommand
     }
 }

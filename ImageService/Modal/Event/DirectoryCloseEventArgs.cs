@@ -17,6 +17,5 @@ namespace ImageService.Modal
             DirectoryPath = dirPath;                    // Setting the Directory Name
             Message = message;                          // Storing the String
         }
-
     }
 }
