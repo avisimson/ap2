@@ -60,12 +60,13 @@ namespace ImageService.Server
         {
             //create directoryhandler that contains the members of constructor
             IDirectoryHandler handler = new DirectoryHandler(m_controller, m_logging);
-            //add to list the current path.
+            //add the handler command received to the event
             this.CommandRecieved += handler.OnCommandRecieved;
-            //add to Directory closed.
+            //add the handler command received to directory closed
             handler.DirectoryClose += CloseHandler;
             //start handle of directory of the path.
             handler.StartHandleDirectory(path);
+            //send messeage that server start to listen to directory.
             m_logging.Log(DateTime.Now.ToString() + " start listening to directory " + path, MessageTypeEnum.INFO);
         }
         /*
@@ -82,6 +83,7 @@ namespace ImageService.Server
                 CommandRecieved -= handler;
             }
         }
+
         /*
          * function in case a directoryHandler closes.
          * <param name = sender> - is a object that send messege.
@@ -89,18 +91,28 @@ namespace ImageService.Server
          */
         public void CloseHandler(object sender, DirectoryCloseEventArgs e)
         {
+            IDirectoryHandler sendDirectoryHandler = sender as IDirectoryHandler;
             if (sender is IDirectoryHandler)
             {
-                ((IDirectoryHandler)sender).DirectoryClose -= CloseHandler;
-                this.CommandRecieved += ((IDirectoryHandler)sender).OnCommandRecieved;
-
+                this.m_logging.Log("Directory Handler of Directory in: " + e.DirectoryPath + @" with message: " + e.Message, MessageTypeEnum.INFO);
+                //unsubscribing of the DirectoryHandler from the server message feed
+                this.CommandRecieved -= sendDirectoryHandler.OnCommandRecieved;
+                if (this.CommandRecieved == null)
+                {
+                    //if all the Directory Handlers closed succefully the server itself can finally close
+                    this.m_logging.Log("Now, the server is closed", MessageTypeEnum.INFO);
+                }
+            } else {
+                //an object that isn't supposed to activate the event did it
+                this.m_logging.Log("source tried to abort handling folder: " + e.DirectoryPath, MessageTypeEnum.WARNING);
+                return;
             }
         }
-
-        public void SendCommand(int id, string[] args, string path)
+        public void CloseServer()
         {
-            CommandRecievedEventArgs crea = new CommandRecievedEventArgs(id, args, path);
-            this.CommandRecieved?.Invoke(this, crea);
+            this.m_logging.Log("Now server is closing", MessageTypeEnum.INFO);
+            CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, "");
+            this.CommandRecieved?.Invoke(this, commandRecievedEventArgs);
         }
     }
 }
