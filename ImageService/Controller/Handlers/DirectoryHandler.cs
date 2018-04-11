@@ -92,8 +92,8 @@ namespace ImageService.Controller.Handlers
          */
         private void AddNewFileCommand(object sender, FileSystemEventArgs e)
         {
-            String[] args = { e.FullPath, e.Name };
-            CommandRecievedEventArgs crea = new CommandRecievedEventArgs((int)CommandEnum.NewFileCommand,
+            String[] args = { e.FullPath, e.Name }; //array of path and name of file.
+            CommandRecievedEventArgs crea = new CommandRecievedEventArgs((int)CommandEnum.AddNewFileCommand,
                 args, this.path);
             //add command to new file in the directory.
             this.OnCommandRecieved(this, crea);
