@@ -23,41 +23,69 @@ namespace ImageService.Server
         #region Properties
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
         #endregion
-
+        /*
+         * constructor
+         * <param name = contoller> - the ImageController.
+         * <param name = logging> - the LoggingService.
+         */
         public ImageServer(IImageController controller, ILoggingService logging)
         {
             this.m_controller = controller;
             this.m_logging = logging;
+            //initilaize the directoryHandlers.
             CreateDirectoryHandlers();
         }
-
+        /*
+         * the function create directory handlers.
+         */
         public void CreateDirectoryHandlers()
         {
+            //all directories contain the path that enter in App.config
             string allDirectories = ConfigurationManager.AppSettings["Handler"];
+            //seperate bettween the paths that found in line of "Handler" in App.config
             string[] paths = allDirectories.Split(';');
-            foreach (string path in paths) { ListenToDirectory(path); }
+            //loop for listen to all the paths that found in line of "Handler" in App.config.
+            foreach (string path in paths)
+            {
+                //function that listen to directory of path
+                ListenToDirectory(path);
+            }
         }
-
+        /*
+         * function that listen to Directory of the path.
+         * <param name = path> - the source path.
+         */
         public void ListenToDirectory(string path)
         {
+            //create directoryhandler that contains the members of constructor
             IDirectoryHandler handler = new DirectoryHandler(m_controller, m_logging);
+            //add to list the current path.
             this.CommandRecieved += handler.OnCommandRecieved;
+            //add to Directory closed.
             handler.DirectoryClose += CloseHandler;
+            //start handle of directory of the path.
             handler.StartHandleDirectory(path);
+            m_logging.Log(DateTime.Now.ToString() + " start listening to directory " + path, MessageTypeEnum.INFO);
         }
-
-        // in case the Service closes
+        /*
+         * function that close in case that the Service closes
+         * <param name = path> - the source path.
+         */
         public void CloseHandlers()
         {
             foreach (EventHandler<CommandRecievedEventArgs> handler in CommandRecieved.GetInvocationList())
             {
+                //close every event handler that found in the list.
                 handler(this, new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
+                //delete him from the list.
                 CommandRecieved -= handler;
             }
         }
-
-        // in case a directoryHandler closes
-        // TODO: check its not creating bugs
+        /*
+         * function in case a directoryHandler closes.
+         * <param name = sender> - is a object that send messege.
+         * <param name = e> - the event that invoke the directory handler is closed
+         */
         public void CloseHandler(object sender, DirectoryCloseEventArgs e)
         {
             if (sender is IDirectoryHandler)
@@ -70,7 +98,8 @@ namespace ImageService.Server
 
         public void SendCommand(int id, string[] args, string path)
         {
-            this.CommandRecieved?.Invoke(this, new CommandRecievedEventArgs(id, args, path));
+            CommandRecievedEventArgs crea = new CommandRecievedEventArgs(id, args, path);
+            this.CommandRecieved?.Invoke(this, crea);
         }
     }
 }

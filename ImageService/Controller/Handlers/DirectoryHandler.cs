@@ -75,6 +75,7 @@ namespace ImageService.Controller.Handlers
         //create new file of filewatcher
         private void NewFile(object sender, FileSystemEventArgs e)
         {
+
             String[] args = { e.FullPath, e.Name };
             CommandRecievedEventArgs crea = new CommandRecievedEventArgs((int)CommandEnum.NewFileCommand,
                 args, this.path);
