@@ -108,6 +108,8 @@ namespace ImageService.Server
                 return;
             }
         }
+        /*function that close the server
+         */
         public void CloseServer()
         {
             this.m_logging.Log("Now server is closing", MessageTypeEnum.INFO);

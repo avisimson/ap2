@@ -41,6 +41,7 @@ namespace ImageService
         private int eventId = 1;
         private ILoggingService logger;
         private ImageServer server;
+
         public ImageService(string[] args)
         {
             InitializeComponent();
