@@ -54,12 +54,12 @@ namespace ImageService.Modal
                     fileName = fileName + "1";
                 }
                 File.Move(path, paths[0] + "//" + fileName);
-                //file exist and moved to right path.
+                //file exist and moved to right path. return INFO.
                 result = true;
                 return "The file: " + Path.GetFileName(path) + " has been added to " + paths[0] +
                     " and to the thumbnails folder as" + fileName;
             } else {
-                //the file doesn't exist.
+                //the file doesn't exist. return FAIL
                 result = false;
                 return "file doesn't exist.";
             }   

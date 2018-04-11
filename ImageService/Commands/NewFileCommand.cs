@@ -19,8 +19,8 @@ namespace ImageService.Commands
 
         public string Execute(string[] args, out bool result)
         {
-            // args[0] is the path.
-            return this.m_modal.AddFile(args[0], out result);
+            // args[0] is the path, and args[1] is the filename.
+            return this.m_modal.AddFile(args[0] + "//" + args[1], out result);
         }
     }
 }

@@ -7,6 +7,7 @@ using ImageService.Controller;
 using ImageService.Controller.Handlers;
 using ImageService.Infrastructure;
 using ImageService.Infrastructure.Enums;
+using ImageService.Logging.Modal;
 using ImageService.Logging;
 using ImageService.Modal;
 using System.Configuration;
