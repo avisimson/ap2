@@ -25,11 +25,12 @@ namespace ImageService.Server
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
         #endregion
         /*
+         * param name = logger - logger of service.
          * constructor
          */
-        public ImageServer()
+        public ImageServer(LoggingService logger)
         {
-            this.m_logging = new LoggingService();
+            this.m_logging = logger;
             //initilaize the directoryHandlers, and create controller for command inside.
             CreateDirectoryHandlers();
         }
