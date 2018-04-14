@@ -8,7 +8,17 @@ namespace ImageService.Logging.Modal
 {
     public class MessageRecievedEventArgs : EventArgs
     {
-        public MessageTypeEnum Status { get; set; }
-        public string Message { get; set; }
+        public MessageTypeEnum status { get; set; }
+        public string message { get; set; }
+        /*
+         *param name = type - the type of of message.
+         * param name = message - the message.
+         * constructor. 
+         */
+        public MessageRecievedEventArgs(MessageTypeEnum type, string msg)
+        {
+            this.status = type;
+            this.message = msg;
+        }
     }
 }

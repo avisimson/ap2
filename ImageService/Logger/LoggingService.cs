@@ -19,9 +19,7 @@ namespace ImageService.Logging
          */
         public void Log(string message, MessageTypeEnum type)
         {
-            MessageRecievedEventArgs msg = new MessageRecievedEventArgs();
-            msg.Message = message;
-            msg.Status = type;
+            MessageRecievedEventArgs msg = new MessageRecievedEventArgs(type, message);
             MessageRecieved?.Invoke(this, msg);
         }
     }

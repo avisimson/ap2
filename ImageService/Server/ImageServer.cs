@@ -26,14 +26,11 @@ namespace ImageService.Server
         #endregion
         /*
          * constructor
-         * <param name = contoller> - the ImageController.
-         * <param name = logging> - the LoggingService.
          */
-        public ImageServer(IImageController controller, ILoggingService logging)
+        public ImageServer()
         {
-            this.m_controller = controller;
-            this.m_logging = logging;
-            //initilaize the directoryHandlers.
+            this.m_logging = new LoggingService();
+            //initilaize the directoryHandlers, and create controller for command inside.
             CreateDirectoryHandlers();
         }
         /*
@@ -43,6 +40,10 @@ namespace ImageService.Server
         {
             //all directories contain the path that enter in App.config
             string allDirectories = ConfigurationManager.AppSettings["Handler"];
+            int size = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
+            //create ImageModal service for controller and create controller of commands.
+            this.m_controller =
+                new ImageController(new ImageServiceModal(ConfigurationManager.AppSettings.Get("OutputDir"), size));
             //seperate bettween the paths that found in line of "Handler" in App.config
             string[] paths = allDirectories.Split(';');
             //loop for listen to all the paths that found in line of "Handler" in App.config.

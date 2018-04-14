@@ -5,7 +5,9 @@ using System.ServiceProcess;
 using System.Runtime.InteropServices;
 using ImageService.Logging;
 using ImageService.Server;
-
+using ImageService.Logging.Modal;
+using ImageService.Controller;
+using ImageService.Modal;
 //
 namespace ImageService
 {
@@ -41,11 +43,14 @@ namespace ImageService
         private int eventId = 1;
         private ILoggingService logger;
         private ImageServer server;
-
+        /*
+         * param name = args - user can enter names for the program.
+         * constructor initializes logger and server.
+         */
         public ImageService(string[] args)
         {
             InitializeComponent();
-            string eventSourceName = "MySource";
+            string eventSourceName = "Advanced Programming project";
             string logName = "MyNewLog";
             if (args.Count() > 0)
             {
@@ -62,12 +67,25 @@ namespace ImageService
             }
             eventLog1.Source = eventSourceName;
             eventLog1.Log = logName;
+            //create the server.
+            this.server = new ImageServer();
+            //add messages to legger.
+            this.logger.MessageRecieved += this.WriteMsg;
         }
+        /*
+         * param name = sender - the object that called method.
+         * param name = args -the timer.
+         * function handles timer.
+         */
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
             // TODO: Insert monitoring activities here.  
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
         }
+        /*
+         * start the events program in the event manager.
+         * handles messages to user.
+         */
         protected override void OnStart(string[] args)
         {
             eventLog1.WriteEntry("In OnStart");
@@ -85,14 +103,48 @@ namespace ImageService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
         }
-
+        /*
+         * send close to user and close server and listen to directories.
+         */
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("In onStop.");
+            eventLog1.WriteEntry("In onStop, closing server.");
+            //tell server to stop(the server will send to everyone else).
+            server.CloseServer();
         }
+        /*
+         * inform user on continue.
+         */
         protected override void OnContinue()
         {
             eventLog1.WriteEntry("In OnContinue.");
+        }
+        /*
+         * param name = sender - the object that called the method.
+         * param name = e - the message
+         * function writes message
+         */
+        public void WriteMsg(Object sender, MessageRecievedEventArgs e)
+        {
+            eventLog1.WriteEntry(e.message, GetType(e.status));
+        }
+        /*
+         * param name = type -the type of message.
+         * returns - type of message to user.
+         */
+        private EventLogEntryType GetType(MessageTypeEnum type)
+        {
+            switch (type)
+            {
+                case MessageTypeEnum.WARNING:
+                    return EventLogEntryType.Warning;
+                case MessageTypeEnum.FAIL:
+                    return EventLogEntryType.Error;
+                case MessageTypeEnum.INFO:
+                    return EventLogEntryType.Information;
+                default:
+                    return EventLogEntryType.Information;
+            }
         }
     }
 }
