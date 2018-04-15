@@ -64,14 +64,14 @@ namespace ImageService.Controller.Handlers
          */
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
+            //if command is close, just close and dont go to conroller.
+            if (e.CommandID == (int)CommandEnum.CloseCommand)
+            {
+                this.CloseHandle();
+                return;
+            }
             if (this.path.Equals(e.RequestDirPath) || e.RequestDirPath.Equals("*"))
             {
-                //if command is close, just close and dont go to conroller.
-                if (e.CommandID == (int)CommandEnum.CloseCommand)
-                {
-                    this.CloseHandle();
-                    return;
-                }
                 bool result;
                 // execute recieved command
                 string message = this.imageController.ExecuteCommand(e.CommandID, e.Args, out result);
@@ -104,7 +104,7 @@ namespace ImageService.Controller.Handlers
             //clear the list of watchers.
             this.sysWatchers.Clear();
             //send close message.
-            DirectoryCloseEventArgs closeListen = new DirectoryCloseEventArgs(this.path, "Closing path- " + this.path);
+            DirectoryCloseEventArgs closeListen = new DirectoryCloseEventArgs(this.path, "Close listening to path- " + this.path);
             //inform closing.
             this.DirectoryClose?.Invoke(this, closeListen);
         }

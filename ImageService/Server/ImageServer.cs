@@ -69,21 +69,7 @@ namespace ImageService.Server
             //start handle of directory of the path.
             handler.StartHandleDirectory(path);
             //send messeage that server start to listen to directory.
-            m_logging.Log(DateTime.Now.ToString() + " start listening to directory " + path, MessageTypeEnum.INFO);
-        }
-        /*
-         * function that close in case that the Service closes
-         * <param name = path> - the source path.
-         */
-        public void CloseHandlers()
-        {
-            foreach (EventHandler<CommandRecievedEventArgs> handler in CommandRecieved.GetInvocationList())
-            {
-                //close every event handler that found in the list.
-                handler(this, new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
-                //delete him from the list.
-                CommandRecieved -= handler;
-            }
+            this.m_logging.Log(" start listening to directory " + path, MessageTypeEnum.INFO);
         }
 
         /*
@@ -93,10 +79,10 @@ namespace ImageService.Server
          */
         public void CloseHandler(object sender, DirectoryCloseEventArgs e)
         {
-            IDirectoryHandler sendDirectoryHandler = sender as IDirectoryHandler;
+            IDirectoryHandler sendDirectoryHandler = (IDirectoryHandler) sender;
             if (sender is IDirectoryHandler)
             {
-                this.m_logging.Log("Directory Handler of Directory in: " + e.DirectoryPath + @" with message: " + e.Message, MessageTypeEnum.INFO);
+                this.m_logging.Log(e.Message, MessageTypeEnum.INFO); //stop listening message.
                 //unsubscribing of the DirectoryHandler from the server message feed
                 this.CommandRecieved -= sendDirectoryHandler.OnCommandRecieved;
                 if (this.CommandRecieved == null)
