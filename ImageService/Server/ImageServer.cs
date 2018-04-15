@@ -28,7 +28,7 @@ namespace ImageService.Server
          * param name = logger - logger of service.
          * constructor
          */
-        public ImageServer(LoggingService logger)
+        public ImageServer(ILoggingService logger)
         {
             this.m_logging = logger;
             //initilaize the directoryHandlers, and create controller for command inside.
@@ -48,11 +48,18 @@ namespace ImageService.Server
             //seperate bettween the paths that found in line of "Handler" in App.config
             string[] paths = allDirectories.Split(';');
             //loop for listen to all the paths that found in line of "Handler" in App.config.
-            foreach (string path in paths)
+            try
             {
-                //function that listen to directory of path
-                ListenToDirectory(path);
+                foreach (string path in paths)
+                {
+                    //function that listen to directory of path
+                    ListenToDirectory(path);
+                }
+            } catch(Exception e)
+            {
+                m_logging.Log("One of the directories doesnt exist", MessageTypeEnum.FAIL);
             }
+            
         }
         /*
          * function that listen to Directory of the path.

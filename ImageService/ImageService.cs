@@ -101,9 +101,9 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
             //create the server.
             this.logger = new LoggingService();
-            this.server = new ImageServer((LoggingService)logger);
             //add messages to legger.
             this.logger.MessageRecieved += this.WriteMsg;
+            this.server = new ImageServer(logger);
             logger.Log("In On start", MessageTypeEnum.INFO);
         }
         /*
