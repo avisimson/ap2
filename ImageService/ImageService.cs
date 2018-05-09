@@ -8,6 +8,7 @@ using ImageService.Server;
 using ImageService.Logging.Modal;
 using ImageService.Controller;
 using ImageService.Modal;
+using System.Configuration;
 //
 namespace ImageService
 {
@@ -35,7 +36,7 @@ namespace ImageService
     };
     public partial class ImageService : ServiceBase
     {
-        
+
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
         private System.ComponentModel.IContainer components;
@@ -51,8 +52,8 @@ namespace ImageService
         public ImageService(string[] args)
         {
             InitializeComponent();
-            string eventSourceName = "Advanced Programming project";
-            string logName = "MyNewLog";
+            string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
+            string logName = ConfigurationManager.AppSettings.Get("LogName");
             if (args.Count() > 0)
             {
                 eventSourceName = args[0];
@@ -85,7 +86,7 @@ namespace ImageService
          */
         protected override void OnStart(string[] args)
         {
-            
+
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;

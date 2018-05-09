@@ -55,11 +55,12 @@ namespace ImageService.Server
                     //function that listen to directory of path
                     ListenToDirectory(path);
                 }
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 m_logging.Log("One of the directories doesnt exist", MessageTypeEnum.FAIL);
             }
-            
+
         }
         /*
          * function that listen to Directory of the path.
@@ -86,7 +87,7 @@ namespace ImageService.Server
          */
         public void CloseHandler(object sender, DirectoryCloseEventArgs e)
         {
-            IDirectoryHandler sendDirectoryHandler = (IDirectoryHandler) sender;
+            IDirectoryHandler sendDirectoryHandler = (IDirectoryHandler)sender;
             if (sender is IDirectoryHandler)
             {
                 this.m_logging.Log(e.Message, MessageTypeEnum.INFO); //stop listening message.
@@ -97,7 +98,9 @@ namespace ImageService.Server
                     //if all the Directory Handlers closed succefully the server itself can finally close
                     this.m_logging.Log("Now, the server is closed", MessageTypeEnum.INFO);
                 }
-            } else {
+            }
+            else
+            {
                 //an object that isn't supposed to activate the event did it
                 this.m_logging.Log("source tried to abort handling folder: " + e.DirectoryPath, MessageTypeEnum.WARNING);
                 return;
