@@ -110,7 +110,7 @@ namespace ImageService.Modal
                     return DateTime.Parse(dateTaken);
                 }
             }
-            catch (Exception e)
+            catch
             {// fail to get time throw FAIL msg.
                 return DateTime.Now;
             }

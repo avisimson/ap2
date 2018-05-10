@@ -44,7 +44,7 @@ namespace ImageService.Server
             int size = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
             //create ImageModal service for controller and create controller of commands.
             this.m_controller =
-                new ImageController(new ImageServiceModal(ConfigurationManager.AppSettings.Get("OutputDir"), size));
+                new ImageController(new ImageServiceModal(ConfigurationManager.AppSettings.Get("OutputDir"), size), this.m_logging);
             //seperate bettween the paths that found in line of "Handler" in App.config
             string[] paths = allDirectories.Split(';');
             //loop for listen to all the paths that found in line of "Handler" in App.config.
@@ -56,8 +56,7 @@ namespace ImageService.Server
                     ListenToDirectory(path);
                 }
             }
-            catch (Exception e)
-            {
+            catch {
                 m_logging.Log("One of the directories doesnt exist", MessageTypeEnum.FAIL);
             }
 
