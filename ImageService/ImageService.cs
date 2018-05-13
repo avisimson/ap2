@@ -47,6 +47,7 @@ namespace ImageService
          * param name = args - user can enter names for the program.
          * constructor initializes logger and server.
          */
+
         public ImageService(string[] args)
         {
             InitializeComponent();
@@ -68,7 +69,8 @@ namespace ImageService
             eventLog1.Source = eventSourceName;
             eventLog1.Log = logName;
             //create the server.
-            this.server = new ImageServer();
+            this.logger = new LoggingService();
+            this.server = new ImageServer((LoggingService)logger);
             //add messages to legger.
             this.logger.MessageRecieved += this.WriteMsg;
         }
@@ -88,7 +90,7 @@ namespace ImageService
          */
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("In OnStart");
+            eventLog1.WriteEntry("In On  Start");
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
