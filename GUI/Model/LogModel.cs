@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.Infrastructure.Enums
+namespace GUI.Model
 {
-    public enum CommandEnum : int
+    class LogModel
     {
-        AddNewFileCommand,
-        CloseCommand
+
     }
 }
