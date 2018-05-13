@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Communication.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using ImageService.Communication.Modal;
 
-namespace ImageServiceGUI.Model
+namespace GUI.Model
 {
-    interface ILogModel
+    interface ILogModel : INotifyPropertyChanged
     {
-        event PropertyChangedEventHandler PropertyChanged;
-        ObservableCollection<Log> model_log { get; set; }
+        ObservableCollection<MessageReceivedEventArgs> LogEntries { get; set; }
     }
 }

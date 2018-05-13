@@ -1,16 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Communication;
+using GUI.Commuunication;
 
-namespace ImageServiceWPF.VModel
+namespace GUI.Model
 {
-    interface ISettingsViewModel
+    interface ISettingsModel : INotifyPropertyChanged
     {
-        string OutputDirectory { get; }
-        string SourceName { get; }
-        string LogName { get; }
-        int ThumbnailSize { get; }
-    }
+
+        string OutputDirectory { get; set; }
+        string SourceName { get; set; }
+        string LogName { get; set; }
+        int ThumbnailSize { get; set; }
+        string SelectedHandler { get; set; }
+
+        ObservableCollection<string> Handlers { get; set; }
+
+        IClientConnection Connection { get; }
+
+        void NotifyPropertyChanged(string v);
+            
+     }
 }

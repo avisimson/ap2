@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Communication.Model
 {
-    public class MessageRecievedEventArgs : EventArgs
+    public class MessageReceivedEventArgs : EventArgs
     {
         public MessageTypeEnum status { get; set; }
         public string message { get; set; }
@@ -15,7 +15,7 @@ namespace Communication.Model
          * param name = message - the message.
          * constructor. 
          */
-        public MessageRecievedEventArgs(MessageTypeEnum type, string msg)
+        public MessageReceivedEventArgs(MessageTypeEnum type, string msg)
         {
             this.status = type;
             this.message = msg;

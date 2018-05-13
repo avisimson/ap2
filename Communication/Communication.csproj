@@ -49,7 +49,7 @@
     <Compile Include="Event\CommandRecievedEventArgs.cs" />
     <Compile Include="Event\DirectoryClosedEventArgs.cs" />
     <Compile Include="IClientHandler.cs" />
-    <Compile Include="Model\MessageRecievedEventArgs.cs" />
+    <Compile Include="Model\MessageReceivedEventArgs.cs" />
     <Compile Include="Model\MessageTypeEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />

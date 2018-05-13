@@ -2,99 +2,157 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Infrastructure;
-using Infrastructure.Enums;
-using GUI.Model;
-using Infrastructure.Event;
+using Communication;
+using Communication.Enums;
+using GUI.Commuunication;
 using Newtonsoft.Json;
-using Prism.Commands;
+using Newtonsoft.Json.Linq;
+using Communication.Event;
 
-namespace GUI.ViewModel
+namespace GUI.Model
 {
-    class SettingsViewModel : ISettingsModel
+    class SettingsModel : ISettingsModel
     {
-        private ISettingsModel model;
-
         public event PropertyChangedEventHandler PropertyChanged;
+        private ObservableCollection<string> handlers;
+        private string outputDirectory;
+        private string sourceName;
+        private string logName;
+        private int thumbnailSize;
+        private string selectedHandler;
+        private bool isConnected;
 
-        public SettingsViewModel()
+        public SettingsModel()
         {
-            this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
-            this.model = new SettingsModel();
-            this.model.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
-            {
-                this.NotifyPropertyChanged("VM_" + e.PropertyName);
-            };
+            handlers = new ObservableCollection<string>();
+            this.Connection.DataReceived += OnDataReceived;
+            CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
+            this.Connection.Write(request);
+            this.Connection.Read();
         }
 
-        private void OnRemove(object obj)
+        public IClientConnection Connection
         {
-            string[] args = { this.model.SelectedHandler };
-            CommandReceivedEventArgs eventArgs = new CommandReceivedEventArgs((int)CommandEnum.CloseCommand, args, null);
-
-            this.model.Connection.Write(eventArgs);
-            this.model.Connection.Read();
-            //this.model.Handlers.Remove(this.model.SelectedHandler);
-        }
-
-        private bool CanRemove(object arg)
-        {
-            if (string.IsNullOrEmpty(this.model.SelectedHandler))
+            get
             {
-                return false;
+                return ClientConnection.Instance;
             }
-            return true;
         }
 
-        public ICommand RemoveCommand
+        public ObservableCollection<string> Handlers
         {
-            get; private set;
-        }
-
-        public string OutputDirectory
-        {
-            get { return this.model.OutputDirectory; }
-        }
-
-        public string SourceName
-        {
-            get { return this.model.SourceName; }
-        }
-
-        public string LogName
-        {
-            get { return this.model.LogName; }
-        }
-
-        public int ThumbnailSize
-        {
-            get { return this.model.ThumbnailSize; }
-        }
-
-        public string SelectedHandler
-        {
-            get { return this.model.SelectedHandler; }
+            get
+            {
+                return this.handlers;
+            }
             set
             {
-                this.model.SelectedHandler = value;
-                var command = this.RemoveCommand as DelegateCommand<object>;
-                command.RaiseCanExecuteChanged();
+                this.handlers = value;
+                this.NotifyPropertyChanged("Handlers");
+            }
+        }
+
+        public void OnDataReceived(object sender, CommandMessage message)
+        {
+            try
+            {
+                if (message.CommandID.Equals((int)CommandEnum.GetConfigCommand))
+                {
+                    this.OutputDirectory = (string)message.CommandArgs["OutputDirectory"];
+                    this.SourceName = (string)message.CommandArgs["SourceName"];
+                    this.LogName = (string)message.CommandArgs["LogName"];
+                    this.ThumbnailSize = (int)message.CommandArgs["ThumbnailSize"];
+                    JArray arr = (JArray)message.CommandArgs["Handlers"];
+                    string[] array = arr.Select(c => (string)c).ToArray();
+                    foreach (var item in array)
+                    {
+                        this.Handlers.Add(item);
+                    }
+                }
+                if (message.CommandID.Equals((int)CommandEnum.CloseCommand))
+                {
+                    this.Handlers.Remove((string)message.CommandArgs["HandlerRemoved"]);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
 
         public void NotifyPropertyChanged(string propName)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            if (PropertyChanged != null)
+            {
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            }
+        }
+        public string OutputDirectory
+        {
+            set
+            {
+                this.outputDirectory = value;
+                this.NotifyPropertyChanged("OutputDirectory");
+            }
+            get
+            {
+                return this.outputDirectory;
+            }
+        }
+        public string SourceName
+        {
+            set
+            {
+                this.sourceName = value;
+                this.NotifyPropertyChanged("SourceName");
+            }
+            get
+            {
+                return this.sourceName;
+            }
+        }
+        public string LogName
+        {
+            set
+            {
+                this.logName = value;
+                this.NotifyPropertyChanged("LogName");
+            }
+            get
+            {
+                return this.logName;
+            }
+        }
+        public int ThumbnailSize
+        {
+            set
+            {
+                this.thumbnailSize = value;
+                this.NotifyPropertyChanged("ThumbnailSize");
+            }
+            get
+            {
+                return this.thumbnailSize;
+            }
         }
 
-        public ObservableCollection<string> VM_Handlers
+        public string SelectedHandler
         {
-            get { return this.model.Handlers; }
-            set { this.model.Handlers = value; }
+            get
+            {
+                return this.selectedHandler;
+            }
+            set
+            {
+                selectedHandler = value;
+                this.NotifyPropertyChanged("SelectedHandler");
+            }
         }
     }
 }

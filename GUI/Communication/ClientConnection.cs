@@ -6,37 +6,37 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using Infrastructure;
-using Infrastructure.Enums;
-using Infrastructure.Event;
+using Communication;
+using Communication.Enums;
+using Communication.Event;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace GUI.Communication
+namespace GUI.Commuunication
 {
-    public class ClientSingelton 
+    public class ClientConnection : IClientConnection
     {
         public event EventHandler<CommandMessage> DataReceived;
-        private static ClientSingelton clientInstance;
+        private static ClientConnection clientInstance;
         private TcpClient client;
         private IPEndPoint ep;
 
         NetworkStream stream;
         private bool isConnected;
 
-        private ClientSingelton()
+        private ClientConnection()
         {
             this.isConnected = this.Connect();
         }
 
-        public static ClientSingelton Instance
+        public static ClientConnection Instance
         {
             //singleton implementation
             get
             {
                 if (clientInstance == null)
                 {
-                    clientInstance = new ClientSingelton();
+                    clientInstance = new ClientConnection();
                     //clientInstance.IsConnected = Instance.Channel
                 }
                 return clientInstance;
@@ -118,7 +118,6 @@ namespace GUI.Communication
 
 
         }
-
 
         public void Write(CommandReceivedEventArgs e)
         {
