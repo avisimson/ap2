@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace ImageService.Logging
 {
@@ -11,5 +12,6 @@ namespace ImageService.Logging
     {
         event EventHandler<MessageRecievedEventArgs> MessageRecieved;
         void Log(string message, MessageTypeEnum type);           // Logging the Message
+        ObservableCollection<MessageRecievedEventArgs> getLogHistory(); //getting history of all logs.
     }
 }

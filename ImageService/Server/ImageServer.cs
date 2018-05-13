@@ -19,6 +19,7 @@ namespace ImageService.Server
         #region Members
         private IImageController m_controller;
         private ILoggingService m_logging;
+        private List<IDirectoryHandler> directoriesHandler;
         #endregion
 
         #region Properties
@@ -33,6 +34,7 @@ namespace ImageService.Server
             this.m_logging = logger;
             //initilaize the directoryHandlers, and create controller for command inside.
             CreateDirectoryHandlers();
+            this.directoriesHandler = new List<IDirectoryHandler>();
         }
         /*
          * the function create directory handlers.
@@ -77,6 +79,7 @@ namespace ImageService.Server
             handler.StartHandleDirectory(path);
             //send messeage that server start to listen to directory.
             this.m_logging.Log(" start listening to directory " + path, MessageTypeEnum.INFO);
+            this.directoriesHandler.Add(handler);
         }
 
         /*
@@ -112,6 +115,29 @@ namespace ImageService.Server
             this.m_logging.Log("Now server is closing", MessageTypeEnum.INFO);
             CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, "");
             this.CommandRecieved?.Invoke(this, commandRecievedEventArgs);
+        }
+        /*
+         * function removes directory from handlers list and removes the listening to it in the eventhandler.
+         * param name = path. the path to directory requested to be closed.
+         * return true if closing handler succeed or false if not found or failed.
+         */
+        public bool CloseSpecificDir(string path)
+        {
+            foreach(IDirectoryHandler handler in directoriesHandler)
+            {
+                if(handler.getPath().Equals(path))
+                {
+                    this.CommandRecieved -= handler.OnCommandRecieved;
+                    if (this.CommandRecieved == null)
+                    {//listening to 0 directories warning message.
+                        this.m_logging.Log("Service does not listen to any directory.", MessageTypeEnum.WARNING);
+                    }
+                    handler.CloseHandle();
+                    directoriesHandler.Remove(handler);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

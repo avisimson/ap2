@@ -25,6 +25,12 @@ namespace ImageService.Logging
         {
             MessageRecievedEventArgs msg = new MessageRecievedEventArgs(type, message);
             MessageRecieved?.Invoke(this, msg);
+            allLogs.Add(msg); //add msg to list of logs.
+        }
+        // returns the collection of logs.
+        public ObservableCollection<MessageRecievedEventArgs> getLogHistory()
+        {
+            return allLogs;
         }
     }
 }

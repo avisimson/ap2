@@ -108,5 +108,9 @@ namespace ImageService.Controller.Handlers
             //inform closing.
             this.DirectoryClose?.Invoke(this, closeListen);
         }
+        public string getPath()
+        {
+            return this.path;
+        }
     }
 }
