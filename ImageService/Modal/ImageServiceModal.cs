@@ -8,11 +8,13 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using ImageService.Infrastructure;
+using System.Drawing.Imaging;
 
 namespace ImageService.Modal
 {
     public class ImageServiceModal : IImageServiceModal
     {
+        private static Regex r = new Regex(":"); //for creation time.
         private string m_OutputFolder { get; set; }            // The Output Folder
         private int m_thumbnailSize  {get; set;}            // The Size Of The Thumbnail Size
         /*
@@ -74,7 +76,7 @@ namespace ImageService.Modal
             //create output directory if not already exists.
             DirectoryInfo dir = Directory.CreateDirectory(this.m_OutputFolder);
             //get creation time year and month.
-            DateTime creationTime = File.GetCreationTime(path);
+            DateTime creationTime = GetDateTakenFromImage(path);
             int year = creationTime.Year;
             int month = creationTime.Month;
             //new path to output folder
@@ -90,6 +92,28 @@ namespace ImageService.Modal
             Directory.CreateDirectory(thumbnailMonthPath);
             string[] paths = { monthPath, thumbnailMonthPath };
             return paths;
+        }
+        /*
+         * param name = path for picture.
+         * func returns when the pic was taken.
+         */
+        public static DateTime GetDateTakenFromImage(string path)
+        {
+            try
+            {
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                using (Image myImage = Image.FromStream(fs, false, false))
+
+                {
+                    PropertyItem propItem = myImage.GetPropertyItem(36867);
+                    string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
+                    return DateTime.Parse(dateTaken);
+                }
+            }
+            catch
+            {// fail to get time throw FAIL msg.
+                return DateTime.Now;
+            }
         }
     }
 }

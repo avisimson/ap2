@@ -8,6 +8,7 @@ using ImageService.Server;
 using ImageService.Logging.Modal;
 using ImageService.Controller;
 using ImageService.Modal;
+using System.Configuration;
 //
 namespace ImageService
 {
@@ -35,7 +36,7 @@ namespace ImageService
     };
     public partial class ImageService : ServiceBase
     {
-        
+
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
         private System.ComponentModel.IContainer components;
@@ -51,8 +52,8 @@ namespace ImageService
         public ImageService(string[] args)
         {
             InitializeComponent();
-            string eventSourceName = "Advanced Programming project";
-            string logName = "MyNewLog";
+            string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
+            string logName = ConfigurationManager.AppSettings.Get("LogName");
             if (args.Count() > 0)
             {
                 eventSourceName = args[0];
@@ -68,11 +69,6 @@ namespace ImageService
             }
             eventLog1.Source = eventSourceName;
             eventLog1.Log = logName;
-            //create the server.
-            this.logger = new LoggingService();
-            this.server = new ImageServer((LoggingService)logger);
-            //add messages to legger.
-            this.logger.MessageRecieved += this.WriteMsg;
         }
         /*
          * param name = sender - the object that called method.
@@ -90,7 +86,7 @@ namespace ImageService
          */
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("In On  Start");
+
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
@@ -104,13 +100,19 @@ namespace ImageService
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+            //create the server.
+            this.logger = new LoggingService();
+            //add messages to legger.
+            this.logger.MessageRecieved += this.WriteMsg;
+            this.server = new ImageServer(logger);
+            logger.Log("In On start", MessageTypeEnum.INFO);
         }
         /*
          * send close to user and close server and listen to directories.
          */
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("In onStop, closing server.");
+            logger.Log("In On stop, closing server.", MessageTypeEnum.INFO);
             //tell server to stop(the server will send to everyone else).
             server.CloseServer();
         }
@@ -119,7 +121,7 @@ namespace ImageService
          */
         protected override void OnContinue()
         {
-            eventLog1.WriteEntry("In OnContinue.");
+            logger.Log("In On continue", MessageTypeEnum.INFO);
         }
         /*
          * param name = sender - the object that called the method.
@@ -128,7 +130,7 @@ namespace ImageService
          */
         public void WriteMsg(Object sender, MessageRecievedEventArgs e)
         {
-            eventLog1.WriteEntry(e.message, GetType(e.status));
+            eventLog1.WriteEntry(e.status + ": " + e.message);
         }
         /*
          * param name = type -the type of message.

@@ -8,8 +8,7 @@ namespace Communication.Model
 {
     public enum MessageTypeEnum : int
     {
-        INFO,
-        WARNING,
-        FAIL
+        AddNewFileCommand,
+        CloseCommand
     }
 }

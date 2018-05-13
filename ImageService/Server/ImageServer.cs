@@ -19,6 +19,7 @@ namespace ImageService.Server
         #region Members
         private IImageController m_controller;
         private ILoggingService m_logging;
+        private List<IDirectoryHandler> directoriesHandler;
         #endregion
 
         #region Properties
@@ -28,11 +29,12 @@ namespace ImageService.Server
          * param name = logger - logger of service.
          * constructor
          */
-        public ImageServer(LoggingService logger)
+        public ImageServer(ILoggingService logger)
         {
             this.m_logging = logger;
             //initilaize the directoryHandlers, and create controller for command inside.
             CreateDirectoryHandlers();
+            this.directoriesHandler = new List<IDirectoryHandler>();
         }
         /*
          * the function create directory handlers.
@@ -44,15 +46,22 @@ namespace ImageService.Server
             int size = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
             //create ImageModal service for controller and create controller of commands.
             this.m_controller =
-                new ImageController(new ImageServiceModal(ConfigurationManager.AppSettings.Get("OutputDir"), size));
+                new ImageController(new ImageServiceModal(ConfigurationManager.AppSettings.Get("OutputDir"), size), this.m_logging);
             //seperate bettween the paths that found in line of "Handler" in App.config
             string[] paths = allDirectories.Split(';');
             //loop for listen to all the paths that found in line of "Handler" in App.config.
-            foreach (string path in paths)
+            try
             {
-                //function that listen to directory of path
-                ListenToDirectory(path);
+                foreach (string path in paths)
+                {
+                    //function that listen to directory of path
+                    ListenToDirectory(path);
+                }
             }
+            catch {
+                m_logging.Log("One of the directories doesnt exist", MessageTypeEnum.FAIL);
+            }
+
         }
         /*
          * function that listen to Directory of the path.
@@ -69,21 +78,8 @@ namespace ImageService.Server
             //start handle of directory of the path.
             handler.StartHandleDirectory(path);
             //send messeage that server start to listen to directory.
-            m_logging.Log(DateTime.Now.ToString() + " start listening to directory " + path, MessageTypeEnum.INFO);
-        }
-        /*
-         * function that close in case that the Service closes
-         * <param name = path> - the source path.
-         */
-        public void CloseHandlers()
-        {
-            foreach (EventHandler<CommandRecievedEventArgs> handler in CommandRecieved.GetInvocationList())
-            {
-                //close every event handler that found in the list.
-                handler(this, new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
-                //delete him from the list.
-                CommandRecieved -= handler;
-            }
+            this.m_logging.Log(" start listening to directory " + path, MessageTypeEnum.INFO);
+            this.directoriesHandler.Add(handler);
         }
 
         /*
@@ -93,10 +89,10 @@ namespace ImageService.Server
          */
         public void CloseHandler(object sender, DirectoryCloseEventArgs e)
         {
-            IDirectoryHandler sendDirectoryHandler = sender as IDirectoryHandler;
+            IDirectoryHandler sendDirectoryHandler = (IDirectoryHandler)sender;
             if (sender is IDirectoryHandler)
             {
-                this.m_logging.Log("Directory Handler of Directory in: " + e.DirectoryPath + @" with message: " + e.Message, MessageTypeEnum.INFO);
+                this.m_logging.Log(e.Message, MessageTypeEnum.INFO); //stop listening message.
                 //unsubscribing of the DirectoryHandler from the server message feed
                 this.CommandRecieved -= sendDirectoryHandler.OnCommandRecieved;
                 if (this.CommandRecieved == null)
@@ -104,7 +100,9 @@ namespace ImageService.Server
                     //if all the Directory Handlers closed succefully the server itself can finally close
                     this.m_logging.Log("Now, the server is closed", MessageTypeEnum.INFO);
                 }
-            } else {
+            }
+            else
+            {
                 //an object that isn't supposed to activate the event did it
                 this.m_logging.Log("source tried to abort handling folder: " + e.DirectoryPath, MessageTypeEnum.WARNING);
                 return;
@@ -117,6 +115,29 @@ namespace ImageService.Server
             this.m_logging.Log("Now server is closing", MessageTypeEnum.INFO);
             CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, "");
             this.CommandRecieved?.Invoke(this, commandRecievedEventArgs);
+        }
+        /*
+         * function removes directory from handlers list and removes the listening to it in the eventhandler.
+         * param name = path. the path to directory requested to be closed.
+         * return true if closing handler succeed or false if not found or failed.
+         */
+        public bool CloseSpecificDir(string path)
+        {
+            foreach(IDirectoryHandler handler in directoriesHandler)
+            {
+                if(handler.getPath().Equals(path))
+                {
+                    this.CommandRecieved -= handler.OnCommandRecieved;
+                    if (this.CommandRecieved == null)
+                    {//listening to 0 directories warning message.
+                        this.m_logging.Log("Service does not listen to any directory.", MessageTypeEnum.WARNING);
+                    }
+                    handler.CloseHandle();
+                    directoriesHandler.Remove(handler);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
