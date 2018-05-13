@@ -31,11 +31,22 @@ namespace ImageService.Controller
             commands = new Dictionary<int, ICommand>()
             {
                 // For Now will contain NEW_FILE_COMMAND, CloseHandler COMMAND, GET CONFIG AND GET LOG.
-                {(int) CommandEnum.AddNewFileCommand, new NewFileCommand(this.m_modal) },
-                {(int) CommandEnum.LogCommand, new LogCommand(this.m_logging) },
-                {(int) CommandEnum.GetConfigCommand, new GetConfigCommand() },
-                {(int) CommandEnum.RemoveHandlerCommand, new RemoveHandlerCommand(this.server) }
+                { (int)CommandEnum.AddNewFileCommand, new NewFileCommand(this.m_modal) },
+                { (int)CommandEnum.LogCommand, new LogCommand(this.m_logging) },
+                { (int)CommandEnum.GetConfigCommand, new GetConfigCommand() }
             };
+        }
+        public ImageServer Server
+        {//implementation for server.
+            get
+            {
+                return this.server;
+            }
+            set
+            {
+                this.server = value;
+                commands.Add((int)CommandEnum.RemoveHandlerCommand, new RemoveHandlerCommand(value));
+            }
         }
         /*
          * function that execute the command that constoller sender to ICommand
