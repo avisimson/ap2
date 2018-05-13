@@ -11,12 +11,16 @@ using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
-    class RemoveHandlerCommand
+    class RemoveHandlerCommand : ICommand
     {
-        ImageServer server;
+        private ImageServer server;
+        /*
+         * constructor
+         * @param name = _server. the server of service.
+         */
         public RemoveHandlerCommand(ImageServer _server)
         {
-            this.server = server;
+            this.server = _server;
         }
         /*
          *@param name = args, the path of directory.

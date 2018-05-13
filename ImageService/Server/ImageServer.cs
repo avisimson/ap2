@@ -14,7 +14,7 @@ using System.Configuration;
 
 namespace ImageService.Server
 {
-    class ImageServer
+    public class ImageServer
     {
         #region Members
         private IImageController m_controller;
@@ -47,6 +47,7 @@ namespace ImageService.Server
             //create ImageModal service for controller and create controller of commands.
             this.m_controller =
                 new ImageController(new ImageServiceModal(ConfigurationManager.AppSettings.Get("OutputDir"), size), this.m_logging);
+            this.m_controller.Server = this;
             //seperate bettween the paths that found in line of "Handler" in App.config
             string[] paths = allDirectories.Split(';');
             //loop for listen to all the paths that found in line of "Handler" in App.config.
