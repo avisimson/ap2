@@ -1,119 +1,100 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ImageServiceGUI.Model;
 using System.Windows.Input;
-using System.Diagnostics;
-using Microsoft.Practices.Prism.Commands;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using ImageService.Modal;
-using ImageService.Communication.Enums;
-
+using Communication;
+using Communication.Enums;
+using GUI.Model;
+using Communication.Event;
+using Newtonsoft.Json;
+using Prism.Commands; // for delegate command.
 
 namespace GUI.ViewModel
 {
-    class SettingsViewModel : INotifyPropertyChanged
+    class SettingsViewModel : ISettingsViewModel
     {
-        private ISettingModel m_settingModel;
+        private ISettingsModel model;
+
         public event PropertyChangedEventHandler PropertyChanged;
-        public IEnumerable<string> HandlersList { get; private set; }
-        public ObservableCollection<string> VM_model_setting { get { return m_settingModel.modelSettingsHandlers; } }
 
-
-
-        protected void NotifyPropertyChanged(string name)
+        public SettingsViewModel()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public ICommand RemoveCommand { get; private set; }
-
-        public SettingsViewModel(ISettingModel settingModel)
-        {
-
-
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
-            this.m_settingModel = settingModel;
-            m_settingModel.PropertyChanged += propChangedMethod;
-            this.HandlersList = VM_model_setting;
-
-        }
-
-        public void propChangedMethod(object sender, PropertyChangedEventArgs e)
-        {
-            var command = this.RemoveCommand as DelegateCommand<object>;
-            command.RaiseCanExecuteChanged();
-            NotifyPropertyChanged(e.PropertyName);
+            this.model = new SettingsModel();
+            this.model.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
+            {
+                this.NotifyPropertyChanged("VM_" + e.PropertyName);
+            };
         }
 
         private void OnRemove(object obj)
         {
-            m_settingModel.OutPutDir = "";
-            CommandReceivedEventArgs e = new CommandReceivedEventArgs((int)CommandEnum.RemoveHandler, null,
-                m_settingModel.SelectedHandler);
-            m_settingModel.WriteToClient(e);
-            //m_settingModel.RemoveHandlerFromCollection(m_settingModel.SelectedHandler);
+            string[] args = { this.model.SelectedHandler };
+            CommandReceivedEventArgs eventArgs = new CommandReceivedEventArgs((int)CommandEnum.CloseCommand, args, null);
 
+            this.model.Connection.Write(eventArgs);
+            this.model.Connection.Read();
+            //this.model.Handlers.Remove(this.model.SelectedHandler);
         }
-        private bool CanRemove(object obj)
+
+        private bool CanRemove(object arg)
         {
-            if (string.IsNullOrEmpty(m_settingModel.SelectedHandler))
+            if (string.IsNullOrEmpty(this.model.SelectedHandler))
             {
                 return false;
             }
             return true;
         }
 
-        public string SelectedHandler
+        public ICommand RemoveCommand
         {
-            get { return m_settingModel.SelectedHandler; }
+            get; private set;
+        }
+
+        public string VM_OutputDirectory
+        {
+            get { return this.model.OutputDirectory; }
+        }
+
+        public string VM_SourceName
+        {
+            get { return this.model.SourceName; }
+        }
+
+        public string VM_LogName
+        {
+            get { return this.model.LogName; }
+        }
+
+        public int VM_ThumbnailSize
+        {
+            get { return this.model.ThumbnailSize; }
+        }
+
+        public string VM_SelectedHandler
+        {
+            get { return this.model.SelectedHandler; }
             set
             {
-                m_settingModel.SelectedHandler = value;
+                this.model.SelectedHandler = value;
+                var command = this.RemoveCommand as DelegateCommand<object>;
+                command.RaiseCanExecuteChanged();
             }
         }
 
-
-
-        public string OutPutDir
+        public void NotifyPropertyChanged(string propName)
         {
-            get { return m_settingModel.OutPutDir; }
-            set
-            {
-                m_settingModel.OutPutDir = value;
-
-            }
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public string SourceName
+        public ObservableCollection<string> VM_Handlers
         {
-            get { return m_settingModel.SourceName; }
-            set
-            {
-                m_settingModel.SourceName = value;
-            }
-        }
-
-        public string LogName
-        {
-            get { return m_settingModel.LogName; }
-            set
-            {
-                m_settingModel.LogName = value;
-            }
-        }
-
-        public int ThumbnailSize
-        {
-            get { return m_settingModel.ThumbnailSize; }
-            set
-            {
-                m_settingModel.ThumbnailSize = value;
-            }
+            get { return this.model.Handlers; }
+            set { this.model.Handlers = value; }
         }
     }
-
 }
