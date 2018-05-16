@@ -1,4 +1,4 @@
-﻿using ImageService.Infrastructure.Enums;
+﻿using Communication.Enums;
 using ImageService.Modal;
 using ImageService.Server;
 using Newtonsoft.Json;
@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Communication.Event;
 
 namespace ImageService.Commands
 {

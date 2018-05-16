@@ -5,7 +5,7 @@ using System.ServiceProcess;
 using System.Runtime.InteropServices;
 using ImageService.Logging;
 using ImageService.Server;
-using ImageService.Logging.Modal;
+using Communication.Modal;
 using ImageService.Controller;
 using ImageService.Modal;
 using System.Configuration;

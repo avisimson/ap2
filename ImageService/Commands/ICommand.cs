@@ -1,4 +1,4 @@
-﻿using ImageService.Infrastructure.Enums;
+﻿using Communication.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace ImageService.Commands
 {
     public interface ICommand
     {
-        string Execute(string[] args, out bool result);          // The Function That will Execute The 
+        string Execute(string[] args, out bool result);          // The Function That will Execute The Command
     }
 }

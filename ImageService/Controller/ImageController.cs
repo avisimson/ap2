@@ -1,6 +1,5 @@
 ﻿using ImageService.Commands;
-using ImageService.Infrastructure;
-using ImageService.Infrastructure.Enums;
+using Communication.Enums;
 using ImageService.Logging;
 using ImageService.Modal;
 using ImageService.Server;

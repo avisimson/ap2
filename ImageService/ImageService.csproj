@@ -65,13 +65,8 @@
     <Compile Include="Controller\Handlers\IDirectoryHandler.cs" />
     <Compile Include="Controller\IImageController.cs" />
     <Compile Include="Controller\ImageController.cs" />
-    <Compile Include="Infrastructure\Enums\CommandEnum.cs" />
     <Compile Include="Logger\ILoggingService.cs" />
     <Compile Include="Logger\LoggingService.cs" />
-    <Compile Include="Logger\Modal\MessageRecievedEventArgs.cs" />
-    <Compile Include="Logger\Modal\MessageTypeEnum.cs" />
-    <Compile Include="Modal\Event\CommandRecievedEventArgs.cs" />
-    <Compile Include="Modal\Event\DirectoryCloseEventArgs.cs" />
     <Compile Include="Modal\IImageServiceModal.cs" />
     <Compile Include="Modal\ImageServiceModal.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -96,7 +91,9 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ImageService.resx">
       <DependentUpon>ImageService.cs</DependentUpon>
@@ -104,6 +101,12 @@
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{e8cc5c1f-dbf0-49f3-b4b1-9ef83e4f79d6}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

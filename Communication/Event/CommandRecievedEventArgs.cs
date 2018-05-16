@@ -6,41 +6,13 @@ using System.Threading.Tasks;
 
 namespace Communication.Event
 {
-    /// <summary>
-    /// the command received event args class, implements eventargs.
-    /// </summary>
-    /// <seealso cref="System.EventArgs" />
-    public class CommandReceivedEventArgs : EventArgs
+    public class CommandRecievedEventArgs : EventArgs
     {
-        /// <summary>
-        /// Gets or sets the command identifier.
-        /// </summary>
-        /// <value>
-        /// The command identifier.
-        /// </value>
-        public int CommandID { get; set; } //the command id
-        /// <summary>
-        /// Gets or sets the arguments.
-        /// </summary>
-        /// <value>
-        /// The arguments.
-        /// </value>
-        public string[] Args { get; set; }
-        /// <summary>
-        /// Gets or sets the request dir path.
-        /// </summary>
-        /// <value>
-        /// The request dir path.
-        /// </value>
-        public string RequestDirPath { get; set; }
+        public int CommandID { get; set; }      // The Command ID
+        public string[] Args { get; set; }  //Information from Command
+        public string RequestDirPath { get; set; }  // The Request Directory
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CommandReceivedEventArgs"/> class.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="args">The arguments.</param>
-        /// <param name="path">The path.</param>
-        public CommandReceivedEventArgs(int id, string[] args, string path) //the request directory
+        public CommandRecievedEventArgs(int id, string[] args, string path)
         {
             CommandID = id;
             Args = args;

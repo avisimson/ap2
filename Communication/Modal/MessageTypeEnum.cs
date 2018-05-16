@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.Logging.Modal
+namespace Communication.Modal
 {
+    //Type for messages in MessageRecievedEventArgs.
     public enum MessageTypeEnum : int
     {
         INFO,

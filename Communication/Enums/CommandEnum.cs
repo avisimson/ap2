@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace Communication.Enums
 {
-    /// <summary>
-    /// the command enum.
-    /// </summary>
+    //All possible commands to service.
+    /*
+     * AddNewFileCommand-add new file to outputdir directory and to thumbnails.
+     * CloseCommand-Close The Service.
+     * RemoveHandlerCommand- Remove one directory handler we listen to from directories list.
+     * GetConfigCommand-get all appConfig from service.
+     * LogCommand-Get all log history.
+     */
     public enum CommandEnum : int
     {
-        NewFileCommand,
-        GetConfigCommand,
-        LogCommand,
+        AddNewFileCommand,
         CloseCommand,
-        CloseGUI
+        RemoveHandlerCommand,
+        GetConfigCommand,
+        LogCommand
     }
 }
