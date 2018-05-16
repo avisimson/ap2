@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GUI.Commuunication
+namespace GUI.Communication
 {
     public interface IClientConnection
     {
-        bool Connect();
-        void Disconnect();
-        void Write(CommandReceivedEventArgs e);
-        void Read();
+        bool Connect(); //connect to server.
+        void Disconnect(); //disconnect.
+        void Write(CommandRecievedEventArgs e); //write to service a command
+        void Read(); //read back from service
         event EventHandler<CommandMessage> DataReceived;
         bool IsConnected { get; set; }
     }

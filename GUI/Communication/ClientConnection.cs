@@ -12,7 +12,7 @@ using Communication.Event;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace GUI.Commuunication
+namespace GUI.Communication
 {
     public class ClientConnection : IClientConnection
     {
@@ -20,18 +20,16 @@ namespace GUI.Commuunication
         private static ClientConnection clientInstance;
         private TcpClient client;
         private IPEndPoint ep;
-
         NetworkStream stream;
         private bool isConnected;
 
         private ClientConnection()
-        {
+        { //construction that can be called only from this class.
             this.isConnected = this.Connect();
         }
-
-        public static ClientConnection Instance
+        //singelton constructor implementation for client gui.
+        public static ClientConnection clientSingelton
         {
-            //singleton implementation
             get
             {
                 if (clientInstance == null)
@@ -44,7 +42,7 @@ namespace GUI.Commuunication
         }
 
         public bool IsConnected
-        {
+        { //get and set implementation.
             get
             {
                 return this.isConnected;
@@ -54,17 +52,19 @@ namespace GUI.Commuunication
                 this.isConnected = value;
             }
         }
-
+        /*
+         * function connects GUI Client to its service.
+         * returns-true if connection succeed/false if failed.
+         */
         public bool Connect()
         {
             try
             {
-                bool result = true;
                 ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
                 client = new TcpClient();
                 client.Connect(ep);
                 isConnected = true;
-                return result;
+                return true;
 
             }
             catch (Exception e)
@@ -73,12 +73,15 @@ namespace GUI.Commuunication
                 return false;
             }
         }
-
+        /*
+         * function disconnects from service, and send closegui commands.
+         * Returns-true is disconnect succeed/false if failed.
+         */
         public void Disconnect()
         {
             try
             {
-                CommandReceivedEventArgs eventArgs = new CommandReceivedEventArgs((int)CommandEnum.CloseGUI, null, null);
+                CommandRecievedEventArgs eventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseGUI, null, null);
                 this.Write(eventArgs);
                 client.Close();
                 isConnected = false;
@@ -88,10 +91,12 @@ namespace GUI.Commuunication
                 Console.WriteLine(e.Message);
             }
         }
-
+        /*
+         * function reads string message from service and converts it back to json, then invokes all listeners.
+         */
         public void Read()
         {
-
+            //new thread.
             Task task = new Task(() =>
             {
                 try
@@ -100,40 +105,41 @@ namespace GUI.Commuunication
                     {
                         stream = client.GetStream();
                         StreamReader reader = new StreamReader(stream);
-                        string jSonString = reader.ReadLine();
+                        string json = reader.ReadLine();
                         while (reader.Peek() > 0)
-                        {
-                            jSonString += reader.ReadLine();
+                        {//read the message
+                            json += reader.ReadLine();
                         }
-                        CommandMessage msg = CommandMessage.ParseJSON(jSonString);
+                        CommandMessage msg = CommandMessage.ParseJSON(json); //parse the json.
                         this.DataReceived?.Invoke(this, msg);
                     }
                 }
                 catch (Exception e)
-                {
+                {//case of read failure or parse json failure.
                     Console.WriteLine(e.Message);
                 }
             });
             task.Start();
-
-
         }
-
-        public void Write(CommandReceivedEventArgs e)
+        /* function writes commands to server.
+         * param name=e, the command to be sent to service from GUI Client.
+         */
+        public void Write(CommandRecievedEventArgs e)
         {
+            //create new thread to write to server.
             Task task = new Task(() =>
             {
                 try
                 {
                     stream = client.GetStream();
                     StreamWriter writer = new StreamWriter(stream);
-                    string toSend = JsonConvert.SerializeObject(e);
-                    writer.WriteLine(toSend);
-                    writer.Flush();
+                    string msg = JsonConvert.SerializeObject(e); //serializing the command to json.
+                    writer.WriteLine(msg); //writing it on writer.
+                    writer.Flush(); //send the message.
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
+                catch (Exception exception)
+                {//writing to server failure or serialize failure.
+                    Console.WriteLine(exception.Message);
                 }
 
             });

@@ -20,6 +20,7 @@ namespace Communication.Enums
         CloseCommand,
         RemoveHandlerCommand,
         GetConfigCommand,
-        LogCommand
+        LogCommand,
+        CloseGUI
     }
 }

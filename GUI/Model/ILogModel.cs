@@ -1,4 +1,4 @@
-﻿using Communication.Model;
+﻿using Communication.Modal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +11,6 @@ namespace GUI.Model
 {
     interface ILogModel : INotifyPropertyChanged
     {
-        ObservableCollection<MessageReceivedEventArgs> LogEntries { get; set; }
+        ObservableCollection<MessageRecievedEventArgs> LogEntries { get; set; }
     }
 }

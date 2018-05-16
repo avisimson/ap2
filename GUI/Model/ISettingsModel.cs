@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Communication;
-using GUI.Commuunication;
+using GUI.Communication;
 
 namespace GUI.Model
 {

@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Communication;
 using Communication.Enums;
-using GUI.Commuunication;
+using GUI.Communication;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Communication.Event;
@@ -32,7 +32,7 @@ namespace GUI.Model
         {
             handlers = new ObservableCollection<string>();
             this.Connection.DataReceived += OnDataReceived;
-            CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
+            CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
             this.Connection.Write(request);
             this.Connection.Read();
         }
@@ -41,7 +41,7 @@ namespace GUI.Model
         {
             get
             {
-                return ClientConnection.Instance;
+                return ClientConnection.clientSingelton;
             }
         }
 
