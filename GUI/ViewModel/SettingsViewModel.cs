@@ -10,8 +10,8 @@ using Communication;
 using Communication.Enums;
 using GUI.Model;
 using Communication.Event;
+using Microsoft.Practices.Prism.Commands; //for delegates.
 using Newtonsoft.Json;
-using Prism.Commands; // for delegate command.
 
 namespace GUI.ViewModel
 {
@@ -27,6 +27,7 @@ namespace GUI.ViewModel
             this.model = new SettingsModel();
             this.model.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
+
                 this.NotifyPropertyChanged("VM_" + e.PropertyName);
             };
         }
