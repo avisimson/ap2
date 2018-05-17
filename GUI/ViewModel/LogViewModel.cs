@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GUI.Model;
-using Communication.Model;
+using Communication.Modal;
 
 namespace GUI.ViewModel
 {
@@ -29,7 +29,7 @@ namespace GUI.ViewModel
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public ObservableCollection<MessageReceivedEventArgs> VM_LogEntries
+        public ObservableCollection<MessageRecievedEventArgs> VM_LogEntries
         {
             get
             {

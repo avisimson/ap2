@@ -9,7 +9,7 @@
 
     <StackPanel >
         <TextBlock  FontStyle="Oblique" Grid.Row="0" Padding="3" Margin="3" FontSize="35" FontWeight="Bold"
-                          FontFamily="Verdana"  HorizontalAlignment="Center" Foreground="Red" Text="Log Table" VerticalAlignment="Top" >
+                          FontFamily="Verdana"  HorizontalAlignment="Center" Foreground="Red" Text="Log Service" VerticalAlignment="Top" >
             <TextBlock.Effect>
                 <DropShadowEffect
                     ShadowDepth="6"

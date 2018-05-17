@@ -11,11 +11,12 @@ using Communication.Event;
 using ImageService.Logging;
 using ImageService.Modal;
 using System.Configuration;
-
+using Communication;
 namespace ImageService.Server
 {
     public class ImageServer
     {
+        private const int port = 8000;
         #region Members
         private IImageController m_controller;
         private ILoggingService m_logging;
@@ -35,7 +36,18 @@ namespace ImageService.Server
             //initilaize the directoryHandlers, and create controller for command inside.
             CreateDirectoryHandlers();
             this.directoriesHandler = new List<IDirectoryHandler>();
-        }
+            //create ImageModal service for controller and create controller of commands.
+            int size = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
+            this.m_controller =
+                new ImageController(new ImageServiceModal(ConfigurationManager.AppSettings.Get("OutputDir"), size), this.m_logging);
+            this.m_controller.Server = this;
+            //create client handler to handle all clients that connect.
+            IClientHandler clientHandler = new ClientHandler(this.m_controller);
+            //new thread to handle client-server communication ainteractively with the running service.
+            Task task = new Task(() => {
+                IServer server = new TCPServer(port, clientHandler);
+            });
+         }
         /*
          * the function create directory handlers.
          */
@@ -43,11 +55,6 @@ namespace ImageService.Server
         {
             //all directories contain the path that enter in App.config
             string allDirectories = ConfigurationManager.AppSettings["Handler"];
-            int size = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
-            //create ImageModal service for controller and create controller of commands.
-            this.m_controller =
-                new ImageController(new ImageServiceModal(ConfigurationManager.AppSettings.Get("OutputDir"), size), this.m_logging);
-            this.m_controller.Server = this;
             //seperate bettween the paths that found in line of "Handler" in App.config
             string[] paths = allDirectories.Split(';');
             //loop for listen to all the paths that found in line of "Handler" in App.config.

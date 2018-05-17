@@ -1,4 +1,4 @@
-﻿using Communication.Model;
+﻿using Communication.Modal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +11,6 @@ namespace GUI.ViewModel
 {
     interface ILogViewModel : INotifyPropertyChanged
     {
-        ObservableCollection<MessageReceivedEventArgs> VM_LogEntries { get; }
+        ObservableCollection<MessageRecievedEventArgs> VM_LogEntries { get; }
     }
 }
