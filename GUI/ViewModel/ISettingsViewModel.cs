@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GUI.ViewModel
 {
+    //settings view model interface
     interface ISettingsViewModel
     {
         string VM_OutputDirectory { get; }

@@ -9,8 +9,8 @@ namespace ImageService.Logging
 {
     public interface ILoggingService
     {
-        event EventHandler<MessageRecievedEventArgs> MessageRecieved;
+        event EventHandler<MessageReceivedEventArgs> MessageRecieved;
         void Log(string message, MessageTypeEnum type);           // Logging the Message
-        List<MessageRecievedEventArgs> getLogHistory(); //getting history of all logs.
+        List<MessageReceivedEventArgs> getLogHistory(); //getting history of all logs.
     }
 }

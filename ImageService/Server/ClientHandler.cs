@@ -46,7 +46,7 @@ namespace ImageService.Server
                     while (true) //get commands from client until client is no longer connected.
                     {
                         string desrializedCommands = reader.ReadString();
-                        CommandRecievedEventArgs commandRecievedEventArgs = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(desrializedCommands);
+                        CommandReceivedEventArgs commandRecievedEventArgs = JsonConvert.DeserializeObject<CommandReceivedEventArgs>(desrializedCommands);
                         if (commandRecievedEventArgs.CommandID == (int)CommandEnum.CloseGUI)
                         {//if close gui is pressed then client handling is over.
                             clients.Remove(client);

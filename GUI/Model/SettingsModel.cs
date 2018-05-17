@@ -26,25 +26,33 @@ namespace GUI.Model
         private string logName;
         private int thumbnailSize;
         private string selectedHandler;
-        private bool isConnected;
-
+        //Initializes a new instance of settings model
         public SettingsModel()
         {
             handlers = new ObservableCollection<string>();
             this.Connection.DataReceived += OnDataReceived;
-            CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
-            this.Connection.Write(request);
-            this.Connection.Read();
+            CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
+            this.Connection.Initialize(request);
         }
-
+        /// <summary>
+        /// Gets the connection.
+        /// </summary>
+        /// <value>
+        /// The connection.
+        /// </value>
         public IClientConnection Connection
         {
             get
             {
-                return ClientConnection.clientSingelton;
+                return ClientConnection.Instance;
             }
         }
-
+        /// <summary>
+        /// Gets or sets the handlers.
+        /// </summary>
+        /// <value>
+        /// The handlers.
+        /// </value>
         public ObservableCollection<string> Handlers
         {
             get
@@ -58,34 +66,58 @@ namespace GUI.Model
             }
         }
 
+        /// <summary>
+        /// Called when [data received].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="message">The message.</param>
         public void OnDataReceived(object sender, CommandMessage message)
         {
-            try
+            if (message.CommandID.Equals((int)CommandEnum.GetConfigCommand))
             {
-                if (message.CommandID.Equals((int)CommandEnum.GetConfigCommand))
+                try
                 {
-                    this.OutputDirectory = (string)message.CommandArgs["OutputDirectory"];
-                    this.SourceName = (string)message.CommandArgs["SourceName"];
-                    this.LogName = (string)message.CommandArgs["LogName"];
-                    this.ThumbnailSize = (int)message.CommandArgs["ThumbnailSize"];
-                    JArray arr = (JArray)message.CommandArgs["Handlers"];
-                    string[] array = arr.Select(c => (string)c).ToArray();
-                    foreach (var item in array)
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        this.Handlers.Add(item);
-                    }
+                        //Console.WriteLine("I am here I am hereI am hereI am hereI am hereI am hereI am hereI am hereI am hereI am hereI am here");
+                        this.OutputDirectory = (string)message.CommandArgs["OutputDirectory"];
+                        this.SourceName = (string)message.CommandArgs["SourceName"];
+                        this.LogName = (string)message.CommandArgs["LogName"];
+                        this.ThumbnailSize = (int)message.CommandArgs["ThumbnailSize"];
+                        JArray arr = (JArray)message.CommandArgs["Handlers"];
+                        string[] array = arr.Select(c => (string)c).ToArray();
+                        foreach (var item in array)
+                        {
+                            this.handlers.Add(item);
+                        }
+
+                    }));
+
                 }
-                if (message.CommandID.Equals((int)CommandEnum.CloseCommand))
+                catch (Exception e)
                 {
-                    this.Handlers.Remove((string)message.CommandArgs["HandlerRemoved"]);
+                    Console.WriteLine(e.Message);
                 }
             }
-            catch (Exception e)
+            if (message.CommandID.Equals((int)CommandEnum.CloseCommand))
             {
-                Console.WriteLine(e.Message);
+                try
+                {
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        this.handlers.Remove((string)message.CommandArgs["HandlerRemoved"]);
+                    }));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
-
+        /// <summary>
+        /// Notifies the property changed.
+        /// </summary>
+        /// <param name="propName">Name of the property.</param>
         public void NotifyPropertyChanged(string propName)
         {
             if (PropertyChanged != null)
@@ -93,6 +125,12 @@ namespace GUI.Model
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
             }
         }
+        /// <summary>
+        /// Gets or sets the output directory.
+        /// </summary>
+        /// <value>
+        /// The output directory.
+        /// </value>
         public string OutputDirectory
         {
             set
@@ -105,6 +143,12 @@ namespace GUI.Model
                 return this.outputDirectory;
             }
         }
+        /// <summary>
+        /// Gets or sets the name of the source.
+        /// </summary>
+        /// <value>
+        /// The name of the source.
+        /// </value>
         public string SourceName
         {
             set
@@ -117,6 +161,12 @@ namespace GUI.Model
                 return this.sourceName;
             }
         }
+        /// <summary>
+        /// Gets or sets the name of the log.
+        /// </summary>
+        /// <value>
+        /// The name of the log.
+        /// </value>
         public string LogName
         {
             set
@@ -129,6 +179,12 @@ namespace GUI.Model
                 return this.logName;
             }
         }
+        /// <summary>
+        /// Gets or sets the size of the thumbnail.
+        /// </summary>
+        /// <value>
+        /// The size of the thumbnail.
+        /// </value>
         public int ThumbnailSize
         {
             set
@@ -141,7 +197,12 @@ namespace GUI.Model
                 return this.thumbnailSize;
             }
         }
-
+        /// <summary>
+        /// Gets or sets the selected handler.
+        /// </summary>
+        /// <value>
+        /// The selected handler.
+        /// </value>
         public string SelectedHandler
         {
             get

@@ -61,7 +61,7 @@ namespace ImageService.Commands
                 configFile.Save(ConfigurationSaveMode.Minimal);
                 ConfigurationManager.RefreshSection("appSettings");
                 String[] arr = new String[1];
-                CommandRecievedEventArgs commandSendArgs = new CommandRecievedEventArgs((int)CommandEnum.RemoveHandlerCommand, arr, "");
+                CommandReceivedEventArgs commandSendArgs = new CommandReceivedEventArgs((int)CommandEnum.RemoveHandlerCommand, arr, "");
                 if (this.server.CloseSpecificDir(removeDir))
                 {
                     arr[0] = "closed";

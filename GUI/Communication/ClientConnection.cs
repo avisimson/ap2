@@ -5,12 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Communication;
 using Communication.Enums;
 using Communication.Event;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 
 namespace GUI.Communication
 {
@@ -20,27 +22,63 @@ namespace GUI.Communication
         private static ClientConnection clientInstance;
         private TcpClient client;
         private IPEndPoint ep;
+        private static Mutex m_mutex = new Mutex();
+
         NetworkStream stream;
         private bool isConnected;
 
         private ClientConnection()
         { //construction that can be called only from this class.
             this.isConnected = this.Connect();
+            CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
+        }
+        /// <summary>
+        /// Initializes the specified request.
+        /// </summary>
+        public void Initialize(CommandReceivedEventArgs request)
+        {
+            try
+            {
+                {
+                    this.Write(request);
+                    stream = client.GetStream();
+                    BinaryReader reader = new BinaryReader(stream);
+                    string jSonString = reader.ReadString();
+                    CommandMessage msg = CommandMessage.ParseJSON(jSonString);
+                    this.DataReceived?.Invoke(this, msg);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         //singelton constructor implementation for client gui.
-        public static ClientConnection clientSingelton
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <value>
+        /// The instance.
+        /// </value>
+        public static ClientConnection Instance
         {
+            //singleton implementation
             get
             {
                 if (clientInstance == null)
                 {
                     clientInstance = new ClientConnection();
-                    //clientInstance.IsConnected = Instance.Channel
                 }
                 return clientInstance;
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is connected.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is connected; otherwise, <c>false</c>.
+        /// </value>
         public bool IsConnected
         { //get and set implementation.
             get
@@ -81,7 +119,7 @@ namespace GUI.Communication
         {
             try
             {
-                CommandRecievedEventArgs eventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseGUI, null, null);
+                CommandReceivedEventArgs eventArgs = new CommandReceivedEventArgs((int)CommandEnum.CloseGUI, null, null);
                 this.Write(eventArgs);
                 client.Close();
                 isConnected = false;
@@ -104,13 +142,9 @@ namespace GUI.Communication
                     while (this.isConnected)
                     {
                         stream = client.GetStream();
-                        StreamReader reader = new StreamReader(stream);
-                        string json = reader.ReadLine();
-                        while (reader.Peek() > 0)
-                        {//read the message
-                            json += reader.ReadLine();
-                        }
-                        CommandMessage msg = CommandMessage.ParseJSON(json); //parse the json.
+                        BinaryReader reader = new BinaryReader(stream);
+                        string jSonString = reader.ReadString();
+                        CommandMessage msg = CommandMessage.ParseJSON(jSonString);
                         this.DataReceived?.Invoke(this, msg);
                     }
                 }
@@ -124,7 +158,7 @@ namespace GUI.Communication
         /* function writes commands to server.
          * param name=e, the command to be sent to service from GUI Client.
          */
-        public void Write(CommandRecievedEventArgs e)
+        public void Write(CommandReceivedEventArgs e)
         {
             //create new thread to write to server.
             Task task = new Task(() =>
@@ -132,10 +166,11 @@ namespace GUI.Communication
                 try
                 {
                     stream = client.GetStream();
-                    StreamWriter writer = new StreamWriter(stream);
-                    string msg = JsonConvert.SerializeObject(e); //serializing the command to json.
-                    writer.WriteLine(msg); //writing it on writer.
-                    writer.Flush(); //send the message.
+                    BinaryWriter writer = new BinaryWriter(stream);
+                    string toSend = JsonConvert.SerializeObject(e);
+                    m_mutex.WaitOne();
+                    writer.Write(toSend);
+                    m_mutex.ReleaseMutex();
                 }
                 catch (Exception exception)
                 {//writing to server failure or serialize failure.

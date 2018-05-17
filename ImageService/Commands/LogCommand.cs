@@ -30,12 +30,12 @@ namespace ImageService.Commands
          */
         public string Execute(string[] args, out bool result)
         {
-            List<MessageRecievedEventArgs> logs = _loggingService.getLogHistory();
+            List<MessageReceivedEventArgs> logs = _loggingService.getLogHistory();
             string allLogs = JsonConvert.SerializeObject(logs);
             result = true; // successful excecution of log.
             string[] logArr = new string[1];
             logArr[0] = allLogs;
-            CommandRecievedEventArgs logsCommand = new CommandRecievedEventArgs((int)CommandEnum.LogCommand, logArr, "");
+            CommandReceivedEventArgs logsCommand = new CommandReceivedEventArgs((int)CommandEnum.LogCommand, logArr, "");
             return JsonConvert.SerializeObject(logsCommand);
         }
     }

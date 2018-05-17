@@ -24,7 +24,7 @@ namespace ImageService.Server
         #endregion
 
         #region Properties
-        public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
+        public event EventHandler<CommandReceivedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
         #endregion
         /*
          * param name = logger - logger of service.
@@ -121,7 +121,7 @@ namespace ImageService.Server
         public void CloseServer()
         {
             this.m_logging.Log("Now server is closing", MessageTypeEnum.INFO);
-            CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, "");
+            CommandReceivedEventArgs commandRecievedEventArgs = new CommandReceivedEventArgs((int)CommandEnum.CloseCommand, null, "");
             this.CommandRecieved?.Invoke(this, commandRecievedEventArgs);
         }
         /*

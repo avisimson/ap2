@@ -12,23 +12,30 @@ using Communication.Event;
 using Newtonsoft.Json.Linq;
 using Communication.Modal;
 using Newtonsoft.Json;
+using System.Windows;
 
 namespace GUI.Model
 {
     class LogModel : ILogModel
     {
-        private ObservableCollection<MessageRecievedEventArgs> logEntries;
+        private ObservableCollection<MessageReceivedEventArgs> logEntries;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public LogModel()
         {
+            //add the data received that get from logs.
             this.Connection.DataReceived += OnDataReceived;
-            CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.LogCommand, null, null);
-            this.Connection.Write(request);
+            CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.LogCommand, null, null);
+            //again read from the server          
             this.Connection.Read();
         }
-
-        public ObservableCollection<MessageRecievedEventArgs> LogEntries
+        /// <summary>
+        /// Gets or sets the log entries.
+        /// </summary>
+        /// <value>
+        /// The log entries.
+        /// </value>
+        public ObservableCollection<MessageReceivedEventArgs> LogEntries
         {
             get
             {
@@ -40,35 +47,47 @@ namespace GUI.Model
                 NotifyPropertyChanged("LogEntries");
             }
         }
-
+        /// <summary>
+        /// Gets the connection.
+        /// </summary>
+        /// <value>
+        /// The connection.
+        /// </value>
         public IClientConnection Connection
         {
             get
             {
-                return ClientConnection.clientSingelton;
+                return ClientConnection.Instance;
             }
         }
 
-
+        /// Notifies the property changed.
         private void NotifyPropertyChanged(string propName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
-
+        /// <summary>
+        /// Called when [data received].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="message">The message.</param>
         public void OnDataReceived(object sender, CommandMessage message)
         {
-            try
+            if (message.CommandID.Equals((int)CommandEnum.LogCommand))
             {
-                if (message.CommandID.Equals((int)CommandEnum.LogCommand))
+                try
                 {
-                    string listOfEntries = (string)message.CommandArgs["LogEntries"];
-                    ObservableCollection<MessageRecievedEventArgs> arr = JsonConvert.DeserializeObject<ObservableCollection<MessageRecievedEventArgs>>(listOfEntries);
-                    this.LogEntries = arr;
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        string listOfEntries = (string)message.CommandArgs["LogEntries"];
+                        ObservableCollection<MessageReceivedEventArgs> arr = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(listOfEntries);
+                        this.LogEntries = arr;
+                    }));
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
 

@@ -31,7 +31,7 @@ namespace ImageService.Commands
                 configInfo[2] = ConfigurationManager.AppSettings.Get("SourceName");
                 configInfo[3] = ConfigurationManager.AppSettings.Get("LogName");
                 configInfo[4] = ConfigurationManager.AppSettings.Get("ThumbnailSize");
-                CommandRecievedEventArgs config = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, configInfo, "");
+                CommandReceivedEventArgs config = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, configInfo, "");
                 return JsonConvert.SerializeObject(config); //serialize config to string and return it.
             }
             catch (Exception e) { //if serialization or going to AppConfig file throws exception.

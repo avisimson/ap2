@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace GUI.ViewModel
 {
+    //interface of log view model
     interface ILogViewModel : INotifyPropertyChanged
     {
-        ObservableCollection<MessageRecievedEventArgs> VM_LogEntries { get; }
+        ObservableCollection<MessageReceivedEventArgs> VM_LogEntries { get; }
     }
 }

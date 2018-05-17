@@ -11,6 +11,6 @@ namespace GUI.Model
 {
     interface ILogModel : INotifyPropertyChanged
     {
-        ObservableCollection<MessageRecievedEventArgs> LogEntries { get; set; }
+        ObservableCollection<MessageReceivedEventArgs> LogEntries { get; set; }
     }
 }

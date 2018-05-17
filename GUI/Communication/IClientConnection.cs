@@ -13,9 +13,10 @@ namespace GUI.Communication
     {
         bool Connect(); //connect to server.
         void Disconnect(); //disconnect.
-        void Write(CommandRecievedEventArgs e); //write to service a command
+        void Write(CommandReceivedEventArgs e); //write to service a command
         void Read(); //read back from service
         event EventHandler<CommandMessage> DataReceived;
         bool IsConnected { get; set; }
+        void Initialize(CommandReceivedEventArgs request);
     }
 }

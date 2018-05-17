@@ -128,7 +128,7 @@ namespace ImageService
          * param name = e - the message
          * function writes message
          */
-        public void WriteMsg(Object sender, MessageRecievedEventArgs e)
+        public void WriteMsg(Object sender, MessageReceivedEventArgs e)
         {
             eventLog1.WriteEntry(e.status + ": " + e.message);
         }

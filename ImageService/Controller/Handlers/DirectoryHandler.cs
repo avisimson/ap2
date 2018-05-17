@@ -63,7 +63,7 @@ namespace ImageService.Controller.Handlers
          * if the command is to close it stops listening to the directory,
          * if the command is everything but close so go to controller to execute command.
          */
-        public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
+        public void OnCommandRecieved(object sender, CommandReceivedEventArgs e)
         {
             //if command is close, just close and dont go to conroller.
             if (e.CommandID == (int)CommandEnum.CloseCommand)
@@ -94,7 +94,7 @@ namespace ImageService.Controller.Handlers
         private void AddNewFileCommand(object sender, FileSystemEventArgs e)
         {
             String[] args = { e.FullPath, e.Name };
-            CommandRecievedEventArgs crea = new CommandRecievedEventArgs((int)CommandEnum.AddNewFileCommand,
+            CommandReceivedEventArgs crea = new CommandReceivedEventArgs((int)CommandEnum.AddNewFileCommand,
                 args, this.path);
             //add command to new file in the directory.
             this.OnCommandRecieved(this, crea);

@@ -21,9 +21,6 @@ namespace GUI.Model
 
         ObservableCollection<string> Handlers { get; set; }
 
-        IClientConnection Connection { get; }
-
-        void NotifyPropertyChanged(string v);
-            
+        IClientConnection Connection { get; }            
      }
 }
