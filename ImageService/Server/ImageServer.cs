@@ -63,7 +63,7 @@ namespace ImageService.Server
                     ListenToDirectory(path);
                 } catch (Exception e) {
                     //m_logging.Log("The directory " + path + " doesn't exist.", MessageTypeEnum.FAIL);
-                    m_logging.Log(e.Message.ToString() + " " + e.Source.ToString(), MessageTypeEnum.FAIL);
+                    m_logging.Log(e.Message.ToString(), MessageTypeEnum.FAIL);
                 }
             }
         }
