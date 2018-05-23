@@ -15,7 +15,7 @@ namespace GUI.Communication
         void Disconnect(); //disconnect.
         void Write(CommandReceivedEventArgs e); //write to service a command
         void Read(); //read back from service
-        event EventHandler<CommandMessage> DataReceived;
+        event EventHandler<CommandReceivedEventArgs> DataReceived;
         bool IsConnected { get; set; }
         void Initialize(CommandReceivedEventArgs request);
     }

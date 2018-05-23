@@ -14,6 +14,7 @@ using GUI.Communication;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Communication.Event;
+using Communication.Modal;
 using System.Windows;
 using System.Windows.Threading;
 using System.Threading;
@@ -74,7 +75,7 @@ namespace GUI.Model
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="message">The message.</param>
-        public void OnDataReceived(object sender, CommandMessage message)
+        public void OnDataReceived(object sender, CommandReceivedEventArgs message)
         {
             if (message.CommandID.Equals((int)CommandEnum.GetConfigCommand))
             {
@@ -83,12 +84,11 @@ namespace GUI.Model
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
                         //Console.WriteLine("I am here I am hereI am hereI am hereI am hereI am hereI am hereI am hereI am hereI am hereI am here");
-                        this.OutputDirectory = (string)message.CommandArgs["OutputDirectory"];
-                        this.SourceName = (string)message.CommandArgs["SourceName"];
-                        this.LogName = (string)message.CommandArgs["LogName"];
-                        this.ThumbnailSize = (int)message.CommandArgs["ThumbnailSize"];
-                        JArray arr = (JArray)message.CommandArgs["Handlers"];
-                        string[] array = arr.Select(c => (string)c).ToArray();
+                        this.OutputDirectory = message.Args[1];
+                        this.SourceName = message.Args[2];
+                        this.LogName = message.Args[3];
+                        this.ThumbnailSize = Convert.ToInt32(message.Args[4]);
+                        string[] array = message.Args[0].Split(';');
                         foreach (var item in array)
                         {
                             this.handlers.Add(item);
@@ -108,7 +108,7 @@ namespace GUI.Model
                 {
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        this.handlers.Remove((string)message.CommandArgs["HandlerRemoved"]);
+                        this.handlers.Remove((string)message.Args[0]);
                     }));
                 }
                 catch (Exception e)

@@ -18,7 +18,7 @@ namespace GUI.Communication
 {
     public class ClientConnection : IClientConnection
     {
-        public event EventHandler<CommandMessage> DataReceived;
+        public event EventHandler<CommandReceivedEventArgs> DataReceived;
         private static ClientConnection clientInstance;
         private TcpClient client;
         private IPEndPoint ep;
