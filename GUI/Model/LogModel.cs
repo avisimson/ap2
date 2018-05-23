@@ -27,7 +27,7 @@ namespace GUI.Model
             this.Connection.DataReceived += OnDataReceived;
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.LogCommand, null, null);
             //again read from the server          
-            this.Connection.Read();
+            this.Connection.Initialize(request);
         }
         /// <summary>
         /// Gets or sets the log entries.

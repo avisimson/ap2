@@ -33,7 +33,6 @@ namespace ImageService.Server
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port); //new communication channel for app.
             listener = new TcpListener(ep);
             //start listen to new GUI Clients.
-            Console.WriteLine("Waiting for connections...");
             //new client has entered. opening new thread to handle it.
             Task task = new Task(() => {
                 listener.Start();

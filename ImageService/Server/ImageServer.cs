@@ -44,7 +44,7 @@ namespace ImageService.Server
             this.m_controller.Server = this;
             CreateDirectoryHandlers();
             //create client handler to handle all clients that connect.
-            IClientHandler clientHandler = new ClientHandler(this.m_controller);
+            IClientHandler clientHandler = new ClientHandler(this.m_controller, this.m_logging);
             //server communication ainteractively with the running service.
             IServer server = new TCPServer(port, clientHandler);
          }
