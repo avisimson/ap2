@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <local:ConvertLog x:Key="ConvertLog"></local:ConvertLog>
     </UserControl.Resources>
-    <StackPanel>
+    <StackPanel >
         <TextBlock  FontStyle="Oblique" Grid.Row="0" Padding="3" Margin="3" FontSize="35" FontWeight="Bold"
                           FontFamily="Verdana"  HorizontalAlignment="Center" Foreground="Red" Text="Log Service" VerticalAlignment="Top" >
             <TextBlock.Effect>
@@ -23,21 +23,21 @@
             </TextBlock.Effect>
         </TextBlock>
 
-        <DataGrid ItemsSource="{Binding VM_LogEntries}" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Width="Auto" Height="Auto">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Status}">
+        <DataGrid Name="logTable"  AlternatingRowBackground = "White"   Height="300"   
+               AutoGenerateColumns = "False" CanUserAddRows="False" CanUserSortColumns="False" ItemsSource = "{Binding VM_LogEntries}" >
+            <DataGrid.Columns >
+                <DataGridTextColumn  IsReadOnly="True" Header = "Type"  FontWeight="Bold" Width="80"  Binding = "{Binding Path=Status}">
                     <DataGridTextColumn.ElementStyle>
-
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Background" Value="{Binding Path=Status, Converter={StaticResource ConvertLog}}">
-                            </Setter>
+                        <Style TargetType="TextBlock" >
+                            <Setter Property="Background" Value="{Binding Path=Status, Converter={StaticResource ConvertLog}}"></Setter>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Message" Width ="*" IsReadOnly="True" Binding ="{Binding Message}">
+                <DataGridTextColumn IsReadOnly="True" Header = "Message" Binding = "{Binding Message}" Width="*" />
 
-                </DataGridTextColumn>
             </DataGrid.Columns>
+
         </DataGrid>
     </StackPanel>
+
 </UserControl>
