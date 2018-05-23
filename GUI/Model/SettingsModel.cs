@@ -14,6 +14,9 @@ using GUI.Communication;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Communication.Event;
+using System.Windows;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace GUI.Model
 {
