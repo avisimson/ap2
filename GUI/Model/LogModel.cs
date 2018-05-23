@@ -27,6 +27,7 @@ namespace GUI.Model
             this.Connection.DataReceived += OnDataReceived;
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.LogCommand, null, null);
             //again read from the server          
+            this.Connection.Initialize(request);
             this.Connection.Read();
         }
         /// <summary>
@@ -82,8 +83,7 @@ namespace GUI.Model
                         string args = message.Args[0];
                         if(logEntries != null)
                         {
-                            string temp = message.Args[0];
-                            MessageReceivedEventArgs msg = JsonConvert.DeserializeObject<MessageReceivedEventArgs>(temp);
+                            MessageReceivedEventArgs msg = JsonConvert.DeserializeObject<MessageReceivedEventArgs>(args);
                             logEntries.Add(msg);
                         } else {//the first time.
                             logEntries = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(args);

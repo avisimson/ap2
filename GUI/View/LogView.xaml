@@ -23,18 +23,18 @@
             </TextBlock.Effect>
         </TextBlock>
 
-        <DataGrid ItemsSource="{Binding VM_LogEntries}" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Width="Auto" Height="Auto">
+        <DataGrid ItemsSource="{Binding VM_LogEntries}" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Width="Auto" Height="300">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Status}">
+                <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding status}">
                     <DataGridTextColumn.ElementStyle>
 
                         <Style TargetType="TextBlock">
-                            <Setter Property="Background" Value="{Binding Path=Status, Converter={StaticResource ConvertLog}}">
+                            <Setter Property="Background" Value="{Binding status, Converter={StaticResource ConvertLog}}">
                             </Setter>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Message" Width ="*" IsReadOnly="True" Binding ="{Binding Message}">
+                <DataGridTextColumn Header="Message" Width ="*" IsReadOnly="True" Binding ="{Binding message}">
 
                 </DataGridTextColumn>
             </DataGrid.Columns>
