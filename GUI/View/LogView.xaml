@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GUI.ViewModel"
+             xmlns:local="clr-namespace:GUI.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
+    <UserControl.Resources>
+        <local:ConvertLog x:Key="LogConvert"></local:ConvertLog>
+    </UserControl.Resources>
     <StackPanel >
         <TextBlock  FontStyle="Oblique" Grid.Row="0" Padding="3" Margin="3" FontSize="35" FontWeight="Bold"
                           FontFamily="Verdana"  HorizontalAlignment="Center" Foreground="Red" Text="Log Service" VerticalAlignment="Top" >
@@ -22,12 +24,12 @@
         </TextBlock>
 
         <DataGrid Name="logTable"  AlternatingRowBackground = "White"   Height="300"   
-               AutoGenerateColumns = "False" CanUserAddRows="False" CanUserSortColumns="False" ItemsSource = "{Binding VM_model_log}" >
+               AutoGenerateColumns = "False" CanUserAddRows="False" CanUserSortColumns="False" ItemsSource = "{Binding VM_LogEntries}" >
             <DataGrid.Columns >
-                <DataGridTextColumn  IsReadOnly="True" Header = "Type"  FontWeight="Bold" Width="80"  Binding = "{Binding Type}">
+                <DataGridTextColumn  IsReadOnly="True" Header = "Type"  FontWeight="Bold" Width="80"  Binding = "{Binding Message}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock" >
-                            <Setter Property="Background" Value="{Binding Color}"></Setter>
+                            <Setter Property="Background" Value="{Binding Path=Status, Converter={StaticResource LogConvert}}"></Setter>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
