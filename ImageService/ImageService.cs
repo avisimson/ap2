@@ -39,7 +39,7 @@ namespace ImageService
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
-        private System.ComponentModel.IContainer components;
+        private System.ComponentModel.IContainer components = null;
         private System.Diagnostics.EventLog eventLog1;
         private int eventId = 1;
         private ILoggingService logger;
