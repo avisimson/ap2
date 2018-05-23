@@ -78,7 +78,7 @@ namespace ImageService
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
             // TODO: Insert monitoring activities here.  
-            eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
+            eventLog1.WriteEntry("Monitoring the System, Every 5 minutes.", EventLogEntryType.Information, eventId++);
         }
         /*
          * start the events program in the event manager.
@@ -94,7 +94,7 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
             // Set up a timer to trigger every minute.  
             System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 60000; // 60 seconds  
+            timer.Interval = 300000; // 300 seconds  
             timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
             timer.Start();
             // Update the service state to Running.  
