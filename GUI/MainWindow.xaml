@@ -10,7 +10,7 @@
     <Grid>
         <TabControl>
             <TabItem Header="Settings">
-                <controls:SettingsView x:Name="settings" RenderTransformOrigin="0.849,0.44" Margin="0,0,0,-3"></controls:SettingsView>
+                <controls:SettingsView x:Name="Settings" RenderTransformOrigin="0.849,0.44"></controls:SettingsView>
             </TabItem>
             <TabItem Header="Logs">
                 <controls:LogView x:Name="logs"></controls:LogView>
