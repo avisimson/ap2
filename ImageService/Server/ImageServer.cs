@@ -47,6 +47,8 @@ namespace ImageService.Server
             IClientHandler clientHandler = new ClientHandler(this.m_controller, this.m_logging);
             //server communication ainteractively with the running service.
             IServer server = new TCPServer(port, clientHandler);
+            //every time that log is added, we send it to clients.
+            this.m_logging.MessageRecieved += server.sendUpdatedLog;
          }
         /*
          * the function create directory handlers.

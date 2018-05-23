@@ -68,8 +68,8 @@
     <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Logger\ILoggingService.cs" />
     <Compile Include="Logger\LoggingService.cs" />
-    <Compile Include="Modal\IImageServiceModal.cs" />
-    <Compile Include="Modal\ImageServiceModal.cs" />
+    <Compile Include="Logger\Modal\IImageServiceModal.cs" />
+    <Compile Include="Logger\Modal\ImageServiceModal.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

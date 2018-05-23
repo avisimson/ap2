@@ -14,7 +14,7 @@ namespace ImageService.Logging
 {
     public class LoggingService : ILoggingService
     {
-        public List<MessageReceivedEventArgs> allLogs = new List<MessageReceivedEventArgs>();
+        public ObservableCollection<MessageReceivedEventArgs> allLogs = new ObservableCollection<MessageReceivedEventArgs>();
         // an event that handles messages that are being recieved to the logger.
         public event EventHandler<MessageReceivedEventArgs> MessageRecieved;
         /*the function recieves a message and invoke the logger recieving mechanism (to write down the message).
@@ -28,7 +28,7 @@ namespace ImageService.Logging
             allLogs.Add(msg); //add msg to list of logs.
         }
         // returns the collection of logs.
-        public List<MessageReceivedEventArgs> getLogHistory()
+        public ObservableCollection<MessageReceivedEventArgs> getLogHistory()
         {
             return allLogs;
         }

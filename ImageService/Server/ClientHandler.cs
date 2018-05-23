@@ -26,6 +26,7 @@ namespace ImageService.Server
          */
         public ClientHandler(IImageController imageController, ILoggingService logger1)
         {
+            GlobMutex = new Mutex();
             this.controller = imageController;
             this.logger = logger1;
         }
@@ -60,9 +61,9 @@ namespace ImageService.Server
                         bool resultCommand;
                         string commandAnswer = this.controller.ExecuteCommand((int)commandRecievedEventArgs.CommandID,
                             commandRecievedEventArgs.Args, out resultCommand);
-                        //GlobMutex.WaitOne();
+                        GlobMutex.WaitOne();
                         writer.Write(commandAnswer);
-                        //GlobMutex.ReleaseMutex();
+                        GlobMutex.ReleaseMutex();
                     }
                 }
                 catch

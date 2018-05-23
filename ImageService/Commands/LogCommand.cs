@@ -30,7 +30,7 @@ namespace ImageService.Commands
          */
         public string Execute(string[] args, out bool result)
         {
-            List<MessageReceivedEventArgs> logs = _loggingService.getLogHistory();
+            ObservableCollection<MessageReceivedEventArgs> logs = _loggingService.getLogHistory();
             string allLogs = JsonConvert.SerializeObject(logs);
             result = true; // successful excecution of log.
             string[] logArr = new string[1];
