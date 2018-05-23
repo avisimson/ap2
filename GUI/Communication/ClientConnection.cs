@@ -44,7 +44,7 @@ namespace GUI.Communication
                     stream = client.GetStream();
                     BinaryReader reader = new BinaryReader(stream);
                     string jSonString = reader.ReadString();
-                    CommandMessage msg = CommandMessage.ParseJSON(jSonString);
+                    CommandReceivedEventArgs msg = JsonConvert.DeserializeObject<CommandReceivedEventArgs>(jSonString);
                     this.DataReceived?.Invoke(this, msg);
                 }
             }
@@ -144,7 +144,7 @@ namespace GUI.Communication
                         stream = client.GetStream();
                         BinaryReader reader = new BinaryReader(stream);
                         string jSonString = reader.ReadString();
-                        CommandMessage msg = CommandMessage.ParseJSON(jSonString);
+                        CommandReceivedEventArgs msg = JsonConvert.DeserializeObject<CommandReceivedEventArgs>(jSonString);
                         this.DataReceived?.Invoke(this, msg);
                     }
                 }

@@ -71,7 +71,7 @@ namespace GUI.Model
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="message">The message.</param>
-        public void OnDataReceived(object sender, CommandMessage message)
+        public void OnDataReceived(object sender, CommandReceivedEventArgs message)
         {
             if (message.CommandID.Equals((int)CommandEnum.LogCommand))
             {
@@ -79,8 +79,8 @@ namespace GUI.Model
                 {
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        string listOfEntries = (string)message.CommandArgs["LogEntries"];
-                        ObservableCollection<MessageReceivedEventArgs> arr = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(listOfEntries);
+                        string args = message.Args[0];
+                        ObservableCollection<MessageReceivedEventArgs> arr = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(args);
                         this.LogEntries = arr;
                     }));
                 }

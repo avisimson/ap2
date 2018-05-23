@@ -12,6 +12,8 @@ using ImageService.Logging;
 using ImageService.Modal;
 using System.Configuration;
 using Communication;
+using System.Threading;
+
 namespace ImageService.Server
 {
     public class ImageServer
@@ -31,6 +33,7 @@ namespace ImageService.Server
          */
         public ImageServer(ILoggingService logger)
         {
+            Thread.Sleep(1000);
             this.m_logging = logger;
             //initilaize the directoryHandlers, and create controller for command inside.
             this.directoriesHandler = new List<IDirectoryHandler>();

@@ -118,7 +118,7 @@ namespace GUI.ViewModel
         /// </value>
         public string VM_SelectedHandler
         {
-            get { return this.model.SelectedHandler; }
+            //get { return this.model.SelectedHandler; }
             set
             {
                 this.model.SelectedHandler = value;
