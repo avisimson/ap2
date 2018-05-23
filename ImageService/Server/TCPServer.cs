@@ -23,6 +23,7 @@ namespace ImageService.Server
             this.port = port1;
             this.clientHandler = clientHandler1;
             this.clientsList = new List<TcpClient>();
+            Start();
         }
         /*
          * 
