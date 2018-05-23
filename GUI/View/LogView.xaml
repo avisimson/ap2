@@ -26,7 +26,7 @@
         <DataGrid Name="logTable"  AlternatingRowBackground = "White"   Height="300"   
                AutoGenerateColumns = "False" CanUserAddRows="False" CanUserSortColumns="False" ItemsSource = "{Binding VM_LogEntries}" >
             <DataGrid.Columns >
-                <DataGridTextColumn  IsReadOnly="True" Header = "Type"  FontWeight="Bold" Width="80"  Binding = "{Binding Message}">
+                <DataGridTextColumn  IsReadOnly="True" Header = "Type"  FontWeight="Bold" Width="80"  Binding = "{Binding Path=Status}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock" >
                             <Setter Property="Background" Value="{Binding Path=Status, Converter={StaticResource LogConvert}}"></Setter>
