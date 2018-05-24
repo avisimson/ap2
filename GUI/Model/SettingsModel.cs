@@ -102,7 +102,7 @@ namespace GUI.Model
                     Console.WriteLine(e.Message);
                 }
             }
-            if (message.CommandID.Equals((int)CommandEnum.CloseCommand))
+            if (message.CommandID.Equals((int)CommandEnum.CloseCommand) || message.CommandID.Equals((int)CommandEnum.RemoveHandlerCommand))
             {
                 try
                 {
