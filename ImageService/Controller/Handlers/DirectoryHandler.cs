@@ -103,6 +103,10 @@ namespace ImageService.Controller.Handlers
         public void CloseHandle()
         {
             //clear the list of watchers.
+            foreach(FileSystemWatcher s in sysWatchers)
+            {
+                s.EnableRaisingEvents = false;
+            }
             this.sysWatchers.Clear();
             //send close message.
             DirectoryCloseEventArgs closeListen = new DirectoryCloseEventArgs(this.path, "Close listening to path- " + this.path);

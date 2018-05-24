@@ -26,12 +26,13 @@ namespace GUI.ViewModel
         /// </summary>
         public SettingsViewModel()
         {
+            this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
             this.model = new SettingsModel();
             this.model.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 this.NotifyPropertyChanged("VM_" + e.PropertyName);
             };
-            this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
+            
         }
         /// <summary>
         /// Called when [remove].
@@ -40,7 +41,7 @@ namespace GUI.ViewModel
         private void OnRemove(object obj)
         {
             string[] args = { this.model.SelectedHandler };
-            CommandReceivedEventArgs eventArgs = new CommandReceivedEventArgs((int)CommandEnum.CloseCommand, args, null);
+            CommandReceivedEventArgs eventArgs = new CommandReceivedEventArgs((int)CommandEnum.RemoveHandlerCommand, args, null);
             //write to service that he delete settings.
             this.model.Connection.Write(eventArgs);
         }

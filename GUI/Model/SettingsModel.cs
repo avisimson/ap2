@@ -102,13 +102,15 @@ namespace GUI.Model
                     Console.WriteLine(e.Message);
                 }
             }
-            if (message.CommandID.Equals((int)CommandEnum.CloseCommand) || message.CommandID.Equals((int)CommandEnum.RemoveHandlerCommand))
+            if (message.CommandID.Equals((int)CommandEnum.CloseCommand))
             {
                 try
                 {
+                    string removeHandler = JsonConvert.DeserializeObject<string>(message.Args[0]);
+                    this.handlers.Remove(removeHandler);
                     Application.Current.Dispatcher.Invoke(new Action(() =>
-                    {
-                        this.handlers.Remove((string)message.Args[0]);
+                    {//find the hndler we remove from the collection and remove it.
+                        this.handlers.Remove(message.Args[0]);
                     }));
                 }
                 catch (Exception e)

@@ -61,9 +61,25 @@ namespace ImageService.Server
                         bool resultCommand;
                         string commandAnswer = this.controller.ExecuteCommand((int)commandRecievedEventArgs.CommandID,
                             commandRecievedEventArgs.Args, out resultCommand);
-                        GlobMutex.WaitOne();
-                        writer.Write(commandAnswer);
-                        GlobMutex.ReleaseMutex();
+                        if(commandRecievedEventArgs.CommandID == (int)CommandEnum.RemoveHandlerCommand)
+                        {
+                            string[] arr = { commandAnswer };
+                            CommandReceivedEventArgs updatedHandlers = new CommandReceivedEventArgs((int)CommandEnum.RemoveHandlerCommand,
+                                arr, "");
+                            foreach(TcpClient client1 in clients)
+                            {
+                                NetworkStream stream1 = client1.GetStream();
+                                GlobMutex.WaitOne();
+                                BinaryWriter writer1 = new BinaryWriter(stream1);
+                                writer1.Write(JsonConvert.SerializeObject(updatedHandlers));
+                                GlobMutex.ReleaseMutex();
+                            }
+                        } else
+                        {
+                            GlobMutex.WaitOne();
+                            writer.Write(commandAnswer);
+                            GlobMutex.ReleaseMutex();
+                        }
                     }
                 }
                 catch
