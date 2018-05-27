@@ -60,16 +60,16 @@ namespace ImageService.Commands
                 configFile.AppSettings.Settings.Add("Handler", updatedHandlers);
                 configFile.Save(ConfigurationSaveMode.Minimal);
                 ConfigurationManager.RefreshSection("appSettings");
-                String[] arr = new String[1];
-                arr[0] = removeDir;
+                String[] arr = new String[2];
+                arr[0] = removeDir; //send the dir that needs to be removed.
                 CommandReceivedEventArgs commandSendArgs = new CommandReceivedEventArgs((int)CommandEnum.RemoveHandlerCommand, arr, "");
                 if (this.server.CloseSpecificDir(removeDir))
                 {
-                    arr[0] = "closed";
+                    arr[1] = "closed";
                 }
                 else
                 {
-                    arr[0] = "notClosed";
+                    arr[2] = "notClosed";
                 }
                 return JsonConvert.SerializeObject(commandSendArgs);
             }
