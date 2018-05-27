@@ -69,7 +69,7 @@ namespace ImageService.Commands
                 }
                 else
                 {
-                    arr[2] = "notClosed";
+                    arr[1] = "notClosed";
                 }
                 return JsonConvert.SerializeObject(commandSendArgs);
             }
