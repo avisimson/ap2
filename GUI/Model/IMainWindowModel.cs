@@ -8,10 +8,7 @@ using System.Threading.Tasks;
 
 namespace GUI.Model
 {
-    /// <summary>
-    /// main window model interface
-    /// </summary>
-    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
+    //main window model interface.
     interface IMainWindowModel : INotifyPropertyChanged
     {
         bool IsConnected { get; set; }

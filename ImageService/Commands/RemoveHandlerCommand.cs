@@ -26,7 +26,7 @@ namespace ImageService.Commands
         /*
          *@param name = args, the path of directory.
          * @param name = result, to be initialized to true is successful excecution and false if fail.
-         * return json conversion of the logs.
+         * return json conversion of the commandrecievedeventargs of logs.
          */
         public string Execute(string[] args, out bool result)
         {
@@ -71,6 +71,7 @@ namespace ImageService.Commands
                 {
                     arr[1] = "notClosed";
                 }
+                //return serialization to json of CommandReceivedEventArgs that has arr[0]=directory to close.
                 return JsonConvert.SerializeObject(commandSendArgs);
             }
             catch (Exception e)
