@@ -81,11 +81,13 @@ namespace GUI.Model
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
                         string args = message.Args[0];
-                        if(logEntries != null)
+                        if (logEntries != null)
                         {
                             MessageReceivedEventArgs msg = JsonConvert.DeserializeObject<MessageReceivedEventArgs>(args);
                             logEntries.Add(msg);
-                        } else {//the first time.
+                        }
+                        else
+                        {//the first time.
                             logEntries = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(args);
                         }
                     }));

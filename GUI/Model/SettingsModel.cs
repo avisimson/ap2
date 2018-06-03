@@ -102,11 +102,11 @@ namespace GUI.Model
                     Console.WriteLine(e.Message);
                 }
             }
-            if (message.CommandID.Equals((int)CommandEnum.CloseCommand))
+            if (message.CommandID.Equals((int)CommandEnum.RemoveHandlerCommand))
             {
                 try
                 {
-                    if(message.Args[1].Equals("closed")) //validation for closing the handler.
+                    if (message.Args[1].Equals("closed")) //validation for closing the handler.
                     {
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {

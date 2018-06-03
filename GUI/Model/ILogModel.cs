@@ -14,3 +14,4 @@ namespace GUI.Model
         ObservableCollection<MessageReceivedEventArgs> LogEntries { get; set; }
     }
 }
+

@@ -32,7 +32,7 @@ namespace GUI.ViewModel
             {
                 this.NotifyPropertyChanged("VM_" + e.PropertyName);
             };
-            
+
         }
         /// <summary>
         /// Called when [remove].

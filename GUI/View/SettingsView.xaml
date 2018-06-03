@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
 
-        
+
         <TextBlock HorizontalAlignment="Left" Height="40" Margin="12,0,0,99.222" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="128" FontSize="15" Grid.Row="2"><Run Text="Source Name:"/><LineBreak/><Run Text=""/></TextBlock>
         <TextBlock HorizontalAlignment="Center" Height="40" Margin="12,0,0,8" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" Width="148" FontSize="30"/>
         <TextBlock HorizontalAlignment="Left" Height="40" Margin="12,0,0,140.222" TextWrapping="Wrap" Text="Output Directory:" VerticalAlignment="Top" Width="128" FontSize="15" Grid.Row="2"/>

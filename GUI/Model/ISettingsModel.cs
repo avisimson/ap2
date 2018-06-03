@@ -21,6 +21,6 @@ namespace GUI.Model
 
         ObservableCollection<string> Handlers { get; set; }
 
-        IClientConnection Connection { get; }            
-     }
+        IClientConnection Connection { get; }
+    }
 }
