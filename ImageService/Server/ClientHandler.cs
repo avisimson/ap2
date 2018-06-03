@@ -63,15 +63,12 @@ namespace ImageService.Server
                             commandRecievedEventArgs.Args, out resultCommand);
                         if(commandRecievedEventArgs.CommandID == (int)CommandEnum.RemoveHandlerCommand)
                         {
-                            string[] arr = { commandAnswer };
-                            CommandReceivedEventArgs updatedHandlers = new CommandReceivedEventArgs((int)CommandEnum.RemoveHandlerCommand,
-                                arr, "");
                             foreach(TcpClient client1 in clients)
                             {
                                 NetworkStream stream1 = client1.GetStream();
                                 GlobMutex.WaitOne();
                                 BinaryWriter writer1 = new BinaryWriter(stream1);
-                                writer1.Write(JsonConvert.SerializeObject(updatedHandlers));
+                                writer1.Write(commandAnswer);
                                 GlobMutex.ReleaseMutex();
                             }
                         } else

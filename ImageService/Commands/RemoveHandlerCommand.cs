@@ -26,7 +26,7 @@ namespace ImageService.Commands
         /*
          *@param name = args, the path of directory.
          * @param name = result, to be initialized to true is successful excecution and false if fail.
-         * return json conversion of the logs.
+         * return json conversion of the commandrecievedeventargs of logs.
          */
         public string Execute(string[] args, out bool result)
         {
@@ -60,17 +60,18 @@ namespace ImageService.Commands
                 configFile.AppSettings.Settings.Add("Handler", updatedHandlers);
                 configFile.Save(ConfigurationSaveMode.Minimal);
                 ConfigurationManager.RefreshSection("appSettings");
-                String[] arr = new String[1];
-                arr[0] = removeDir;
+                String[] arr = new String[2];
+                arr[0] = removeDir; //send the dir that needs to be removed.
                 CommandReceivedEventArgs commandSendArgs = new CommandReceivedEventArgs((int)CommandEnum.RemoveHandlerCommand, arr, "");
                 if (this.server.CloseSpecificDir(removeDir))
                 {
-                    arr[0] = "closed";
+                    arr[1] = "closed";
                 }
                 else
                 {
-                    arr[0] = "notClosed";
+                    arr[1] = "notClosed";
                 }
+                //return serialization to json of CommandReceivedEventArgs that has arr[0]=directory to close.
                 return JsonConvert.SerializeObject(commandSendArgs);
             }
             catch (Exception e)

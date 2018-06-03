@@ -1,0 +1,418 @@
+commit a413b7e32de4bcedafc6d62dc980a7bdf2a65c4b
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun May 27 16:03:38 2018 +0300
+
+    finished ex2
+
+commit 44a2eaea143f49457c62880dc6063d6b7092abb7
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun May 27 03:33:03 2018 +0300
+
+    finished ex2
+
+commit fb4e2c7fb6d3baca1569fc67e036c0eaa813cebb
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Thu May 24 01:36:59 2018 +0300
+
+    remove handler
+
+commit 86b2466d0e49bf640fee2483b908f56790803d43
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 20:33:30 2018 +0300
+
+    XAML
+
+commit e325c9356402e41ba8b0076546f0485e1cc7a9a0
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 20:21:02 2018 +0300
+
+    ko
+
+commit 2427b3154b5e3c1b1e2f7020f4befdf11f022bab
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 23 20:18:39 2018 +0300
+
+    aa
+
+commit 9f9cbc52f2dea986d5dd9ef752e49a9aec384831
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 19:31:35 2018 +0300
+
+    log xaml
+
+commit 753f5ab078b3ce3b7711be93e33ddee40071992a
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 18:16:14 2018 +0300
+
+    yakir
+
+commit 9e4bb3490a951ee11f29344c3e69e24efa4e95cb
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 18:07:20 2018 +0300
+
+    log
+
+commit 1374075501b1b94acb7a3695a6fe50be196795bf
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 23 18:04:55 2018 +0300
+
+    aa
+
+commit b75ad74c3c1ac1ba3acc54a781794ab0fe54d8aa
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 23 17:43:08 2018 +0300
+
+    debugging changes
+
+commit a98ea68ecb0f52a9625c59608d400f57715cf307
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 16:36:57 2018 +0300
+
+    yakir
+
+commit 358c7c45c513074a58a4dca6d5fef131b9c9ef33
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 16:16:44 2018 +0300
+
+    yakir
+
+commit aa63b8783f2167aabdae2583f72d1bf502a6364d
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 23 15:44:54 2018 +0300
+
+    a
+
+commit b5f7f930ff2ee1bff6db3c7c754ebbe9b40ffe20
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 23 15:20:32 2018 +0300
+
+    exception handling
+
+commit abfa3af71a5533225758cdab4a967106fb5ab287
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 23 14:58:13 2018 +0300
+
+    a
+
+commit c5bfbbc5a6238a16b7b951217796f11b969cc3c9
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 14:01:08 2018 +0300
+
+    commit gui
+
+commit f6a0d456f849f45662c9e530ea4fefd841a9b90f
+Merge: 1673aee 2bebc2c
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 13:08:05 2018 +0300
+
+    Merge branch 'master' of https://github.com/avisimson/ap2
+
+commit 1673aee772ea718649854ee206b0faa9164087de
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 13:07:52 2018 +0300
+
+    YAKIR COMMIT
+
+commit 2bebc2ce9395e5bc6acc12f633bde596e2ca9560
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 23 12:31:49 2018 +0300
+
+    a
+
+commit 186c09430c5ea2de2165ca814aaefcaa1f9cbfa4
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 23 12:12:29 2018 +0300
+
+    avi commit
+
+commit 13b126543a18f61da73e7125733db956b15b40c9
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed May 23 11:48:00 2018 +0300
+
+    change
+
+commit 3f9903a277a37e57e62cf58fcf4c499f048fa11c
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Thu May 17 21:26:14 2018 +0300
+
+    gui finished
+
+commit ff2cfddee8c04db5d9918aacce1f3e70bf6e4193
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Thu May 17 17:11:22 2018 +0300
+
+    Prism
+
+commit b871b87a80eceb33c449c7aca37425151f71c7b8
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Thu May 17 16:53:49 2018 +0300
+
+    classes organization
+
+commit c9cbd5a089bef0693111bbf54496bdf7a1e7d740
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Thu May 17 02:45:02 2018 +0300
+
+    client handling
+
+commit b71555a3a57ba979cdc0b9c501f64114799830a1
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 16 15:31:28 2018 +0300
+
+    Communication stuff
+
+commit 8a069670819604f7f35fec98bd95aeb36b2569bb
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Mon May 14 09:21:10 2018 +0300
+
+    GUI finished?
+
+commit 6ea6c24425f914708e8a3e5b1c05933863bee7d3
+Merge: 668ae7e 0c3006f
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Sun May 13 18:08:53 2018 +0300
+
+    Merge branch 'master' of https://github.com/avisimson/ap2
+
+commit 668ae7e6baf5ad178ea059419b5ba265c9365a54
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Sun May 13 18:08:40 2018 +0300
+
+    yakir
+
+commit 0c3006ff6e8532808c3247b39c76032689e5fd9b
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun May 13 17:54:32 2018 +0300
+
+    SERVER AND CONTROLLER UPDATE
+
+commit 5aa07cac9569884e2a4dc78787956b889b359551
+Merge: f0ac89e ad2e951
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun May 13 17:25:11 2018 +0300
+
+    Merge branch 'master' of https://github.com/avisimson/ap2.git
+
+commit ad2e95155da6bf3426d73ce0abf310f8c91e2d2a
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Sun May 13 17:24:00 2018 +0300
+
+    YAKIR COM
+
+commit f0ac89e241d8c3bb8538966b9cde41dab7ed2456
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun May 13 17:10:43 2018 +0300
+
+    a
+
+commit 0be86297df1f0776350e6db1a266a7e3957e9853
+Merge: d9f2fd7 d5ddebc
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Sun May 13 17:08:52 2018 +0300
+
+    yakir commit
+
+commit d9f2fd7ffb8fae340204865f2595d0ec72979eb5
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Sun May 13 16:53:09 2018 +0300
+
+    gui
+
+commit a00cba9990af12b9bf85e393fa10c6640ca52566
+Merge: d164803 9f86e8f
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Sun May 13 16:51:55 2018 +0300
+
+    yakir commit
+
+commit d5ddebc5947778fc14e2bf4763e679ccc436dead
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun May 13 16:50:28 2018 +0300
+
+    LOG CONFIG AND REMOVEHANDLER COMMANDS
+
+commit 3c8ef128e21d9f78dbe17c19cd64ae11b295396c
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Thu May 10 18:01:22 2018 +0300
+
+    Config and log commands
+    The Log Command still not finished
+
+commit e4cd1e0fd8e0b394246633dbcc3fba1af4191b81
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed May 9 13:19:59 2018 +0300
+
+    App config restore
+
+commit a98053140666be59da47dfbf6fa9bceb387fe6df
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Tue May 8 20:04:16 2018 +0300
+
+    g
+
+commit 04dc91a40451893f358c3cc331762eb99b6d78b8
+Merge: 0a05324 38c21b6
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Tue May 8 19:56:56 2018 +0300
+
+    Merge branch 'master' of https://github.com/avisimson/ap2.git
+
+commit 0a05324b3574e5a5d9aa21c014ceaae83251866b
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Tue May 8 19:56:23 2018 +0300
+
+    a
+
+commit da727975fe2a5729005e94a7ad0d2a9472b57c1e
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Tue May 8 19:40:39 2018 +0300
+
+    app config change
+
+commit 38c21b652eb77082f6564cccbca67dd7cfe32951
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Fri Apr 27 14:54:31 2018 +0300
+
+    avi push
+
+commit 6a0b0a665c915ec490d9000860b10e1baebd6b50
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun Apr 15 13:49:10 2018 +0300
+
+    Working project hey hey Avi Commit
+
+commit 81a48cf2035cbb29c5f134dca2768bf7e99dfa9e
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun Apr 15 13:22:27 2018 +0300
+
+    last
+
+commit d16480378d78211f969da22f2acb05f205192ca4
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Sun Apr 15 02:24:56 2018 +0300
+
+      d
+
+commit 9f86e8fafd351816e46efe9eecb564e8aaca7ac4
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun Apr 15 02:19:17 2018 +0300
+
+    service work
+
+commit c3238704d92bce3eeb1ba0cb7d96e63abf313fcb
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sat Apr 14 17:16:35 2018 +0300
+
+    image service and server changes
+
+commit 58609198cc51aa1451b23a48bee51a8ff7d3e7c2
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Thu Apr 12 00:09:50 2018 +0300
+
+    add comments
+
+commit 7beec7f59e5db3adb77a82ea4634f7fc9293b961
+Merge: cb2f21a 8be8573
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed Apr 11 15:44:15 2018 +0300
+
+    comments update
+
+commit 8be857334e4dd98680e1b4ce0ece111d19bf86a6
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed Apr 11 15:43:30 2018 +0300
+
+    c
+
+commit cb2f21ad7339de1eec0a0396b60e0aa620cc7d07
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed Apr 11 15:42:49 2018 +0300
+
+    comments update
+
+commit 3e79da094717d0f08eb0b66fa8c283d541606107
+Merge: f24ffc0 babd442
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed Apr 11 14:45:26 2018 +0300
+
+    d
+
+commit f24ffc0b026dffdab94924f92a9ee18932f04285
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed Apr 11 14:40:27 2018 +0300
+
+    commit
+
+commit babd442f29e41d36203d7f1f9d5e87cc696e0548
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Wed Apr 11 14:38:34 2018 +0300
+
+    directory handler work
+
+commit ecff3941b72eacbd5246f973ab1eb84e79ea03e1
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Wed Apr 11 13:33:38 2018 +0300
+
+    commit 4nd yakir
+
+commit 0ce017448afbd464b3af1fce83229841dac8b7f3
+Merge: 0b30b63 9e4e9f7
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Tue Apr 10 20:19:15 2018 +0300
+
+    Merge branch 'master' of https://github.com/avisimson/ap2
+
+commit 0b30b63c955e7855d9a3a20cac1d5e2839718ca1
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Tue Apr 10 20:19:04 2018 +0300
+
+    change in logging
+
+commit 9e4e9f70abb12d8aa217742f3046355e0f223ef3
+Merge: 0622e20 27bfdba
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Tue Apr 10 20:15:36 2018 +0300
+
+    Merge branch 'master' of https://github.com/avisimson/ap2.git
+
+commit 0622e2029a684d020f1eef5f90255dea1cd4a750
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Tue Apr 10 20:14:25 2018 +0300
+
+    AddFile change
+
+commit 27bfdbafd4e7a7cfd2b104f1a2b190a98e157fde
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Tue Apr 10 19:54:46 2018 +0300
+
+    2nd commit
+
+commit 4efb7d05a59a2e6071dfb77682aed87ea6ebfba4
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Tue Apr 10 18:19:11 2018 +0300
+
+    2nd commit
+
+commit c341fd5fe8327583e7e84c8db92f772ed998cf3b
+Author: yakir pinchas <yakir.pinchas@live.biu.ac.il>
+Date:   Sun Apr 8 15:51:51 2018 +0300
+
+    yakir first commit
+
+commit 057ee78ed5d044b8a5f06b36e87419a685e10428
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun Apr 8 15:45:42 2018 +0300
+
+    first commit
+
+commit 554da7226147b59e9ae8455c0c877005936a94b7
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun Apr 8 15:11:44 2018 +0300
+
+    Add project files.
+
+commit 8ab16c67d6f436c42fd9d95a00e7bce2d2b5fe6b
+Author: Avi Simson <avi.simson@live.biu.ac.il>
+Date:   Sun Apr 8 15:11:41 2018 +0300
+
+    Add .gitignore and .gitattributes.

@@ -32,9 +32,11 @@ namespace GUI.Communication
             this.isConnected = this.Connect();
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
         }
-        /// <summary>
-        /// Initializes the specified request.
-        /// </summary>
+        /*
+         * param name=request- the command from client to the service.
+         * Function send command to service after first connection,
+         * and gets return message and invoke its listeners.
+         */
         public void Initialize(CommandReceivedEventArgs request)
         {
             try
@@ -54,12 +56,6 @@ namespace GUI.Communication
             }
         }
         //singelton constructor implementation for client gui.
-        /// <summary>
-        /// Gets the instance.
-        /// </summary>
-        /// <value>
-        /// The instance.
-        /// </value>
         public static ClientConnection Instance
         {
             //singleton implementation
@@ -73,12 +69,7 @@ namespace GUI.Communication
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is connected.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is connected; otherwise, <c>false</c>.
-        /// </value>
+        //IsConnected- boolean variable of the class that says if client is connected to service or not.
         public bool IsConnected
         { //get and set implementation.
             get

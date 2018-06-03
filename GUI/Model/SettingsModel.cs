@@ -106,12 +106,13 @@ namespace GUI.Model
             {
                 try
                 {
-                    string removeHandler = JsonConvert.DeserializeObject<string>(message.Args[0]);
-                    this.handlers.Remove(removeHandler);
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
-                    {//find the hndler we remove from the collection and remove it.
-                        this.handlers.Remove(message.Args[0]);
-                    }));
+                    if(message.Args[1].Equals("closed")) //validation for closing the handler.
+                    {
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            this.handlers.Remove(message.Args[0]);
+                        }));
+                    }
                 }
                 catch (Exception e)
                 {

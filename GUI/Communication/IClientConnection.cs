@@ -16,7 +16,7 @@ namespace GUI.Communication
         void Write(CommandReceivedEventArgs e); //write to service a command
         void Read(); //read back from service
         event EventHandler<CommandReceivedEventArgs> DataReceived;
-        bool IsConnected { get; set; }
-        void Initialize(CommandReceivedEventArgs request);
+        bool IsConnected { get; set; } //true while the connection to service is on.
+        void Initialize(CommandReceivedEventArgs request); //first command to service.
     }
 }
