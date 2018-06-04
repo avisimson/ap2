@@ -1,4 +1,4 @@
-﻿using WEB;
+﻿using WEB.Communication;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

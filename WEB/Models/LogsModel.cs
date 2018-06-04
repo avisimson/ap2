@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Communication.Modal;
+using WEB.Communication;
 
 namespace WEB.Models
 {

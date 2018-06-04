@@ -14,12 +14,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
-namespace GUI.Communication
+namespace WEB.Communication
 {
-    public class ImageSerivceClient : IClientConnection
+    public class ImageServiceClient : IImageServiceClient
     {
         public event EventHandler<CommandReceivedEventArgs> DataReceived;
-        private static ImageSerivceClient clientInstance;
+        private static ImageServiceClient clientInstance;
         private TcpClient client;
         private IPEndPoint ep;
         private static Mutex m_mutex = new Mutex();
@@ -27,7 +27,7 @@ namespace GUI.Communication
         NetworkStream stream;
         private bool isConnected;
 
-        private ImageSerivceClient()
+        private ImageServiceClient()
         { //construction that can be called only from this class.
             this.isConnected = this.Connect();
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
@@ -56,14 +56,14 @@ namespace GUI.Communication
             }
         }
         //singelton constructor implementation for client gui.
-        public static ImageSerivceClient Instance
+        public static ImageServiceClient Instance
         {
             //singleton implementation
             get
             {
                 if (clientInstance == null)
                 {
-                    clientInstance = new ImageSerivceClient();
+                    clientInstance = new ImageServiceClient();
                 }
                 return clientInstance;
             }

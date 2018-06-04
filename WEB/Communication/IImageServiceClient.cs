@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GUI.Communication
+namespace WEB.Communication
 {
     public interface IImageServiceClient
     {

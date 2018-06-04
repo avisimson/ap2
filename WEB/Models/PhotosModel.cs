@@ -9,9 +9,9 @@ using System.Drawing.Imaging;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ImageServiceWeb.Models
+namespace WEB.Models
 {
-    public class Photo
+    public class PhotosModel
     {
         [Required]
         [DataType(DataType.Text)]
@@ -33,7 +33,7 @@ namespace ImageServiceWeb.Models
         [Display(Name = "Month")]
         public string Month { get; }
 
-        public Photo(string path)
+        public PhotosModel(string path)
         {
             string root = Path.GetPathRoot(path);
             Directory.SetCurrentDirectory(root);
