@@ -83,7 +83,7 @@ namespace GUI.Model
                 {
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        //Console.WriteLine("I am here I am hereI am hereI am hereI am hereI am hereI am hereI am hereI am hereI am hereI am here");
+                        
                         this.OutputDirectory = message.Args[1];
                         this.SourceName = message.Args[2];
                         this.LogName = message.Args[3];

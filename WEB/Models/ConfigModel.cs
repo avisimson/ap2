@@ -4,19 +4,23 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Communication.Event;
+using Communication.Enums;
 
 namespace WEB.Models
 {
     public class ConfigModel
     {
-        public delegate void NotifyAboutChange();
         private IImageServiceClient client;
         private List<string> handlers;
-
+        
         public ConfigModel()
         {
             client = ImageServiceClient.Instance;
             handlers = new List<string>();
+            this.client.DataReceived += NotifyChange;
+            CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
+            this.client.Initialize(request);
         }
 
         public List<string> Handlers
@@ -27,6 +31,29 @@ namespace WEB.Models
             }
         }
 
+
+        public void NotifyChange(object sender, CommandReceivedEventArgs message)
+        {
+            if (message.CommandID.Equals((int)CommandEnum.GetConfigCommand))
+            {
+                try
+                {
+                        this.OutputDirectory = message.Args[1];
+                        this.SourceName = message.Args[2];
+                        this.LogName = message.Args[3];
+                        this.ThumbnailSize = Convert.ToInt32(message.Args[4]);
+                        string[] array = message.Args[0].Split(';');
+                        foreach (var item in array)
+                        {
+                            this.handlers.Add(item);
+                        }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
 
         [Required]
         [Display(Name = "Output Directory")]

@@ -1,0 +1,37 @@
+﻿@model WEB.Models.ImageWebModel
+@{
+	ViewBag.Title = "ImageWeb";
+}
+
+<h2>ImageWeb</h2>
+<h3>Server status: @ViewBag.IsConnected</h3>
+<h4>Number of pictures in outputDir: @ViewBag.NumOfPics</h4>
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.IsConnected)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.NumOfPics)
+		</th>
+		<th></th>
+	</tr>
+
+	@*foreach (var item in Model.Students)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.FirstName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LastName)
+				</td>
+
+				<td>
+					@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+					@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+					@Html.ActionLink("Delete", "Delete", new { id = item.ID })
+				</td>
+			</tr>
+		}
+	*@
