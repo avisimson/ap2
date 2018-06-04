@@ -30,7 +30,19 @@ namespace WEB.Models
                 return this.handlers;
             }
         }
-
+        public void RemoveHandler(string handlerToRemove)
+        {
+            try
+            {
+                string[] args = { handlerToRemove };
+                CommandReceivedEventArgs eventArgs = new CommandReceivedEventArgs((int)CommandEnum.CloseCommand, args, null);
+                client.Write(eventArgs);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
 
         public void NotifyChange(object sender, CommandReceivedEventArgs message)
         {
@@ -53,9 +65,25 @@ namespace WEB.Models
                     Console.WriteLine(e.Message);
                 }
             }
+            if (message.CommandID.Equals((int)CommandEnum.RemoveHandlerCommand))
+            {
+                try
+                {
+                    if (message.Args[1].Equals("closed")) //validation for closing the handler.
+                    {   
+                          this.handlers.Remove(message.Args[0]); 
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
         }
+    
 
         [Required]
+        [DataType(DataType.Text)]
         [Display(Name = "Output Directory")]
         public string OutputDirectory { get; set; }
 

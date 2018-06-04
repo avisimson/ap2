@@ -39,10 +39,16 @@ namespace WEB.Models
                 }
             }
         }
-
         public List<PhotosModel> GetPhotos()
         {
+            RefreshList();
             return PhotosList;
         }
+
+        public int Length()
+        {
+            return PhotosList.Count;
+        }
+
     }
 }

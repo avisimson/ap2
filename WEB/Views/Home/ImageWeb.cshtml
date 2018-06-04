@@ -3,35 +3,62 @@
 	ViewBag.Title = "ImageWeb";
 }
 
-<h2>ImageWeb</h2>
-<h3>Server status: @ViewBag.IsConnected</h3>
-<h4>Number of pictures in outputDir: @ViewBag.NumOfPics</h4>
-<table class="table">
-	<tr>
-		<th>
-			@Html.DisplayNameFor(model => model.IsConnected)
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.NumOfPics)
-		</th>
-		<th></th>
-	</tr>
-
-	@*foreach (var item in Model.Students)
-		{
-			<tr>
+<h2>Image Web</h2>
+<div>
+	<table>
+		<tr>
+			<td><p></p></td>
+		</tr>
+		<tr>
+			<td>Service Status: </td>
+			<td><p type="text" id="statusId" size="5"></p></td>
+			<td>@Html.DisplayFor(model => model.GetStatus)</td>
+		</tr>
+		<tr>
+			<td>Total Images In Cloud: </td>
+			<td><p type="text" id="imageNumberId" size="5" style="margin:10px"></p></td>
+			<td>@Html.DisplayFor(model => model.GetNumofPics)</td>
+		</tr>
+		<tr>
+			<td><p></p></td>
+		</tr>
+	</table>
+	<table class="table">
+		<tr>
+			<p>Students Info:</p>
+		</tr>
+		<tr>
+			<th>
+				FirstName
+			<th>
+				LastName
+			<th>
+				ID
+			<th></th>
+		</tr>
+		<tr>
+			@foreach (var item in Model.GetInfo)
+			{
 				<td>
-					@Html.DisplayFor(modelItem => item.FirstName)
+					@Html.DisplayFor(modelItem => item.GetFirstName)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.LastName)
+					@Html.DisplayFor(modelItem => item.GetLastName)
 				</td>
-
 				<td>
-					@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-					@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-					@Html.ActionLink("Delete", "Delete", new { id = item.ID })
+					@Html.DisplayFor(modelItem => item.GetID)
 				</td>
-			</tr>
+			<tr></tr>
 		}
-	*@
+			</tr>
+		</table>
+	</div>
+
+	<script>
+    function () {
+        $.getJSON("@Url.Action("GetServiceInfo")", function () {
+            $("#statusId").text(ServiceStauts);
+            $("#imageNumberId").text(NumOfImages);
+        });
+    };
+	</script>

@@ -34,16 +34,18 @@
 		</th>
 	</tr>
 
-	@foreach (var item in Model.LogEntries)
-	{
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Status)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Message)
-			</td>
-		</tr>
-	}
+	@*
+		@foreach (var item in Model.LogEntries)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Status)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Message)
+				</td>
+			</tr>
+		}
+	*@
 
 </table>

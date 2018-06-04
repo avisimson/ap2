@@ -1,66 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 using WEB.Communication;
 
-namespace ImageServiceWeb.Models
+namespace WEB.Models
 {
     public class ImageWebModel
     {
-        private static IImageServiceClient Client { get; set; }
-        public ImageWebModel()
+        private string status;
+        private int numOfPics;
+        private List<Student> info = new List<Student>();
+        private IImageServiceClient client;
+
+        public ImageWebModel(PhotoListModel photoList)
         {
-            Students = GetStudents();
-            Client = ImageServiceClient.Instance;
-            IsConnected = Client.IsConnected;
-            NumOfPics = 0;
+            client = ImageServiceClient.Instance;
+            bool connected = client.IsConnected;
+            numOfPics = photoList.Length();
+            status = ConnectionStatus(connected);
+            this.ParseInfo();
         }
 
+        public string GetStatus { get { return this.status; } }
+        public int GetNumofPics { get { return this.numOfPics; } }
+        public List<Student> GetInfo { get { return this.info; } }
 
-        [Required]
-        [Display(Name = "Is Connected")]
-        public bool IsConnected { get; set; }
-
-        [Required]
-        [Display(Name = "Number of Pictures")]
-        public int NumOfPics { get; set; }
-
-        public static List<Student> GetStudents()
+        private string ConnectionStatus(bool connected)
         {
-            List<Student> students = new List<Student>();
-            StreamReader file = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/App_Data/StudentsDetails.txt"));
-            string line;
-
-            while ((line = file.ReadLine()) != null)
+            switch (connected)
             {
-                string[] param = line.Split(',');
-                students.Add(new Student() { FirstName = param[0], LastName = param[1], ID = param[2] });
+                case true:
+                    return "connected";
+                default:
+                    return "disconnected";
+            }
+        }
+
+        private void ParseInfo()
+        {
+            string text;
+            string[] line;
+            StreamReader file = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/App_Data/details.txt"));
+            text = file.ReadLine();
+            while (text != null)
+            {
+                line = text.Split(' ');
+                this.info.Add(new Student(line[0], line[1], line[2]));
+                text = file.ReadLine();
             }
             file.Close();
-            return students;
         }
+    }
 
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Students")]
-        public List<Student> Students { get; set; }
-
-        public class Student
+    public class Student
+    {
+        private string firstName, lastName, ID;
+        public Student(string first, string last, string id)
         {
-            [Required]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
-
-            [Required]
-            [Display(Name = "Last Name")]
-            public string LastName { get; set; }
-
-            [Required]
-            [Display(Name = "ID")]
-            public string ID { get; set; }
+            this.firstName = first;
+            this.lastName = last;
+            this.ID = id;
         }
+
+        public string GetFirstName
+        {
+            get { return this.firstName; }
+        }
+        public string GetLastName
+        {
+            get { return this.lastName; }
+        }
+        public string GetID { get { return this.ID; } }
     }
 }

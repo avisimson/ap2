@@ -194,6 +194,7 @@
     <Content Include="Views\Home\Logs.cshtml" />
     <Content Include="Views\Home\Photos.cshtml" />
     <Content Include="Views\Home\ImageWeb.cshtml" />
+    <Content Include="Views\Home\Confirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

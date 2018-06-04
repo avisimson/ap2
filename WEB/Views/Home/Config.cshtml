@@ -58,11 +58,9 @@
 			@foreach (var item in Model.Handlers)
 			{
 				<tr>
-
 					<td>
-						@Html.ActionLink(@item, "DeleteHandler", new { toBeDeletedHandler = item })
+						@Html.ActionLink(@item, "Confirm", new { handlerToBeDeleted = item })
 					</td>
-
 				</tr>
 			}
 		</table>
