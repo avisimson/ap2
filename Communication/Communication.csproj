@@ -44,8 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\ClientConnection.cs" />
-    <Compile Include="Client\IClientConnection.cs" />
     <Compile Include="Enums\CommandEnum.cs" />
     <Compile Include="Event\CommandReceivedEventArgs.cs" />
     <Compile Include="Event\DirectoryCloseEventArgs.cs" />

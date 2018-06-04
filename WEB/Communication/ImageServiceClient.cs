@@ -16,10 +16,10 @@ using Newtonsoft.Json.Linq;
 
 namespace GUI.Communication
 {
-    public class ClientConnection : IClientConnection
+    public class ImageSerivceClient : IClientConnection
     {
         public event EventHandler<CommandReceivedEventArgs> DataReceived;
-        private static ClientConnection clientInstance;
+        private static ImageSerivceClient clientInstance;
         private TcpClient client;
         private IPEndPoint ep;
         private static Mutex m_mutex = new Mutex();
@@ -27,7 +27,7 @@ namespace GUI.Communication
         NetworkStream stream;
         private bool isConnected;
 
-        private ClientConnection()
+        private ImageSerivceClient()
         { //construction that can be called only from this class.
             this.isConnected = this.Connect();
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
@@ -56,14 +56,14 @@ namespace GUI.Communication
             }
         }
         //singelton constructor implementation for client gui.
-        public static ClientConnection Instance
+        public static ImageSerivceClient Instance
         {
             //singleton implementation
             get
             {
                 if (clientInstance == null)
                 {
-                    clientInstance = new ClientConnection();
+                    clientInstance = new ImageSerivceClient();
                 }
                 return clientInstance;
             }

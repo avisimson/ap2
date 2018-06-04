@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GUI.Communication
 {
-    public interface IClientConnection
+    public interface IImageServiceClient
     {
         bool Connect(); //connect to server.
         void Disconnect(); //disconnect.

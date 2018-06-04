@@ -1,11 +1,11 @@
-﻿using Communication;
+﻿using WEB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ImageServiceWeb.Models
+namespace WEB.Models
 {
     public class ConfigModel
     {
