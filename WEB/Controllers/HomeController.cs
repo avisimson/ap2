@@ -11,7 +11,7 @@ namespace WEB.Controllers
     {
         private static ConfigModel config = new ConfigModel();
         private static LogsModel logs = new LogsModel();
-        private static PhotosModel photos = new PhotosModel();
+        //private static PhotosModel photos = new PhotosModel();
         private static ImageWebModel imageWeb = new ImageWebModel();
 
         public ActionResult Config()
@@ -36,11 +36,11 @@ namespace WEB.Controllers
             return View(logs);
         }
 
-        public ActionResult Photos()
+        /*public ActionResult Photos()
         {
             ViewBag.Message = "The photos saved.";
             return View(photos);
-        }
+        }*/
 
         public ActionResult Confirm()
         {

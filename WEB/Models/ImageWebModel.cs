@@ -1,77 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
-using WEB.Communication;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using Communication.Connection;
 
 namespace WEB.Models
 {
     public class ImageWebModel
     {
-        private string status;
-        private int numOfPics;
-        private List<Student> info = new List<Student>();
-        private IImageServiceClient client;
-
-        public ImageWebModel(PhotoListModel photoList)
+        private static IClientConnection Client { get; set; }
+        public ImageWebModel()
         {
-            client = ImageServiceClient.Instance;
-            bool connected = client.IsConnected;
-            numOfPics = photoList.Length();
-            status = ConnectionStatus(connected);
-            this.ParseInfo();
+            Client = ClientConnection.Instance;
+            IsConnected = Client.IsConnected;
+            NumOfPics = 0;
+            Students = GetStudents();
         }
 
-        public string GetStatus { get { return this.status; } }
-        public int GetNumofPics { get { return this.numOfPics; } }
-        public List<Student> GetInfo { get { return this.info; } }
+        [Required]
+        [Display(Name = "Is Connected")]
+        public bool IsConnected { get; set; }
 
-        private string ConnectionStatus(bool connected)
-        {
-            switch (connected)
-            {
-                case true:
-                    return "connected";
-                default:
-                    return "disconnected";
-            }
-        }
+        [Required]
+        [Display(Name = "Number of Pictures")]
+        public int NumOfPics { get; set; }
 
-        private void ParseInfo()
+        public static List<Student> GetStudents()
         {
-            string text;
-            string[] line;
-            StreamReader file = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/App_Data/details.txt"));
-            text = file.ReadLine();
-            while (text != null)
+            List<Student> students = new List<Student>();
+            StreamReader file = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Details.txt"));
+            string line;
+
+            while ((line = file.ReadLine()) != null)
             {
-                line = text.Split(' ');
-                this.info.Add(new Student(line[0], line[1], line[2]));
-                text = file.ReadLine();
+                string[] param = line.Split(' ');
+                students.Add(new Student() { FirstName = param[0], LastName = param[1], ID = param[2] });
             }
             file.Close();
-        }
-    }
-
-    public class Student
-    {
-        private string firstName, lastName, ID;
-        public Student(string first, string last, string id)
-        {
-            this.firstName = first;
-            this.lastName = last;
-            this.ID = id;
+            return students;
         }
 
-        public string GetFirstName
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Students")]
+        public List<Student> Students { get; set; }
+
+        public class Student
         {
-            get { return this.firstName; }
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
+            [Display(Name = "ID")]
+            public string ID { get; set; }
         }
-        public string GetLastName
-        {
-            get { return this.lastName; }
-        }
-        public string GetID { get { return this.ID; } }
     }
 }

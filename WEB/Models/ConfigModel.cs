@@ -46,8 +46,10 @@ namespace WEB.Models
             try
             {
                 string[] args = { handlerToRemove };
-                CommandReceivedEventArgs eventArgs = new CommandReceivedEventArgs((int)CommandEnum.CloseCommand, args, null);
+                CommandReceivedEventArgs eventArgs = new CommandReceivedEventArgs((int)CommandEnum.RemoveHandlerCommand, args, null);
                 client.Write(eventArgs);
+                client.Read();
+
             }
             catch (Exception e)
             {
