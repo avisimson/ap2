@@ -1,5 +1,5 @@
 ﻿using Communication;
-using GUI.Communication;
+using Communication.Connection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

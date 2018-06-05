@@ -1,13 +1,9 @@
-﻿using Communication;
+﻿
 using Communication.Event;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GUI.Communication
+
+namespace Communication.Connection
 {
     public interface IClientConnection
     {
