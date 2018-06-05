@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Communication;
 using Communication.Enums;
-using GUI.Communication;
+using Communication.Connection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Communication.Event;

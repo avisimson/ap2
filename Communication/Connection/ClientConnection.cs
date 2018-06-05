@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Communication;
 using Communication.Enums;
 using Communication.Event;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 
-namespace WEB.Communication
+namespace Communication.Connection
 {
-    public class ImageServiceClient : IImageServiceClient
+    public class ClientConnection : IClientConnection
     {
         public event EventHandler<CommandReceivedEventArgs> DataReceived;
-        private static ImageServiceClient clientInstance;
+        private static ClientConnection clientInstance;
         private TcpClient client;
         private IPEndPoint ep;
         private static Mutex m_mutex = new Mutex();
@@ -27,7 +23,7 @@ namespace WEB.Communication
         NetworkStream stream;
         private bool isConnected;
 
-        private ImageServiceClient()
+        private ClientConnection()
         { //construction that can be called only from this class.
             this.isConnected = this.Connect();
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
@@ -56,14 +52,14 @@ namespace WEB.Communication
             }
         }
         //singelton constructor implementation for client gui.
-        public static ImageServiceClient Instance
+        public static ClientConnection Instance
         {
             //singleton implementation
             get
             {
                 if (clientInstance == null)
                 {
-                    clientInstance = new ImageServiceClient();
+                    clientInstance = new ClientConnection();
                 }
                 return clientInstance;
             }

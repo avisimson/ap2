@@ -64,8 +64,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Communication\ClientConnection.cs" />
-    <Compile Include="Communication\IClientConnection.cs" />
     <Compile Include="Model\ILogModel.cs" />
     <Compile Include="Model\IMainWindowModel.cs" />
     <Compile Include="Model\ISettingsModel.cs" />
@@ -143,5 +141,6 @@
       <Name>ImageService</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
