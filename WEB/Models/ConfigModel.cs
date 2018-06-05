@@ -1,4 +1,4 @@
-﻿using WEB.Communication;
+﻿using Communication.Connection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,16 +11,27 @@ namespace WEB.Models
 {
     public class ConfigModel
     {
-        private IImageServiceClient client;
+        private IClientConnection client;
         private List<string> handlers;
+        private bool requested;
         
         public ConfigModel()
         {
-            client = ImageServiceClient.Instance;
+            client = ClientConnection.Instance;
             handlers = new List<string>();
             this.client.DataReceived += NotifyChange;
-            CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
-            this.client.Initialize(request);
+            //don't get request to send config
+            this.requested = false;
+        }
+
+        public void SendConfigRequest()
+        {
+            if (!requested)
+            {
+                CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
+                this.client.Initialize(request);
+                requested = true;
+            }
         }
 
         public List<string> Handlers

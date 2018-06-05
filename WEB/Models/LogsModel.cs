@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Communication.Modal;
-using WEB.Communication;
+using Communication.Connection;
 using Communication.Event;
 using Communication.Enums;
 using System.Collections.ObjectModel;
@@ -14,18 +14,19 @@ namespace WEB.Models
 {
     public class LogsModel
     {
-        private IImageServiceClient client;
+        private IClientConnection client;
         public string Filter { get; set; }
 
         public LogsModel()
         {
-            client = ImageServiceClient.Instance;
-            //add the data received that get from logs.
-            this.client.DataReceived += OnDataReceived;
+            client = ClientConnection.Instance;
+            client.DataReceived += OnDataReceived;
+        }
+
+        public void SendLogRequest()
+        {
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.LogCommand, null, null);
-            //again read from the server          
             this.client.Initialize(request);
-            this.client.Read();
         }
         public void OnDataReceived(object sender, CommandReceivedEventArgs message)
         {
@@ -50,20 +51,6 @@ namespace WEB.Models
                 }
             }
         }
-        //need to implement function that send log list according to type log
-     /*   public List<Log> LogsList
-        {
-            get
-            {
-                List<Log> filteredList = new List<Log>();
-                foreach (Log log in logs)
-                {
-                    if (String.IsNullOrEmpty(this.Filter) || this.Filter.Equals(log.GetStatus))
-                        filteredList.Add(log);
-                }
-                return filteredList;
-            }
-        }*/
 
         [Required]
         [DataType(DataType.Text)]

@@ -19,9 +19,8 @@ namespace WEB.Models
         [Display(Name = "PhotosList")]
         private List<PhotosModel> PhotosList = new List<PhotosModel>();
 
-        public PhotoListModel(string path)
+        public PhotoListModel()
         {
-            PhotoPath = path;
             RefreshList();
         }
 
