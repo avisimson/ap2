@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ImageServiceWeb.Controllers
+namespace WEB.Controllers
 {
     public class HomeController : Controller
     {
@@ -50,7 +50,7 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Photos()
         {
-            ViewBag.Message = "The photos saved.";
+            ViewBag.Message = "The photos.";
 
             return View();
         }
