@@ -115,20 +115,56 @@ namespace WEB.Models
         //All fields of configuration.
         [Required]
         [Display(Name = "Output Directory")]
-        public string OutputDirectory { get; set; }
+        public string OutputDirectory {
+            get
+            {
+                return this.OutputDirectory;
+            }
+            set
+            {
+                this.OutputDirectory = value;
+            }
+        }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Source Name")]
-        public string SourceName { get; set; }
+        public string SourceName {
+            get
+            {
+                return this.SourceName;
+            }
+            set
+            {
+                this.SourceName = value;
+            }
+        }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Log Name")]
-        public string LogName { get; set; }
+        public string LogName {
+            get
+            {
+                return this.LogName;
+            }
+            set
+            {
+                this.LogName = value;
+            }
+        }
 
         [Required]
         [Display(Name = "Thumbnail Size")]
-        public int ThumbnailSize { get; set; }
+        public int ThumbnailSize {
+            get
+            {
+                return this.ThumbnailSize;
+            }
+            set
+            {
+                this.ThumbnailSize = value;
+            }
+        }
     }
 }
