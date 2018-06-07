@@ -11,6 +11,20 @@ namespace WEB.Models
     //class has responsibility to show the students that made the project and the number of pics in dir.
     public class ImageWebModel
     {
+        private static ImageWebModel instance;
+        //singelton constructor implementation for client gui.
+        public static ImageWebModel Instance
+        {
+            //singleton implementation
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new ImageWebModel();
+                }
+                return instance;
+            }
+        }
         private static IClientConnection Client { get; set; } //the connection to server.
         //constructor
         public ImageWebModel()

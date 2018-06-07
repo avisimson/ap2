@@ -7,8 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Communication.Enums;
 using Communication.Event;
+using Communication;
 using Newtonsoft.Json;
-
+using Newtonsoft.Json.Linq;
 
 namespace Communication.Connection
 {

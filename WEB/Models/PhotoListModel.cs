@@ -40,7 +40,9 @@ namespace WEB.Models
                 {
                     tempList.Add(new PhotosModel(photo));
                 }
+                //set the list of pics and num of pics.
                 photosList = tempList;
+                ImageWebModel.Instance.NumOfPics = Length();
             }
         }
         //returns list of photos after checking for changes.
