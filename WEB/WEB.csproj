@@ -221,6 +221,10 @@
       <Project>{e8cc5c1f-dbf0-49f3-b4b1-9ef83e4f79d6}</Project>
       <Name>Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageService\ImageService.csproj">
+      <Project>{b71572e4-0956-4358-9b9f-b34df2c7d41f}</Project>
+      <Name>ImageService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
