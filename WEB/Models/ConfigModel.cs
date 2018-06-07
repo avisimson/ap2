@@ -80,15 +80,15 @@ namespace WEB.Models
             {
                 try
                 {
-                    this.OutputDirectory = message.Args[1];
-                    this.SourceName = message.Args[2];
-                    this.LogName = message.Args[3];
-                    this.ThumbnailSize = Convert.ToInt32(message.Args[4]);
-                    string[] array = message.Args[0].Split(';');
-                    foreach (var item in array)
-                    {
-                        this.handlers.Add(item);
-                    }
+                        this.OutputDirectory = message.Args[1];
+                        this.SourceName = message.Args[2];
+                        this.LogName = message.Args[3];
+                        this.ThumbnailSize = Convert.ToInt32(message.Args[4]);
+                        string[] array = message.Args[0].Split(';');
+                        foreach (var item in array)
+                        {
+                            this.handlers.Add(item);
+                        }
                 }
                 catch (Exception e)
                 {
@@ -100,8 +100,8 @@ namespace WEB.Models
                 try
                 {
                     if (message.Args[1].Equals("closed")) //validation for closing the handler.
-                    {
-                        this.handlers.Remove(message.Args[0]);
+                    {   
+                          this.handlers.Remove(message.Args[0]); 
                     }
                 }
                 catch (Exception e)
@@ -110,7 +110,7 @@ namespace WEB.Models
                 }
             }
         }
-
+        
         //All fields of configuration.
         [Required]
         [DataType(DataType.Text)]

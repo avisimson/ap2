@@ -42,16 +42,16 @@ namespace WEB.Models
             {
                 try
                 {
-                    string args = message.Args[0];
-                    if (LogEntries != null)
-                    {//change in existing log.
+                   string args = message.Args[0];
+                   if (LogEntries != null)
+                   {//change in existing log.
                         MessageReceivedEventArgs msg = JsonConvert.DeserializeObject<MessageReceivedEventArgs>(args);
                         LogEntries.Add(msg);
-                    }
-                    else
-                    {//the first time.
+                   }
+                   else
+                   {//the first time.
                         LogEntries = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(args);
-                    }
+                   }
                 }
                 catch (Exception e)
                 {//case of failure.
