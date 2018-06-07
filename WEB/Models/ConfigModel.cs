@@ -34,7 +34,8 @@ namespace WEB.Models
             if (!requested)
             {
                 CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
-                this.client.Initialize(request);
+                this.client.Write(request);
+                this.client.Read();
                 requested = true;
             }
         }
@@ -113,7 +114,6 @@ namespace WEB.Models
 
         //All fields of configuration.
         [Required]
-        [DataType(DataType.Text)]
         [Display(Name = "Output Directory")]
         public string OutputDirectory { get; set; }
 

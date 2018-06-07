@@ -28,7 +28,7 @@ namespace WEB.Models
         public void SendLogRequest()
         {
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.LogCommand, null, null);
-            this.client.Initialize(request);
+            this.client.Write(request);
             this.client.Read();
         }
         /*

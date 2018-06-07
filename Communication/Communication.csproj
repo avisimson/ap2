@@ -53,6 +53,7 @@
     <Compile Include="IServer.cs" />
     <Compile Include="Modal\MessageReceivedEventArgs.cs" />
     <Compile Include="Modal\MessageTypeEnum.cs" />
+    <Compile Include="Modal\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

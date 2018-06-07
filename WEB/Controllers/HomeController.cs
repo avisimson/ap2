@@ -16,7 +16,7 @@ namespace WEB.Controllers
     {
         private static ConfigModel config = new ConfigModel();
         private static LogsModel logs = new LogsModel();
-        private static PhotosListModel photos = new PhotosListModel(config);
+        private static PhotoListModel photos = new PhotoListModel();
         private static ImageWebModel imageWeb = new ImageWebModel();
         private static string m_handlerRequested = null;
 
@@ -39,8 +39,8 @@ namespace WEB.Controllers
         {
             ViewBag.Message = "The main home page.";
             ViewBag.IsConnected = imageWeb.IsConnected;
-            photos.SetPhotos();
-            imageWeb.NumOfPics = photos.NumOfPics;
+           // photos.SetPhotos();
+           // imageWeb.NumOfPics = photos.NumOfPics;
             ViewBag.NumOfPics = imageWeb.NumOfPics;
             return View(imageWeb);
         }
@@ -63,8 +63,8 @@ namespace WEB.Controllers
         public ActionResult Photos()
         {
             ViewBag.Message = "The photos saved.";
-            photos.ImageList.Clear();
-            photos.SetPhotos();
+           // photos.ImageList.Clear();
+           // photos.SetPhotos();
             return View(photos);
         }
 
@@ -138,7 +138,7 @@ namespace WEB.Controllers
         /// <returns></returns>
         public ActionResult DeleteSpecificPhoto(string fullUrl)
         {
-            photos.DeletePhoto(fullUrl);
+           // photos.DeletePhoto(fullUrl);
             return RedirectToAction("Photos");
         }
     }
