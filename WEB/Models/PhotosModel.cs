@@ -13,36 +13,43 @@ namespace WEB.Models
 {
     public class PhotosModel
     {
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "PhotoPath")]
-        public string PhotoPath { get; }
+        //fields to present a photo in web app.   
 
         [Required]
         [DataType(DataType.ImageUrl)]
         [Display(Name = "CurrentImage")]
-        public Image CurrentImage { get; }
+        public Image currentImage { get; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "ImagePath")]
+        public string imgPath { get; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Year")]
-        public string Year { get; }
+        public string year { get; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Month")]
-        public string Month { get; }
-
+        public string month { get; }
+        /*
+         * constructor
+         * param name = path, the path in cp to photo.
+         */
         public PhotosModel(string path)
         {
+            //set us to directory of current photo
             string root = Path.GetPathRoot(path);
             Directory.SetCurrentDirectory(root);
-            PhotoPath = path;
-            CurrentImage = Image.FromFile(path);
-            Month = Path.GetDirectoryName(path);
-            Month = new DirectoryInfo(Month).Name;
-            Year = Path.GetDirectoryName(Path.GetDirectoryName(path));
-            Year = new DirectoryInfo(Year).Name;
+            //initialize class vars.
+            imgPath = path;
+            currentImage = Image.FromFile(path);
+            month = Path.GetDirectoryName(path);
+            month = new DirectoryInfo(month).Name;
+            year = Path.GetDirectoryName(Path.GetDirectoryName(path));
+            year = new DirectoryInfo(year).Name;
         }
     }
 }

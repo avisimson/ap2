@@ -10,43 +10,49 @@ namespace WEB.Models
 {
     public class PhotoListModel
     {
+        //fields to show on web app.
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "PhotoPath")]
-        public string PhotoPath { get; }
+        [Display(Name = "ImagePath")]
+        public string imgPath { get; }
 
         [Required]
-        [Display(Name = "PhotosList")]
-        private List<PhotosModel> PhotosList = new List<PhotosModel>();
-
+        [Display(Name = "photosList")]
+        private List<PhotosModel> photosList = new List<PhotosModel>();
+        //constructor.
         public PhotoListModel()
         {
             RefreshList();
         }
-
+        /*
+         * function check get to outputDir if it exists and insert all of its thumbnail
+         * photos into a list.
+         */
         public void RefreshList()
         {
-            //check if photopath exist
-            if (Directory.Exists(PhotoPath))
+            //check if output dir exist
+            if (Directory.Exists(imgPath))
             {
-                //create a array of photos
-                string[] photos = Directory.GetFiles(PhotoPath + "\\Thumbnails", "*.jpg", SearchOption.AllDirectories);
+                //initialize array of all thumbnail photos.
+                string[] photos = Directory.GetFiles(imgPath + "\\Thumbnails", "*.jpg", SearchOption.AllDirectories);
+                List<PhotosModel> tempList = new List<PhotosModel>();
                 foreach (string photo in photos)
                 {
-                    //add photo to list
-                    PhotosList.Add(new PhotosModel(photo));
+                    tempList.Add(new PhotosModel(photo));
                 }
+                photosList = tempList;
             }
         }
+        //returns list of photos after checking for changes.
         public List<PhotosModel> GetPhotos()
         {
             RefreshList();
-            return PhotosList;
+            return photosList;
         }
-
+        //returns the number of thumbnail photos that exist in list.
         public int Length()
         {
-            return PhotosList.Count;
+            return photosList.Count;
         }
 
     }
