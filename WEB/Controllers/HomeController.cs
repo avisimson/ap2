@@ -1,17 +1,18 @@
 ﻿using WEB.Models;
+using Communication.Modal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace WEB.Controllers
+namespace ImageServiceWeb.Controllers
 {
     public class HomeController : Controller
     {
         private static ConfigModel config = new ConfigModel();
         private static LogsModel logs = new LogsModel();
-        //private static PhotosModel photos = new PhotosModel();
+        private static PhotoListModel photos = new PhotoListModel();
         private static ImageWebModel imageWeb = new ImageWebModel();
 
         public ActionResult Config()
@@ -36,11 +37,11 @@ namespace WEB.Controllers
             return View(logs);
         }
 
-        /*public ActionResult Photos()
+        public ActionResult Photos()
         {
             ViewBag.Message = "The photos saved.";
             return View(photos);
-        }*/
+        }
 
         public ActionResult Confirm()
         {
@@ -54,5 +55,11 @@ namespace WEB.Controllers
             config.RemoveHandler(handlerToRemove);
             return RedirectToAction("Config");
         }
+
+      /*  public ActionResult FilterLogs(MessageTypeEnum filter)
+        {
+            logs.FilterLogList(filter);
+            return View(logs);
+        }*/
     }
 }
