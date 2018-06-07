@@ -51,6 +51,7 @@ namespace Communication.Connection
                 Console.WriteLine(e.Message);
             }
         }
+
         //singelton constructor implementation for client gui.
         public static ClientConnection Instance
         {
