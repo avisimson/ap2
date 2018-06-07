@@ -8,58 +8,59 @@ using Communication.Connection;
 
 namespace WEB.Models
 {
+    //class has responsibility to show the students that made the project and the number of pics in dir.
     public class ImageWebModel
     {
-        private static IClientConnection Client { get; set; }
+        private static IClientConnection Client { get; set; } //the connection to server.
+        //constructor
         public ImageWebModel()
         {
             Client = ClientConnection.Instance;
-            IsConnected = Client.IsConnected;
             NumOfPics = 0;
-            Students = GetStudents();
+            IsConnected = Client.IsConnected;
+            Students = StudentsInit();
         }
-
-        [Required]
-        [Display(Name = "Is Connected")]
-        public bool IsConnected { get; set; }
-
-        [Required]
-        [Display(Name = "Number of Pictures")]
-        public int NumOfPics { get; set; }
-
-        public static List<Student> GetStudents()
+        /*
+         * initializing the list of students from AppData details file.
+         * returns - the List of all students that made the project of Advenced Programming 2.
+         */
+        public static List<Student> StudentsInit()
         {
-            List<Student> students = new List<Student>();
+            List<Student> st = new List<Student>();
             StreamReader file = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Details.txt"));
             string line;
-
             while ((line = file.ReadLine()) != null)
             {
-                string[] param = line.Split(' ');
-                students.Add(new Student() { FirstName = param[0], LastName = param[1], ID = param[2] });
+                string[] details = line.Split(' ');
+                st.Add(new Student() { firstName = details[0], lastName = details[1], id = details[2] });
             }
             file.Close();
-            return students;
+            return st;
         }
-
+        //fields to show on web app.
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Students")]
         public List<Student> Students { get; set; }
-
+        [Required]
+        [Display(Name = "Is Connected")]
+        public bool IsConnected { get; set; }
+        [Required]
+        [Display(Name = "Number of Pictures")]
+        public int NumOfPics { get; set; }
         public class Student
         {
             [Required]
             [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            public string firstName { get; set; }
 
             [Required]
             [Display(Name = "Last Name")]
-            public string LastName { get; set; }
+            public string lastName { get; set; }
 
             [Required]
             [Display(Name = "ID")]
-            public string ID { get; set; }
+            public string id { get; set; }
         }
     }
 }
