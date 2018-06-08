@@ -34,7 +34,7 @@ namespace WEB.Models
             if (!requested)
             {
                 CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.GetConfigCommand, null, null);
-                this.client.Write(request);
+                this.client.Initialize(request);
                 this.client.Read();
                 requested = true;
             }
