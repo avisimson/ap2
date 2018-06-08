@@ -34,6 +34,13 @@ namespace WEB.Models
             IsConnected = Client.IsConnected;
             Students = StudentsInit();
         }
+        //to check!
+        public void CountNumOfPictures()
+        {
+            string path = HttpContext.Current.Server.MapPath("../PhotosOutput");
+            int fileCount = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).Length;
+            this.NumOfPics = fileCount;
+        }
         /*
          * initializing the list of students from AppData details file.
          * returns - the List of all students that made the project of Advenced Programming 2.

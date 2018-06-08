@@ -28,7 +28,7 @@ namespace WEB.Models
         public void SendLogRequest()
         {
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.LogCommand, null, null);
-            this.client.Write(request);
+            this.client.Initialize(request);
             this.client.Read();
         }
         /*
@@ -63,16 +63,6 @@ namespace WEB.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Log Enteries")]
-        public ObservableCollection<MessageReceivedEventArgs> LogEntries
-        {
-            get
-            {
-                return this.LogEntries;
-            }
-            set
-            {
-                this.LogEntries = value;
-            }
-        }
+        public ObservableCollection<MessageReceivedEventArgs> LogEntries{ get; set; }
     }
 }
