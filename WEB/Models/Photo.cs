@@ -26,7 +26,7 @@ namespace WEB.Models
                 int intLocation, intLength;
 
                 intLength = imageUrl.Length;
-                intLocation = imageUrl.IndexOf("outputDir");
+                intLocation = imageUrl.IndexOf("OutputDir");
 
                 strDirName = imageUrl.Substring(intLocation, intLength - intLocation);
 
