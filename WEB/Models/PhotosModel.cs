@@ -13,7 +13,7 @@ namespace WEB.Models
 
         private string outputDir;
         private ConfigModel config;
-        private int counter = 0;
+        
 
         public PhotosModel(ConfigModel config)
         {
@@ -33,7 +33,7 @@ namespace WEB.Models
             get; set;
         }
 
-
+        //return the num of pics in the imageList
         public int NumOfPics
         {
             get
@@ -42,14 +42,14 @@ namespace WEB.Models
             }
         }
 
-        /// <summary>
-        /// Sets the photos from the output directory
-        /// </summary>
+        
+        //Sets the photos from the output directory.
         public void SetPhotos()
         {
             try
             {
                 string thumbnailDir = outputDir + "\\Thumbnails";
+                //check if exist folder that her name is "Thumbnails"
                 if (!Directory.Exists(thumbnailDir))
                 {
                     return;
