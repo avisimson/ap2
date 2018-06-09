@@ -46,7 +46,9 @@ namespace WEB.Models
                     if (LogEntries != null)
                     {//change in existing log.
                         MessageReceivedEventArgs msg = JsonConvert.DeserializeObject<MessageReceivedEventArgs>(args);
-                        LogEntries.Add(msg);
+                        this.LogEntries.Add(msg);
+                       // ObservableCollection<MessageReceivedEventArgs> arr = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(args);
+                       // this.LogEntries = new ObservableCollection<MessageReceivedEventArgs>(arr);
                     }
                     else
                     {//the first time.

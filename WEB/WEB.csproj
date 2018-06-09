@@ -150,8 +150,8 @@
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="Models\ImageWebModel.cs" />
     <Compile Include="Models\LogsModel.cs" />
-    <Compile Include="Models\PhotoListModel.cs" />
     <Compile Include="Models\PhotosModel.cs" />
+    <Compile Include="Models\Photo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

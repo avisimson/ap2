@@ -1,55 +1,111 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace WEB.Models
 {
+
     public class PhotosModel
     {
-        //fields to present a photo in web app.   
 
-        [Required]
-        [DataType(DataType.ImageUrl)]
-        [Display(Name = "CurrentImage")]
-        public Image currentImage { get; }
+        private string outputDir;
+        private ConfigModel config;
+        private int counter = 0;
 
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "ImagePath")]
-        public string imgPath { get; }
-
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Year")]
-        public string year { get; }
-
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Month")]
-        public string month { get; }
-        /*
-         * constructor
-         * param name = path, the path in cp to photo.
-         */
-        public PhotosModel(string path)
+        public PhotosModel(ConfigModel config)
         {
-            //set us to directory of current photo
-            string root = Path.GetPathRoot(path);
-            Directory.SetCurrentDirectory(root);
-            //initialize class vars.
-            imgPath = path;
-            currentImage = Image.FromFile(path);
-            month = Path.GetDirectoryName(path);
-            month = new DirectoryInfo(month).Name;
-            year = Path.GetDirectoryName(Path.GetDirectoryName(path));
-            year = new DirectoryInfo(year).Name;
+            ImageList = new List<Photo>();
+            this.config = config;
+            if (!config.Requested)
+            {
+                config.SendConfigRequest();
+            }
+            outputDir = config.OutputDirectory;
+
+        }
+
+
+        public List<Photo> ImageList
+        {
+            get; set;
+        }
+
+
+        public int NumOfPics
+        {
+            get
+            {
+                return this.ImageList.Count;
+            }
+        }
+
+        /// <summary>
+        /// Sets the photos from the output directory
+        /// </summary>
+        public void SetPhotos()
+        {
+            try
+            {
+                string thumbnailDir = outputDir + "\\Thumbnails";
+                if (!Directory.Exists(thumbnailDir))
+                {
+                    return;
+                }
+                DirectoryInfo di = new DirectoryInfo(thumbnailDir);
+
+                string[] validExtensions = { ".jpg", ".png", ".gif", ".bmp" };
+                foreach (DirectoryInfo yearDirInfo in di.GetDirectories())
+                {
+                    if (!Path.GetDirectoryName(yearDirInfo.FullName).EndsWith("Thumbnails"))
+                    {
+                        continue;
+                    }
+                    foreach (DirectoryInfo monthDirInfo in yearDirInfo.GetDirectories())
+                    {
+                        foreach (FileInfo fileInfo in monthDirInfo.GetFiles())
+                        {
+                            if (validExtensions.Contains(fileInfo.Extension.ToLower()))
+                            {
+                                Photo im = ImageList.Find(x => (x.ImageFullThumbnailUrl == fileInfo.FullName));
+                                if (im == null)
+                                {
+                                    ImageList.Add(new Photo(fileInfo.FullName));
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
+        public void DeletePhoto(string fullUrl)
+        {
+            try
+            {
+                foreach (Photo photo in ImageList)
+                {
+                    if (photo.ImageFullUrl.Equals(fullUrl))
+                    {
+                        File.Delete(photo.ImageFullUrl);
+                        File.Delete(photo.ImageFullThumbnailUrl);
+                        this.ImageList.Remove(photo);
+                        break;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

@@ -111,6 +111,17 @@ namespace WEB.Models
                 }
             }
         }
+        public bool Requested
+        {
+            get
+            {
+                return this.requested;
+            }
+            set
+            {
+                this.requested = value;
+            }
+        }
 
         //All fields of configuration.
         [Required]

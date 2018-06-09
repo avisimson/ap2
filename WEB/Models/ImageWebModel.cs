@@ -37,7 +37,7 @@ namespace WEB.Models
         //to check!
         public void CountNumOfPictures()
         {
-            string path = HttpContext.Current.Server.MapPath("../PhotosOutput");
+            string path = HttpContext.Current.Server.MapPath("../Output");
             int fileCount = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).Length;
             this.NumOfPics = fileCount;
         }
