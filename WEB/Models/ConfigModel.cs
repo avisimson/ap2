@@ -40,6 +40,7 @@ namespace WEB.Models
                 this.client.Read();
                 requested = true;
             }
+            this.client.Read();
         }
         /*
          * returns the list of directories.
@@ -93,6 +94,7 @@ namespace WEB.Models
                     {
                         this.Handlers.Add(item);
                     }
+
                 }
                 catch (Exception e)
                 {
