@@ -8,24 +8,25 @@ using System.Web.Mvc;
 
 namespace WEB.Controllers
 {
-
-    // the home controller for all the views.
+    // the home controller for all the views. connect views with models.
     public class HomeController : Controller
     {
+        //create all models for the web.
         private static ConfigModel config = new ConfigModel();
         private static LogsModel logs = new LogsModel();
         private static PhotosModel photos = new PhotosModel(config);
         private static ImageWebModel imageWeb = new ImageWebModel();
         private static string m_handlerRequested = null;
-        // the controller for the view of the config settings
+        // function activated when the config is pressed in views layout. get config request from service.
+        // returns the config to the view.
         public ActionResult Config()
         {
             ViewBag.Message = "The App Configuration.";
             config.SendConfigRequest();
-            
             return View(config);
         }
-        // the controller for the view of the main image web page
+        // function activates image web page when activeted in layout. gets number of pic from dir.
+        //returns the updated image web model to view.
         public ActionResult ImageWeb()
         {
             ViewBag.Message = "The main home page.";
@@ -35,15 +36,16 @@ namespace WEB.Controllers
             ViewBag.NumOfPics = imageWeb.NumOfPics;
             return View(imageWeb);
         }
-        // the controller for the view of the logs page
+        // function activates logs page when activeted in layout. get logs from service.
+        //returns the updated logs model to view.
         public ActionResult Logs()
         {
             ViewBag.Message = "The list of service logs.";
             logs.SendLogRequest();
-            
             return View(logs);
         }
-        // the controller for the view of the photos display
+        // function activates photos page when activeted in layout.
+        //returns the updated photos model to view.
         public ActionResult Photos()
         {
             ViewBag.Message = "The photos saved.";
@@ -55,7 +57,6 @@ namespace WEB.Controllers
         public ActionResult Confirm()
         {
             ViewBag.Message = "The photos saved.";
-
             return View(config);
         }
         // sets the handler to be removed and removes to the view
@@ -65,18 +66,19 @@ namespace WEB.Controllers
             m_handlerRequested = handlerToRemove;
             return View();
         }
-        // invoked when the ok button has been selected to delete the handler, calls the function to delete the handler and returns to the view
+        // activated when the ok button has been selected to delete the handler
+        //calls the function to delete the handler and returns to the view
         public ActionResult DeleteOK()
         {
             config.RemoveHandler(m_handlerRequested);
             return RedirectToAction("Config");
         }
-        // invoked when the cancel button has been selected to delete the handler, returns to the config page
+        // activated when the cancel button has been selected to delete the handler, returns to the config page
         public ActionResult DeleteCancel()
         {
             return RedirectToAction("Config");
         }
-        // the controller for the photo viewer page, sends the photo to view
+        // the controller for the photo viewer page, sends the path of the photo to  the view.
         // <param name="fullUrl">The full URL.</param>
         public ActionResult PhotosViewer(string fullUrl)
         {
@@ -90,7 +92,7 @@ namespace WEB.Controllers
             Photo photo = new Photo(fullUrl);
             return View(photo);
         }
-        // Deletes the specific photo.
+        // Deletes the specific photo, and return to photos page.
         // <param name="fullUrl">The full URL.</param>
         public ActionResult DeleteSpecificPhoto(string fullUrl)
         {
