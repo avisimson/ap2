@@ -23,6 +23,7 @@ namespace WEB.Controllers
         {
             ViewBag.Message = "The App Configuration.";
             config.SendConfigRequest();
+
             return View(config);
         }
         // function activates image web page when activeted in layout. gets number of pic from dir.
@@ -42,6 +43,7 @@ namespace WEB.Controllers
         {
             ViewBag.Message = "The list of service logs.";
             logs.SendLogRequest();
+            ViewBag.LogEntries = logs.LogEntries;
             return View(logs);
         }
         // function activates photos page when activeted in layout.
