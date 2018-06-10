@@ -11,7 +11,9 @@ namespace WEB.Models
 
     public class Photo
     {
-
+        /*
+         * constructor.
+         */
         public Photo(string imageUrl)
         {
             try
@@ -22,7 +24,6 @@ namespace WEB.Models
                 Month = Path.GetFileNameWithoutExtension(Path.GetDirectoryName(ImageFullThumbnailUrl));
                 Year = Path.GetFileNameWithoutExtension(Path.GetDirectoryName((Path.GetDirectoryName(ImageFullThumbnailUrl))));
                 string strDirName;
-
                 int intLocation, intLength;
 
                 intLength = imageUrl.Length;
@@ -38,7 +39,7 @@ namespace WEB.Models
                 Console.WriteLine(e.Message);
             }
         }
-
+        //fields of details for photo.
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Name")]
