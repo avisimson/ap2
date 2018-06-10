@@ -22,7 +22,6 @@ namespace WEB.Controllers
         {
             ViewBag.Message = "The App Configuration.";
             config.SendConfigRequest();
-            
             return View(config);
         }
         // the controller for the view of the main image web page
