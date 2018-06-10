@@ -13,6 +13,7 @@ namespace WEB.Models
     {
         /*
          * constructor.
+         * param name = imageUrl, the path to the specific photo.
          */
         public Photo(string imageUrl)
         {
@@ -35,7 +36,7 @@ namespace WEB.Models
                 ImageRelativePath = ImageRelativePathThumbnail.Replace(@"Thumbnails\", string.Empty);
             }
             catch (Exception e)
-            {
+            {//case of failure in getting to directories of photo.
                 Console.WriteLine(e.Message);
             }
         }

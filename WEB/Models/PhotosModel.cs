@@ -13,8 +13,10 @@ namespace WEB.Models
 
         private string outputDir;
         private ConfigModel config;
-        
-
+        /*
+         * constructor.
+         * param name = config, the config model of the WEB.
+         */
         public PhotosModel(ConfigModel config)
         {
             ImageList = new List<Photo>();
@@ -26,14 +28,12 @@ namespace WEB.Models
             outputDir = config.OutputDirectory;
 
         }
-
-
+        //field of list of photos in output directory.
         public List<Photo> ImageList
         {
             get; set;
         }
-
-        //return the num of pics in the imageList
+        //count of all pictures in directory.
         public int NumOfPics
         {
             get
@@ -41,21 +41,17 @@ namespace WEB.Models
                 return this.ImageList.Count;
             }
         }
-
-        
-        //Sets the photos from the output directory.
+        //function puts photos from output directory to imageList
         public void SetPhotos()
         {
             try
             {
                 string thumbnailDir = outputDir + "\\Thumbnails";
-                //check if exist folder that her name is "Thumbnails"
                 if (!Directory.Exists(thumbnailDir))
-                {
+                { //if thumbnail directory doesn't exist we wont show it.
                     return;
                 }
                 DirectoryInfo di = new DirectoryInfo(thumbnailDir);
-
                 string[] validExtensions = { ".jpg", ".png", ".gif", ".bmp" };
                 foreach (DirectoryInfo yearDirInfo in di.GetDirectories())
                 {
@@ -86,7 +82,10 @@ namespace WEB.Models
             }
         }
 
-
+        /*
+         * function deletes photo from the list of photos.
+         * param name = fullUrl, the path to the photo being deleted.
+         */
         public void DeletePhoto(string fullUrl)
         {
             try
@@ -103,7 +102,7 @@ namespace WEB.Models
                 }
             }
             catch (Exception e)
-            {
+            {//case of file delete fail.
                 Console.WriteLine(e.Message);
             }
         }
