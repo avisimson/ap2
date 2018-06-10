@@ -18,9 +18,9 @@ namespace WEB.Models
         //constructor.
         public LogsModel()
         {
-            client = ClientConnection.Instance;
+            client = WebClient.Instance;
             client.DataReceived += OnDataRecieved;
-            SendLogRequest();
+            //SendLogRequest();
         }
         /*
          * send request to read logs from server and continue reading all time while connected.
@@ -28,8 +28,15 @@ namespace WEB.Models
         public void SendLogRequest()
         {
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.LogCommand, null, null);
-            this.client.Initialize(request);
-            this.client.Read();
+            if (LogEntries == null)
+            {
+                this.client.Initialize(request);
+                this.client.Read();
+            } else
+            {
+                this.client.Write(request);
+                this.client.Read();
+            }
         }
         /*
          * this function is activated when a data is recieved to client.
