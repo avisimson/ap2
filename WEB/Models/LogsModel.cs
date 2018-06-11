@@ -20,6 +20,7 @@ namespace WEB.Models
         {
             client = WebClient.Instance;
             client.DataReceived += OnDataRecieved;
+
             //SendLogRequest();
         }
         /*
@@ -71,7 +72,7 @@ namespace WEB.Models
         //the fields for the web.
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Log Enteries")]
+        [Display(Name = "Log Entries")]
         public ObservableCollection<MessageReceivedEventArgs> LogEntries{ get; set; }
     }
 }
