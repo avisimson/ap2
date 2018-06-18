@@ -33,8 +33,7 @@ namespace WEB.Models
             {
                 this.client.Initialize(request);
                 this.client.Read();
-            }
-            else
+            } else
             {
                 this.client.Write(request);
                 this.client.Read();
@@ -56,8 +55,8 @@ namespace WEB.Models
                     {//change in existing log.
                         MessageReceivedEventArgs msg = JsonConvert.DeserializeObject<MessageReceivedEventArgs>(args);
                         this.LogEntries.Add(msg);
-                        // ObservableCollection<MessageReceivedEventArgs> arr = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(args);
-                        // this.LogEntries = new ObservableCollection<MessageReceivedEventArgs>(arr);
+                       // ObservableCollection<MessageReceivedEventArgs> arr = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(args);
+                       // this.LogEntries = new ObservableCollection<MessageReceivedEventArgs>(arr);
                     }
                     else
                     {//the first time.
@@ -74,6 +73,6 @@ namespace WEB.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Log Entries")]
-        public ObservableCollection<MessageReceivedEventArgs> LogEntries { get; set; }
+        public ObservableCollection<MessageReceivedEventArgs> LogEntries{ get; set; }
     }
 }

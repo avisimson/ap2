@@ -6,20 +6,8 @@
 }
 
 <h2>Logs</h2>
-
-<style>
-	input[type=checkbox] {
-		transform: scale(3.5);
-	}
-</style>
-
-@using (Html.BeginForm())
-{
-	<p>
-		Find by type: @Html.TextBox("SearchString")
-		<input type="submit" value="Search" />
-	</p>
-}
+<h3>Choose type of message:</h3>
+<input type="text" id="filterfield" onkeyup="filter()" placeholder="Log Type.." />
 <h3>Log Entries</h3>
 <table class="table table-striped table-dark" id="myTable">
 	<thead class="thead-dark">
@@ -29,14 +17,14 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var entry in Model.LogEntries)
+		@foreach (var log in Model.LogEntries)
 		{
 			<tr>
-				<td id=@entry.status>
-					@Html.DisplayFor(m => entry.status)
+				<td id=@log.status>
+					@Html.DisplayFor(m => log.status)
 				</td>
 				<td>
-					@Html.DisplayFor(m => entry.message)
+					@Html.DisplayFor(m => log.message)
 				</td>
 			</tr>
 		}
@@ -44,3 +32,24 @@
 	</tbody>
 
 </table>
+<script type="text/javascript">
+    //FILTERING THE LOGS
+    function filter() {
+        var table, tr, td, i, input, filter;
+        input = document.getElementById("filterfield");
+        filter = input.value.toUpperCase(); //users input with making all letters upper case.
+        table = document.getElementById("myTable"); //the table of all log list.
+        tr = table.getElementsByTagName("tr"); //the types of logs
+        // go through table rows and show only the ones that are the same as the filter.
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

@@ -104,11 +104,11 @@ namespace ImageService.Server
                 this.m_logging.Log(e.Message, MessageTypeEnum.INFO); //stop listening message.
                 //unsubscribing of the DirectoryHandler from the server message feed
                 this.CommandRecieved -= sendDirectoryHandler.OnCommandRecieved;
-                if (this.CommandRecieved == null)
+                /*if (this.CommandRecieved == null)
                 {
                     //if all the Directory Handlers closed succefully the server itself can finally close
                     this.m_logging.Log("Now, the server is closed", MessageTypeEnum.INFO);
-                }
+                }*/
             }
             else
             {
@@ -137,10 +137,10 @@ namespace ImageService.Server
                 if(handler.getPath().Equals(path))
                 {
                     this.CommandRecieved -= handler.OnCommandRecieved;
-                    if (this.CommandRecieved == null)
+                    /*if (this.CommandRecieved == null)
                     {//listening to 0 directories warning message.
                         this.m_logging.Log("Service does not listen to any directory.", MessageTypeEnum.WARNING);
-                    }
+                    }*/
                     handler.CloseHandle();
                     directoriesHandler.Remove(handler);
                     return true;
