@@ -6,11 +6,13 @@ using System.Linq;
 using System.Web;
 using Communication.Event;
 using Communication.Enums;
+using System.Threading;
 
 namespace WEB.Models
 {
     public class ConfigModel
     {
+        object locker = new object();
         private IClientConnection client; //the connection to server.
         private List<string> handlers; //the directorys
         private bool requested; //if config request sent or not.
@@ -19,7 +21,7 @@ namespace WEB.Models
          */
         public ConfigModel()
         {
-            client = ClientConnection.Instance;
+            client = WebClient.Instance;
             handlers = new List<string>();
             //every time that data recieved to Web Client-NotifyChange method is activated.
             this.client.DataReceived += OnDataRecieved;
@@ -38,7 +40,6 @@ namespace WEB.Models
                 this.client.Read();
                 requested = true;
             }
-            this.client.Read();
         }
         /*
          * returns the list of directories.
@@ -64,6 +65,7 @@ namespace WEB.Models
                 //send command to remove to server.
                 client.Write(eventArgs);
                 //get the answer of removing from server and invoke all listeners.
+                client.Read(); //read to skip log command.
                 client.Read();
             }
             catch (Exception e)
@@ -89,7 +91,7 @@ namespace WEB.Models
                     string[] array = message.Args[0].Split(';');
                     foreach (var item in array)
                     {
-                        this.handlers.Add(item);
+                        this.Handlers.Add(item);
                     }
 
                 }
@@ -104,7 +106,7 @@ namespace WEB.Models
                 {
                     if (message.Args[1].Equals("closed")) //validation for closing the handler.
                     {
-                        this.handlers.Remove(message.Args[0]);
+                        this.Handlers.Remove(message.Args[0]);
                     }
                 }
                 catch (Exception e)
@@ -129,7 +131,7 @@ namespace WEB.Models
         [Required]
         [Display(Name = "Output Directory")]
         public string OutputDirectory { get; set; }
-    
+
 
         [Required]
         [DataType(DataType.Text)]

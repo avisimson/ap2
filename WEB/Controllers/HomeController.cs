@@ -5,18 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Communication.Event;
+using Communication.Enums;
+using System.Threading;
 
 namespace WEB.Controllers
 {
     // the home controller for all the views. connect views with models.
     public class HomeController : Controller
     {
+        private static string handlerPicked = null;
         //create all models for the web.
         private static ConfigModel config = new ConfigModel();
         private static LogsModel logs = new LogsModel();
         private static PhotosModel photos = new PhotosModel(config);
         private static ImageWebModel imageWeb = new ImageWebModel();
-        private static string m_handlerRequested = null;
         // function activated when the config is pressed in views layout. get config request from service.
         // returns the config to the view.
         public ActionResult Config()
@@ -65,14 +68,14 @@ namespace WEB.Controllers
         // <param name="handlerToRemove">The handler to remove.</param>
         public ActionResult ConfirmDeleteHandler(string handlerToRemove)
         {
-            m_handlerRequested = handlerToRemove;
+            handlerPicked = handlerToRemove;
             return View();
         }
         // activated when the ok button has been selected to delete the handler
         //calls the function to delete the handler and returns to the view
         public ActionResult DeleteOK()
         {
-            config.RemoveHandler(m_handlerRequested);
+            config.RemoveHandler(handlerPicked);
             return RedirectToAction("Config");
         }
         // activated when the cancel button has been selected to delete the handler, returns to the config page

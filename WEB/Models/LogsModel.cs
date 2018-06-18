@@ -18,9 +18,10 @@ namespace WEB.Models
         //constructor.
         public LogsModel()
         {
-            client = ClientConnection.Instance;
+            client = WebClient.Instance;
             client.DataReceived += OnDataRecieved;
-            SendLogRequest();
+
+            //SendLogRequest();
         }
         /*
          * send request to read logs from server and continue reading all time while connected.
@@ -28,8 +29,16 @@ namespace WEB.Models
         public void SendLogRequest()
         {
             CommandReceivedEventArgs request = new CommandReceivedEventArgs((int)CommandEnum.LogCommand, null, null);
-            this.client.Initialize(request);
-            this.client.Read();
+            if (LogEntries == null)
+            {
+                this.client.Initialize(request);
+                this.client.Read();
+            }
+            else
+            {
+                this.client.Write(request);
+                this.client.Read();
+            }
         }
         /*
          * this function is activated when a data is recieved to client.
@@ -47,8 +56,8 @@ namespace WEB.Models
                     {//change in existing log.
                         MessageReceivedEventArgs msg = JsonConvert.DeserializeObject<MessageReceivedEventArgs>(args);
                         this.LogEntries.Add(msg);
-                       // ObservableCollection<MessageReceivedEventArgs> arr = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(args);
-                       // this.LogEntries = new ObservableCollection<MessageReceivedEventArgs>(arr);
+                        // ObservableCollection<MessageReceivedEventArgs> arr = JsonConvert.DeserializeObject<ObservableCollection<MessageReceivedEventArgs>>(args);
+                        // this.LogEntries = new ObservableCollection<MessageReceivedEventArgs>(arr);
                     }
                     else
                     {//the first time.
@@ -64,7 +73,7 @@ namespace WEB.Models
         //the fields for the web.
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Log Enteries")]
-        public ObservableCollection<MessageReceivedEventArgs> LogEntries{ get; set; }
+        [Display(Name = "Log Entries")]
+        public ObservableCollection<MessageReceivedEventArgs> LogEntries { get; set; }
     }
 }
