@@ -18,19 +18,19 @@ namespace ImageService.Server
     class AndroidServer
     {
         private int port;
-        private ILoggingService m_logging;
+        private ILoggingService logger;
         private Boolean isStopped;
         private TcpListener tcpListener;
-        private string handlerPath;
+        private string path;
 
-        public AndroidServer(ILoggingService m_logging, int port)
+        public AndroidServer(ILoggingService logger, int port)
         {
-            this.m_logging = m_logging;
+            this.logger = logger;
             this.port = port;
             this.isStopped = false;
             this.Start();
             string[] handlers = ConfigurationManager.AppSettings["Handler"].Split(';');
-            this.handlerPath = handlers[0];
+            this.path = handlers[0];
 
 
         }
@@ -39,7 +39,7 @@ namespace ImageService.Server
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
             tcpListener = new TcpListener(ep);
             tcpListener.Start();
-            m_logging.Log("Waiting for connections...", MessageTypeEnum.INFO);
+            logger.Log("Waiting for connections...", MessageTypeEnum.INFO);
 
             Task task = new Task(() =>
             {
@@ -48,7 +48,7 @@ namespace ImageService.Server
                     try
                     {
                         TcpClient client = tcpListener.AcceptTcpClient();
-                        m_logging.Log("Client Connected", MessageTypeEnum.INFO);
+                        logger.Log("Client Connected", MessageTypeEnum.INFO);
                         try
                         {
                             while (true)
@@ -87,21 +87,21 @@ namespace ImageService.Server
                                 }
                                 catch (Exception e)
                                 {
-                                    this.m_logging.Log(e.Message, MessageTypeEnum.FAIL);
+                                    this.logger.Log(e.Message, MessageTypeEnum.FAIL);
                                 }
                             }
                         }
                         catch (Exception e)
                         {
-                            this.m_logging.Log(e.Message, MessageTypeEnum.FAIL);
+                            this.logger.Log(e.Message, MessageTypeEnum.FAIL);
                         }
                     }
                     catch (SocketException e)
                     {
-                        m_logging.Log(e.Message, MessageTypeEnum.FAIL);
+                        logger.Log(e.Message, MessageTypeEnum.FAIL);
                     }
                 }
-                m_logging.Log("Server Stopped", MessageTypeEnum.INFO);
+                logger.Log("Server Stopped", MessageTypeEnum.INFO);
             });
             task.Start();
         }
@@ -111,7 +111,7 @@ namespace ImageService.Server
             using (var ms = new MemoryStream(byteArray))
             {
                 //write all bytes to image.
-                File.WriteAllBytes(handlerPath + "\\" + picName, byteArray);
+                File.WriteAllBytes(path + "\\" + picName, byteArray);
             }
 
         }
