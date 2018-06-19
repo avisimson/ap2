@@ -105,6 +105,7 @@ namespace ImageService
             //add messages to legger.
             this.logger.MessageRecieved += this.WriteMsg;
             this.server = new ImageServer(logger);
+            //AndroidServer androidServer = new AndroidServer(logger, 8600);
             logger.Log("In On start", MessageTypeEnum.INFO);
         }
         /*

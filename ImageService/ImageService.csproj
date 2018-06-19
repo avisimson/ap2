@@ -76,6 +76,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Server\AndroidServer.cs" />
     <Compile Include="Server\ClientHandler.cs" />
     <Compile Include="Server\ImageServer.cs" />
     <Compile Include="ImageService.cs">
