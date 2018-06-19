@@ -17,12 +17,15 @@ namespace ImageService.Server
 {
     class AndroidServer
     {
+        
         private int port;
         private ILoggingService logger;
         private Boolean isStopped;
         private TcpListener tcpListener;
         private string path;
+        private string outputDir;
 
+        //constructor of Android Server
         public AndroidServer(ILoggingService logger, int port)
         {
             this.logger = logger;
@@ -31,9 +34,10 @@ namespace ImageService.Server
             this.Start();
             string[] handlers = ConfigurationManager.AppSettings["Handler"].Split(';');
             this.path = handlers[0];
-
+            this.outputDir = ConfigurationManager.AppSettings["OutputDir"];
 
         }
+        //start the service
         public void Start()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
@@ -105,17 +109,40 @@ namespace ImageService.Server
             });
             task.Start();
         }
-
+        //converts the byte array to an image and saves it.
         public void ByteArrayToImage(byte[] byteArray, string picName)
         {
-            using (var ms = new MemoryStream(byteArray))
+            DirectoryInfo outputD = new DirectoryInfo(outputDir);
+            foreach (DirectoryInfo year in outputD.EnumerateDirectories())
             {
-                //write all bytes to image.
-                File.WriteAllBytes(path + "\\" + picName, byteArray);
+                foreach (DirectoryInfo month in year.EnumerateDirectories())
+                {
+                    foreach (FileInfo file in month.EnumerateFiles())
+                    {
+                        //if the file already exists
+                        if (file.Name.Equals(picName))
+                        {
+                            try
+                            {
+                                //delete the image
+                                File.Delete(file.FullName);
+                                String thumbnailsPath = outputDir + "\\" + "Thumbnails" + "\\"
+                                    + year.Name + "\\" + month.Name + "\\" + picName;
+                                //delete the thumbnail
+                                File.Delete(thumbnailsPath);
+                            }
+                            catch (Exception e)
+                            {
+                                logger.Log(e.Message, MessageTypeEnum.FAIL);
+                            }
+                            break;
+                        }
+                    }
+                }
             }
-
+            File.WriteAllBytes(path + "\\" + picName, byteArray);
         }
-
+        //transfer the bytes.
         public void TransferBytes(byte[] source, byte[] forCopy, int start)
         {
             for (int i = start; i < source.Length; i++)
