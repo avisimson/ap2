@@ -118,7 +118,11 @@ namespace ImageService.Server
             });
             task.Start();
         }
-        //converts the byte array to an image and saves it.
+        /*
+         * converts the byte array to an image and saves it.
+         * param name = byteArray - is a array of bytes.
+         * param name = picName -the name of picture. 
+         */
         public void ByteArrayToImage(byte[] byteArray, string picName)
         {
             //directory info backup to outputDir.
@@ -154,6 +158,9 @@ namespace ImageService.Server
         }
         /*
          * transfer the bytes.
+         * param name = source - is a original byte array.
+         * param name = forCopy - is a backup byte array.
+         * param name = start - is the start of byte that need for the transfer.
          */
         public void TransferBytes(byte[] source, byte[] forCopy, int start)
         {
