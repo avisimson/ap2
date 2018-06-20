@@ -24,8 +24,10 @@ namespace ImageService.Server
         private TcpListener tcpListener;
         private string path;
         private string outputDir;
-
-        //constructor of Android Server
+        /* constructor of Android Server
+         * param name = logger - is a ILoggingService.
+         * param name = port -the number of the port that we use.
+         */
         public AndroidServer(ILoggingService logger, int port)
         {
             this.logger = logger;
@@ -33,11 +35,14 @@ namespace ImageService.Server
             this.isStopped = false;
             this.Start();
             string[] handlers = ConfigurationManager.AppSettings["Handler"].Split(';');
+            //take the address of one of directory handler that the service listen them. 
             this.path = handlers[0];
             this.outputDir = ConfigurationManager.AppSettings["OutputDir"];
 
         }
-        //start the service
+        /*
+         * start the service
+         */
         public void Start()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
@@ -51,7 +56,9 @@ namespace ImageService.Server
                 {
                     try
                     {
+                        //connect the client to server.
                         TcpClient client = tcpListener.AcceptTcpClient();
+                        //send current messeage
                         logger.Log("Client Connected", MessageTypeEnum.INFO);
                         try
                         {
@@ -59,6 +66,7 @@ namespace ImageService.Server
                             {
                                 try
                                 {
+                                    //get the info from the client
                                     NetworkStream stream = client.GetStream();
                                     byte[] bytes = new byte[4096];
 
@@ -79,6 +87,7 @@ namespace ImageService.Server
                                     byte[] bytesCurrent;
                                     while (tempBytes < bytes.Length)
                                     {
+                                        //allocate more space for the bytes
                                         bytesCurrent = new byte[int.Parse(picSize)];
                                         bytesRead = stream.Read(bytesCurrent, 0, bytesCurrent.Length);
                                         TransferBytes(bytes, bytesCurrent, tempBytes);
@@ -112,6 +121,7 @@ namespace ImageService.Server
         //converts the byte array to an image and saves it.
         public void ByteArrayToImage(byte[] byteArray, string picName)
         {
+            //directory info backup to outputDir.
             DirectoryInfo outputD = new DirectoryInfo(outputDir);
             foreach (DirectoryInfo year in outputD.EnumerateDirectories())
             {
@@ -142,7 +152,9 @@ namespace ImageService.Server
             }
             File.WriteAllBytes(path + "\\" + picName, byteArray);
         }
-        //transfer the bytes.
+        /*
+         * transfer the bytes.
+         */
         public void TransferBytes(byte[] source, byte[] forCopy, int start)
         {
             for (int i = start; i < source.Length; i++)
