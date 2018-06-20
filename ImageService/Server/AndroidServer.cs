@@ -69,7 +69,7 @@ namespace ImageService.Server
                                     int bytesRead = stream.Read(bytes, 0, bytes.Length);
                                     string picSize = Encoding.ASCII.GetString(bytes, 0, bytesRead);
 
-                                    if (picSize == "End\n") { break; }
+                                    if (picSize == "complete\n") { break; }
                                     bytes = new byte[int.Parse(picSize)];
 
                                     //gets the name of the picture.
